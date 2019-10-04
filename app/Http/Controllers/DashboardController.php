@@ -118,7 +118,7 @@ class DashboardController extends Controller
                     $mes = $fecha->format("m/Y");
                     return $formattedDate == $mes && $tipoDoc == $value->tipoDoc;
                 })->sum("total");
-                $date = $today->format("MMM");
+                $date = $today->format("M");
                 if (count($days) < 6) {
                     $days[] = ucfirst($date);
                 }
