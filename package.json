@@ -115,7 +115,8 @@
     "write-file-webpack-plugin": "4.5.1"
   },
   "engines": {
-    "node": ">=8.9.0"
+    "node": ">=8.9.0",
+    "npm": ">= 6.11.3"
   },
   "scripts": {
     "prettier:format": "prettier --write \"{,frontend/}*.{md,json,ts,css,scss,yml}\"",
