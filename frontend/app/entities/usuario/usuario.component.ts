@@ -196,7 +196,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.usuarioService.delete(usuario.idUsuario).pipe(
                     filter((response: HttpResponse<any>) => response.ok)
                 ).subscribe((response: HttpResponse<any>) => {
-                    this.showToast(`Cliente ${usuario.nombUsuario} eliminado exitosamente`, 'Usuario Eliminado', true);
+                    this.showToast(`Usuario ${usuario.nombUsuario} eliminado exitosamente`, 'Usuario Eliminado', true);
                     this.paginator.page.emit();
                 }, (res: HttpErrorResponse) => this.onError(res.message));
             }
