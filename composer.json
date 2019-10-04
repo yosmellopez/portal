@@ -9,14 +9,15 @@
   "type": "project",
   "require": {
     "php": ">=7.0.0",
+    "ext-intl": "*",
     "doctrine/dbal": "^2.9",
     "eduardokum/laravel-mail-auto-embed": "^1.0",
     "fideloper/proxy": "~3.3",
+    "jenssegers/date": "^3.5",
     "laravel/framework": "5.5.*",
     "laravel/tinker": "~1.0",
     "matriphe/laravel-md5-hash": "^1.0",
-    "tymon/jwt-auth": "~1.0.0-rc.5",
-    "ext-intl": "*"
+    "tymon/jwt-auth": "~1.0.0-rc.5"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entity\Documento;
+use Jenssegers\Date\Date;
 
 class DashboardController extends Controller
 {
@@ -105,13 +106,11 @@ class DashboardController extends Controller
         $tiposDocumento = array("factura", "boleta", "nota-credito", "nota-debito");
         $documentos = array();
         $days = array();
-        $formatter = new \IntlDateFormatter('es_ES', \IntlDateFormatter::SHORT, \IntlDateFormatter::SHORT);
-        $formatter->setPattern('MMM');
         foreach ($tiposDocumento as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
-            $today = new \DateTime();
-            $today->modify("-5 month");
+            $today = Date::now();
+            $today->subMonths(5);
             for ($i = 0; $i < 6; $i++) {
                 $formattedDate = $today->format("m/Y");
                 $total = $collection->filter(function ($value, $key) use ($tipoDoc, $formattedDate) {
@@ -119,11 +118,11 @@ class DashboardController extends Controller
                     $mes = $fecha->format("m/Y");
                     return $formattedDate == $mes && $tipoDoc == $value->tipoDoc;
                 })->sum("total");
-                $date = $formatter->format($today);
+                $date = $today->format("MMM");
                 if (count($days) < 6) {
                     $days[] = ucfirst($date);
                 }
-                $today->modify("+1 month");
+                $today->addMonth();
                 $data[] = number_format($total, 2, '.', '');
             }
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);
