@@ -180,19 +180,19 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.clienteService.delete(cliente.rucClient).pipe(
                     filter((response: HttpResponse<any>) => response.ok)
                 ).subscribe((response: HttpResponse<any>) => {
-                    this.showToast(`Cliente ${cliente.nombreClient} eliminado exitosamente`, 'Cliente Eliminado');
+                    this.showToast(`Cliente ${cliente.nombreClient} eliminado exitosamente`, 'Cliente Eliminado', true);
                     this.paginator.page.emit();
                 }, (res: HttpErrorResponse) => this.onError(res.message));
             }
         });
     }
 
-    showToast(mensaje: string, title: string) {
+    showToast(mensaje: string, title: string, success: boolean) {
         this.snackBar.openFromComponent(MensajeToast, {
-            duration: 3000,
+            duration: 5000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
-            panelClass: ['success-snackbar'],
+            panelClass: [success ? 'success-snackbar' : 'failure-snackbar'],
             announcementMessage: 'Esto es una prueba',
             data: {description: mensaje, title: title}
         });

@@ -16,12 +16,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { AppResponseBody } from 'app/shared/model/generic-model';
 import { MatDialog } from '@angular/material/dialog';
 import { UsuarioWindowComponent } from 'app/entities/usuario/usuario-window/usuario-window.component';
-import { Confirm } from 'app/mensaje/window.mensaje';
+import { Confirm, Information, MensajeToast } from 'app/mensaje/window.mensaje';
 import { ClienteService } from 'app/entities/cliente/cliente.service';
 import { IRol } from 'app/shared/model/rol.model';
 import { RolService } from 'app/entities/usuario/rol.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IDocumentoElectronico } from 'app/shared/model/documento-electronico.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'jhi-usuario',
@@ -48,7 +49,8 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
         protected activatedRoute: ActivatedRoute,
         protected accountService: AccountService,
         protected rolService: RolService,
-        protected dialog: MatDialog
+        protected dialog: MatDialog,
+        protected snackBar: MatSnackBar
     ) {
         this.formulario = new FormGroup({
             rucClient: new FormControl('', []),
@@ -66,8 +68,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 .subscribe((res: IRol[]) => {
                         this.roles = res;
                         this.rolService.setRoles(res);
-                    },
-                    (res: HttpErrorResponse) => this.onError(res.message)
+                    }, (res: HttpErrorResponse) => this.onError(res.message)
                 );
         else {
             this.roles = this.rolService.getRoles();
@@ -88,8 +89,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 (res: IUsuario[]) => {
                     this.isLoadingResults = false;
                     this.usuarios = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
+                }, (res: HttpErrorResponse) => this.onError(res.message)
             );
     }
 
@@ -196,9 +196,21 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.usuarioService.delete(usuario.idUsuario).pipe(
                     filter((response: HttpResponse<any>) => response.ok)
                 ).subscribe((response: HttpResponse<any>) => {
+                    this.showToast(`Cliente ${usuario.nombUsuario} eliminado exitosamente`, 'Usuario Eliminado', true);
                     this.paginator.page.emit();
                 }, (res: HttpErrorResponse) => this.onError(res.message));
             }
+        });
+    }
+
+    showToast(mensaje: string, title: string, success: boolean) {
+        this.snackBar.openFromComponent(MensajeToast, {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: [success ? 'success-snackbar' : 'failure-snackbar'],
+            announcementMessage: 'Esto es una prueba',
+            data: {description: mensaje, title: title}
         });
     }
 
