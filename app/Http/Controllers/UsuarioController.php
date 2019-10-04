@@ -51,7 +51,8 @@ class UsuarioController extends Controller
     {
         $usuario = new Usuario();
         $data = $request->only($usuario->getFillable());
-        $lastUser = DB::table('fe_usuario')->latest()->first();
+//        $lastUser = DB::table('fe_usuario')->latest()->first();
+        $lastUser = DB::table('fe_usuario')->latest('idUsuario')->first();
         $data["idRoles"] = $request->rol['idRoles'];
         $lastId = $lastUser->idUsuario;
         $data["idUsuario"] = $lastId + 1;
