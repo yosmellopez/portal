@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { IUsuario, Usuario } from 'app/shared/model/usuario.model';
-import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IRol, Rol } from 'app/shared/model/rol.model';
 import { RolService } from 'app/entities/usuario/rol.service';
 import { filter, map, takeUntil } from 'rxjs/operators';
@@ -70,8 +70,7 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
                 .subscribe((res: IRol[]) => {
                         this.roles = res;
                         this.rolService.setRoles(res);
-                    },
-                    (res: HttpErrorResponse) => this.onError(res.message)
+                    }, (res: HttpErrorResponse) => this.onError(res.message)
                 );
         else {
             this.roles = this.rolService.getRoles();
@@ -87,8 +86,7 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
                         this.clientes = res;
                         this.clientService.setClientes(res);
                         this.filteredClientes.next(this.clientes.slice());
-                    },
-                    (res: HttpErrorResponse) => this.onError(res.message)
+                    }, (res: HttpErrorResponse) => this.onError(res.message)
                 );
         } else {
             this.clientes = clientesTemp;
@@ -121,7 +119,7 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
                 filter((res: HttpResponse<IUsuario>) => res.ok),
                 map((res: HttpResponse<IUsuario>) => res.body))
                 .subscribe((res: IUsuario) => {
-                    this.showToast(`Usuario ${usuario.nombUsuario} guardado correctamente`, 'Información');
+                    this.showToast(`Usuario ${usuario.nombUsuario} guardado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
                 }, (res: HttpErrorResponse) => this.onError(res.message));
         } else {
@@ -130,7 +128,7 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
                 filter((res: HttpResponse<IUsuario>) => res.ok),
                 map((res: HttpResponse<IUsuario>) => res.body))
                 .subscribe((res: IUsuario) => {
-                    this.showToast(`Usuario ${usuario.nombUsuario} actualizado correctamente`, 'Información');
+                    this.showToast(`Usuario ${usuario.nombUsuario} actualizado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
                 }, (res: HttpErrorResponse) => this.onError(res.message));
         }
@@ -152,12 +150,12 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
         return null;
     }
 
-    showToast(mensaje: string, title: string) {
+    showToast(mensaje: string, title: string, success: boolean) {
         this.snackBar.openFromComponent(MensajeToast, {
-            duration: 3000,
+            duration: 5000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
-            panelClass: ['success-snackbar'],
+            panelClass: [success ? 'success-snackbar' : 'failure-snackbar'],
             announcementMessage: 'Esto es una prueba',
             data: {description: mensaje, title: title}
         });

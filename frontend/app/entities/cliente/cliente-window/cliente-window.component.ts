@@ -58,7 +58,7 @@ export class ClienteWindowComponent implements OnInit {
                 filter((res: HttpResponse<ICliente>) => res.ok),
                 map((res: HttpResponse<ICliente>) => res.body))
                 .subscribe((res: ICliente) => {
-                    this.showToast(`Cliente ${cliente.nombreClient} guardado correctamente`, 'Información');
+                    this.showToast(`Cliente ${cliente.nombreClient} guardado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
                 }, (res: HttpErrorResponse) => this.onError(res.message));
         } else {
@@ -67,7 +67,7 @@ export class ClienteWindowComponent implements OnInit {
                 filter((res: HttpResponse<ICliente>) => res.ok),
                 map((res: HttpResponse<ICliente>) => res.body))
                 .subscribe((res: ICliente) => {
-                    this.showToast(`Cliente ${cliente.nombreClient} actualizado correctamente`, 'Información');
+                    this.showToast(`Cliente ${cliente.nombreClient} actualizado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
                 }, (res: HttpErrorResponse) => this.onError(res.message));
         }
@@ -77,18 +77,18 @@ export class ClienteWindowComponent implements OnInit {
         return inicio && fin && inicio.idRoles === fin.idRoles;
     }
 
-    showToast(mensaje: string, title: string) {
+    showToast(mensaje: string, title: string, success: boolean) {
         this.snackBar.openFromComponent(MensajeToast, {
-            duration: 3000,
+            duration: 5000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
-            panelClass: ['success-snackbar'],
+            panelClass: [success ? 'success-snackbar' : 'failure-snackbar'],
             announcementMessage: 'Esto es una prueba',
             data: {description: mensaje, title: title}
         });
     }
 
     protected onError(errorMessage: string) {
-        // this.jhiAlertService.error(errorMessage, null, null);
+        this.showToast(errorMessage, 'Error', false);
     }
 }

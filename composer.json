@@ -23,7 +23,6 @@
     "filp/whoops": "~2.0",
     "fzaninotto/faker": "~1.4",
     "mockery/mockery": "~1.0",
-    "heroku/heroku-buildpack-php": "*",
     "phpunit/phpunit": "~6.0",
     "symfony/thanks": "^1.0"
   },
@@ -63,10 +62,7 @@
     ],
     "post-install-cmd": [
       "php artisan clear-compiled",
-      "php artisan optimize",
-      "npm install",
-      "npm run build",
-      "bower install --production"
+      "php artisan optimize"
     ]
   },
   "config": {
