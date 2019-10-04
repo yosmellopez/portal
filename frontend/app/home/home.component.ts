@@ -44,8 +44,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     public lineChartData: ChartDataSets[] = [
         {data: [65, 59, 80, 81, 56, 55, 40], label: 'Facturas'},
-        // {data: [28, 48, 40, 19, 86, 27, 90], label: 'Boletas'},
-        // {data: [180, 480, 770, 90, 1000, 270, 400], label: 'Notas de Crédito', yAxisID: 'y-axis-1'}
     ];
     public lineChartLabels: Label[] = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'];
     public lineChartColors: Color[] = [{ // grey
@@ -139,6 +137,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     protected onError(errorMessage: string) {
+        this.isLoadingResults = false;
     }
 
     isAuthenticated() {
@@ -240,7 +239,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.isLoadingResults = false;
             this.lineChartLabels = timeData.columns;
             this.lineChartData = timeData.documentos;
-        });
+        }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     public mensual() {
@@ -250,7 +249,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.isLoadingResults = false;
             this.lineChartLabels = timeData.columns;
             this.lineChartData = timeData.documentos;
-        });
+        }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     public anual(): void {
@@ -260,6 +259,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.isLoadingResults = false;
             this.lineChartLabels = timeData.columns;
             this.lineChartData = timeData.documentos;
-        });
+        }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 }
