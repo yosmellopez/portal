@@ -1,13 +1,66 @@
-<!doctype html> <html class="no-js" lang="en" dir="ltr"> <head> <base href="/"/> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Portal</title> <meta name="description" content="Description for Portal"> <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"> <meta name="theme-color" content="#000000"> <link rel="shortcut icon" href="favicon.ico"/> <link rel="manifest" href="manifest.webapp"/> <link rel="stylesheet" href="content/css/loading.css"> <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <link href="content/main.e1f2914aa409a8f588f2.css" rel="stylesheet"><link href="content/global.089291f2f786f9b76f33.css" rel="stylesheet"></head> <body> <!--[if lt IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]--> <jhi-main> <div class="app-loading"> <div class="lds-css ng-scope"> <div class="lds-pacman"> <div> <div></div> <div></div> <div></div> </div> <div> <div></div> <div></div> <div></div> </div> </div> <div class="loader"> <svg class="circular" viewBox="25 25 50 50"> <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/> </svg> </div> </div> </div> <div class="app-loading"> <div id="jhipster-error" style="display:none"> <h1>An error has occurred :-(</h1> <h2>Usual error causes</h2> <ol> <li>You started the application from an IDE and you didn't run <code style="color:red">npm start</code> or <code style="color:red">npm run webpack:build</code>.</li> <li>You had a network error while running <code style="color:red">npm install</code>. If you are behind a corporate proxy, it is likely that this error was caused by your proxy. Have a look at the JHipster error logs, you will probably have the cause of the error. </li> <li>You installed a Node.js version that doesn't work with JHipster: please use an LTS (long-term support) version, as it's the only version we support.</li> </ol> <h2>Building the client side code again</h2> <p>If you want to go fast, run <code style="color:red">./mvnw</code> to build and run everything.</p> <p>If you want to have more control, so you can debug your issue more easily, you should follow the following steps:</p> <ol> <li>Install npm dependencies with the command <code style="color:red">npm install</code></li> <li>Build the client with the command <code style="color:red">npm run webpack:build</code> or <code style="color:red">npm start</code></li> <li>Start the server with <code style="color:red">./mvnw</code> or using your IDE</li> </ol> <h2>Getting more help</h2> <h3>If you have a question on how to use JHipster</h3> <p> Go to Stack Overflow with the <a href="http://stackoverflow.com/tags/jhipster" target="_blank" rel="noopener noreferrer">"jhipster"</a> tag. </p> <h3>If you have a bug or a feature request</h3> <p> First read our <a href="https://github.com/jhipster/generator-jhipster/blob/master/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">contributing guidelines</a>. </p> <p> Then, fill a ticket on our <a href="https://github.com/jhipster/generator-jhipster/issues/new/choose" target="_blank" rel="noopener noreferrer">bug tracker</a>, we'll be happy to resolve your issue! </p> <h3>If you want to chat with contributors and other users</h3> <p> Join our chat room on <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">Gitter.im</a>. Please note that this is a public chat room, and that we expect you to respect other people and write in a correct English language! </p> </div> </div> </jhi-main> <noscript> <h1>You must enable javascript to view this page.</h1> </noscript> <script language="javascript"> // show an error message if the app loading takes more than 5 sec
-            window.onload = function () {
-                setTimeout(showError, 4000);
-            }
+<!doctype html> <html class="no-js" lang="en" dir="ltr"> <head> <base href="/"/> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Portal</title> <meta name="description" content="Description for Portal"> <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"> <meta name="theme-color" content="#000000"> <link rel="shortcut icon" href="favicon.ico"/> <link rel="manifest" href="manifest.webapp"/> <link rel="stylesheet" href="content/css/loading.css"> <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <style type="text/css"> body, html {
+                                height: 90%;
+                        }
 
-            function showError() {
-                var errorElm = document.getElementById("jhipster-error");
-                if (errorElm && errorElm.style) {
-                    errorElm.style.display = "block";
-                }
-            } </script> <script type="text/javascript" src="app/polyfills.07217220383917ffcb6f.bundle.js"></script><script type="text/javascript" src="app/main.07217220383917ffcb6f.bundle.js"></script><script type="text/javascript" src="app/global.07217220383917ffcb6f.bundle.js"></script></body> </html>
+                        .app-loading {
+                                position: relative;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+                                height: 100%;
+                        }
+
+                        .app-loading .spinner {
+                                height: 200px;
+                                width: 200px;
+                                animation: rotate 1s linear infinite;
+                                transform-origin: center center;
+                                position: absolute;
+                                top: 0;
+                                bottom: 0;
+                                left: 0;
+                                right: 0;
+                                margin: auto;
+                        }
+
+                        .app-loading .spinner .path {
+                                stroke-dasharray: 1, 200;
+                                stroke-dashoffset: 0;
+                                animation: dash 1.5s ease-in-out infinite;
+                                stroke-linecap: round;
+                                stroke: #039be5;
+                        }
+
+                        @keyframes rotate {
+                                100% {
+                                        transform: rotate(360deg);
+                                }
+                        }
+
+                        @keyframes dash {
+                                0% {
+                                        stroke-dasharray: 1, 200;
+                                        stroke-dashoffset: 0;
+                                }
+                                50% {
+                                        stroke-dasharray: 89, 200;
+                                        stroke-dashoffset: -35px;
+                                }
+                                100% {
+                                        stroke-dasharray: 89, 200;
+                                        stroke-dashoffset: -124px;
+                                }
+                        } </style> <link href="content/main.188c475b7be8e361854b.css" rel="stylesheet"><link href="content/global.e9c75d98ca8e11146fba.css" rel="stylesheet"></head> <body> <!--[if lt IE 9]>
+                <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+                <![endif]--> <jhi-main> <div class="app-loading"> <div class="applogo"></div> <svg class="spinner" viewBox="25 25 50 50"> <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="1" stroke-miterlimit="10"/> </svg> </div> </jhi-main> <noscript> <h1>You must enable javascript to view this page.</h1> </noscript> <script language="javascript"> // show an error message if the app loading takes more than 5 sec
+                        window.onload = function () {
+                                setTimeout(showError, 4000);
+                        }
+
+                        function showError() {
+                                var errorElm = document.getElementById("jhipster-error");
+                                if (errorElm && errorElm.style) {
+                                        errorElm.style.display = "block";
+                                }
+                        } </script> <script type="text/javascript" src="app/polyfills.1c18e835bdcced342d91.bundle.js"></script><script type="text/javascript" src="app/main.1c18e835bdcced342d91.bundle.js"></script><script type="text/javascript" src="app/global.1c18e835bdcced342d91.bundle.js"></script></body> </html>
