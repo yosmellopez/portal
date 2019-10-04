@@ -1,0 +1,32 @@
+.mat-dialog-actions {
+  padding-bottom: 15px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.spacer-right {
+  margin-right: 50px;
+}
+
+.card-actions button:first-child {
+  margin-right: 5px;
+}
+
+.close-button {
+  float: right;
+  clear: right;
+  position: relative;
+  right: -6px;
+  top: -7px;
+}
+
+mat-card-content {
+  min-height: 550px;
+}
+
+mat-paginator {
+  margin-right: 30px;
+}

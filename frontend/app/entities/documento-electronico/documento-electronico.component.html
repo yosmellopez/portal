@@ -1,0 +1,181 @@
+<div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner strokeWidth="2" diameter="70" *ngIf="isLoadingResults" color="primary"></mat-spinner>
+</div>
+<div>
+    <div class="row">
+        <div class="col-sm-11">
+            <h2 id="page-heading" style="font-size: 1.5rem;margin-bottom: 20px">
+                <span>{{tipoDocumento.title}}</span>
+            </h2>
+        </div>
+        <div class="col-sm-1">
+            <button mat-mini-fab color="primary" matTooltip="Exportar a PDF" matTooltipClass="apptooltip" (click)="exportarPDF()">
+                <mat-icon>picture_as_pdf</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" matTooltip="Exportar a Excel" matTooltipClass="apptooltip" (click)="exportarTabla()">
+                <mat-icon>file_download</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline" [formGroup]="formulario" (ngSubmit)="search()">
+                <mat-accordion style="width: 100%">
+                    <mat-expansion-panel style="width: 100%" #expansionPanel>
+                        <mat-expansion-panel-header style="background-color: #4fc3f7">
+                            <mat-panel-title>
+                                <mat-icon>search</mat-icon>
+                                Filtros de documentos
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Seleccione los filtros para aplicar
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="row pt-2">
+                            <div class="col-sm-4">
+                                <mat-form-field>
+                                    <input matInput placeholder="Estado Sunat" formControlName="estadoSunat" [matAutocomplete]="autoEstado">
+                                    <mat-autocomplete #autoEstado="matAutocomplete">
+                                        <mat-option *ngFor="let estado of estados" [value]="estado.estadoSunat|estado">
+                                            {{estado.estadoSunat|estado}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="fechaInicio" placeholder="Seleccione fecha inicio" formControlName="fechaEmisionInicio"
+                                                   [min]="minDate" [max]="selectedEndDate" [errorStateMatcher]="matcher">
+                                            <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                                            <mat-datepicker #fechaInicio></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="fechaFin" placeholder="Seleccione fecha fin" formControlName="fechaEmisionFin"
+                                                   [min]="selectedStartDate" [max]="maxDate" [errorStateMatcher]="matcher">
+                                            <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+                                            <mat-datepicker #fechaFin></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <mat-form-field>
+                                    <input type="text" placeholder="Tipo Moneda" matInput formControlName="monedaTransaccion" [matAutocomplete]="auto">
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let tipoMoneda of tiposMoneda" [value]="tipoMoneda.monedaTransaccion">
+                                            {{tipoMoneda.monedaTransaccion}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Número de RUC" formControlName="rucClient">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-4">
+                                <mat-form-field>
+                                    <input matInput placeholder="Número de Comprobante" formControlName="numSerie" [matAutocomplete]="autoSerie">
+                                    <mat-autocomplete #autoSerie="matAutocomplete">
+                                        <mat-option *ngFor="let serie of series" [value]="serie.serie">
+                                            {{serie.serie}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Número" formControlName="numero">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <mat-action-row class="table-actions-theme">
+                            <button mat-raised-button color="primary" type="submit">
+                                <mat-icon>search</mat-icon>
+                                Buscar
+                            </button>
+                            <button mat-raised-button color="warn" (click)="reset()">
+                                <mat-icon>clear_all</mat-icon>
+                                Limpiar campos
+                            </button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <kendo-pdf-export #pdf>
+            <mat-table [dataSource]="dataSource" matSort matSortActive="rucClient" matSortDirection="asc" matSortDisableClear matTableExporter #tableMat #exporter="matTableExporter" hiddenColumns="[5,6,7,8]">
+                <ng-container matColumnDef="rucCliente">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> RUC Cliente</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.rucClient}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="numSerie">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Número de Serie</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.numSerie}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="fecEmisionDoc">
+                    <mat-header-cell *matHeaderCellDef style="width: 20%" mat-sort-header> Fecha Emisión</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.fecEmisionDoc}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="estadoSunat">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Estado Sunat</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.estadoSunat|estado}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="center-block"> Total</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="center-block"> {{element.total | number:'1.2-3':'en-US' }} {{element.monedaTransaccion}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="docPdf">
+                    <mat-header-cell *matHeaderCellDef class="center-block"> PDF Documento</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="center-block table-actions-theme">
+                        <button mat-mini-fab color="primary" (click)="downloadDocument(element,'pdf')"
+                                matTooltip="Descargar pdf [{{element.numSerie}}]" matTooltipClass="apptooltip">
+                            <mat-icon>picture_as_pdf</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="docXml">
+                    <mat-header-cell *matHeaderCellDef class="center-block"> XML Documento</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="center-block">
+                        <button mat-mini-fab color="primary" (click)="downloadDocument(element,'xml')" class="btn-success-color"
+                                matTooltip="Descargar xml [{{element.numSerie}}]" matTooltipClass="apptooltip">
+                            <mat-icon>code</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="docCdr">
+                    <mat-header-cell *matHeaderCellDef class="center-block"> CDR Documento</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="center-block">
+                        <button mat-mini-fab color="primary" (click)="downloadDocument(element,'cdr')" class="btn-info-color"
+                                matTooltip="Descargar CDR [{{element.numSerie}}]" matTooltipClass="apptooltip">
+                            <mat-icon>archive</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="correo">
+                    <mat-header-cell *matHeaderCellDef class="center-block"> Reenvio de Correo</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="center-block">
+                        <button mat-mini-fab color="primary" (click)="sendEmail(element)" class="btn-warning-color"
+                                matTooltip="Reenviar correo del documento [{{element.numSerie}}]" matTooltipClass="apptooltip">
+                            <mat-icon>email</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row [ngClass]="{'danger-row': row.tipoTransaccion == 'B'}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </kendo-pdf-export>
+    </div>
+    <mat-paginator [length]="resultsLength" [pageSize]="15" [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+</div>

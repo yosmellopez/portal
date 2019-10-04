@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="documentoElectronico">
+            <h2><span>Documento Electronico</span> {{documentoElectronico.idDocumento}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Id Documento</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.idDocumento}}</span>
+                </dd>
+                <dt><span>Num Serie</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.numSerie}}</span>
+                </dd>
+                <dt><span>Fecha Emision</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.fecEmisionDoc}}</span>
+                </dd>
+                <dt><span>Tipo Documento</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.tipoDoc}}</span>
+                </dd>
+                <dt><span>Tipo Transaccion</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.tipoTransaccion}}</span>
+                </dd>
+                <dt><span>Total</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.total}}</span>
+                </dd>
+                <dt><span>Doc Pdf</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.docPdf}}</span>
+                </dd>
+                <dt><span>Doc Xml</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.docXml}}</span>
+                </dd>
+                <dt><span>Doc Cdr</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.docCdr}}</span>
+                </dd>
+                <dt><span>Ruc Cliente</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.rucClient}}</span>
+                </dd>
+                <dt><span>Estado Sunat</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.estadoSunat}}</span>
+                </dd>
+                <dt><span>Estado Web</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.estadoWeb}}</span>
+                </dd>
+                <dt><span>Moneda</span></dt>
+                <dd>
+                    <span>{{documentoElectronico.monedaTransaccion}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit" mat-raised-button color="primary"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/documento-electronico', documentoElectronico.idDocumento, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

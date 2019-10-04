@@ -1,0 +1,62 @@
+<form class="form" [formGroup]="formulario" (submit)="enviarDatos()">
+    <h1 mat-dialog-title style="margin: 0 0" draggable-dialog>{{nuevo ? 'Nuevo Usuario' : 'Modificar Usuario - ' + username}}
+        <button type="button" mat-icon-button class="close-button" (click)="cancel()">
+            <mat-icon style="font-size: 25px">close</mat-icon>
+        </button>
+        <hr>
+    </h1>
+    <!--    nombUsuario, email, estadoUsuario, rol-->
+    <div mat-dialog-content style="min-height: 100%;">
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre de Usuario" formControlName="nombUsuario">
+            <mat-error *ngIf="formulario.controls['nombUsuario'].errors?.required">Debe insertar un nombre de usuario</mat-error>
+        </mat-form-field>
+        <mat-form-field class="middle-width">
+            <input matInput type="password" placeholder="Contraseña del Usuario" formControlName="claveUsuario">
+            <mat-error *ngIf="formulario.controls['claveUsuario'].errors?.required">Debe introducir la contraseña del usuario</mat-error>
+            <mat-error *ngIf="formulario.controls['claveUsuario'].errors?.noigual">Las contrasenas no coinciden</mat-error>
+        </mat-form-field>
+        <mat-form-field class="middle-width">
+            <input matInput type="password" placeholder="Repetir Contraseña" formControlName="passwordRepeat">
+            <mat-error *ngIf="formulario.controls['passwordRepeat'].errors?.required">Debe repetir la contraseña del usuario</mat-error>
+            <mat-error *ngIf="formulario.controls['passwordRepeat'].errors?.noigual">Las contrasenas no coinciden</mat-error>
+        </mat-form-field>
+        <div class="row">
+            <div class="col-sm-5" style="margin-top: 10px">
+                <password-lenght [passwordToCheck]="formulario.controls['claveUsuario'].value"></password-lenght>
+            </div>
+            <div class="col-sm-7">
+                <mat-label style="margin-right: 10px">Estado Usuario</mat-label>
+                <mat-slide-toggle style="margin-top: -5px" formControlName="estadoUsuario">{{formulario.controls['estadoUsuario'].value ? 'Activo' : 'Desactivado'}}</mat-slide-toggle>
+            </div>
+        </div>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Correo" formControlName="email">
+            <mat-error *ngIf="formulario.controls['email'].errors?.required">Debe insertar un correo</mat-error>
+            <mat-error *ngIf="formulario.controls['email'].errors?.email">Debe insertar un correo válido</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Seleccione el cliente" formControlName="rucClient" #singleSelect [compareWith]="compararClientes">
+                <mat-select-search [formControl]="clientesFilterCtrl"></mat-select-search>
+                <mat-option *ngFor="let cliente of filteredClientes | async" [value]="cliente.rucClient">{{cliente|cliente}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formulario.controls['rucClient'].errors?.required">Debe seleccionar un cliente</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Rol en el Sistema" formControlName="rol" [compareWith]="compararRoles">
+                <mat-option *ngFor="let rol of roles" [value]="rol">{{rol|rol}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formulario.controls['rol'].errors?.required">Debe seleccionar un rol</mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="boton-theme" align="end">
+        <button type="submit" mat-raised-button cdkFocusInitial color="primary" [disabled]="this.formulario.invalid">
+            <mat-icon>check_circle</mat-icon>
+            {{nuevo ? 'Guardar' : 'Modificar'}}
+        </button>
+        <button type="button" mat-raised-button (click)="cancel()" color="warn">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</form>

@@ -1,0 +1,16 @@
+<h6 mat-dialog-title style="margin: 0 0">Confirmar {{accion}}</h6>
+<hr style="position: relative;top: -10px;background-color: gray;">
+<div mat-dialog-content>
+    <p style="font-size: 16px;margin-bottom: 0" [innerHtml]="description"></p>
+</div>
+<hr>
+<div mat-dialog-actions align="center" class="boton-theme">
+    <button mat-raised-button cdkFocusInitial (click)="confirmar(true)" color="primary">
+        <mat-icon>check_circle</mat-icon>
+        Aceptar
+    </button>
+    <button mat-raised-button (click)="confirmar(false)" color="warn">
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+    </button>
+</div>

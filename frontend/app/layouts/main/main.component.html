@@ -1,0 +1,23 @@
+<!--<jhi-page-ribbon></jhi-page-ribbon>-->
+<div class="wrapper" *ngIf="auth.isAuthenticated()">
+    <div class="sidebar" data-color="azure" data-background-color="white">
+        <jhi-sidebar></jhi-sidebar>
+        <div class="sidebar-background"></div>
+    </div>
+    <div class="main-panel" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto" style="padding-left: 300px">
+        <perfect-scrollbar [scrollIndicators]="true" [config]="config">
+            <div>
+                <router-outlet name="navbar"></router-outlet>
+            </div>
+            <div class="container-fluid">
+                <div class="card jh-card" style="min-height: 700px">
+                    <router-outlet #outlet="outlet"></router-outlet>
+                    <router-outlet name="popup"></router-outlet>
+                </div>
+                <jhi-footer></jhi-footer>
+            </div>
+        </perfect-scrollbar>
+    </div>
+</div>
+<jhi-signin *ngIf="!auth.isAuthenticated()"></jhi-signin>
+<!-- Buy-Modal-angular -->

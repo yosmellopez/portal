@@ -1,0 +1,88 @@
+.close-button {
+    float: right;
+    clear: right;
+    position: relative;
+    right: -6px;
+    top: -7px;
+}
+
+.example-card {
+    max-width: 100%;
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+table {
+    width: 100%;
+}
+
+.fab-button {
+    position: absolute;
+    left: 50px;
+    bottom: 22%;
+}
+
+mat-form-field {
+    min-width: 100%;
+}
+
+.example-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.example-rate-limit-reached {
+    color: #980000;
+    max-width: 360px;
+    text-align: center;
+}
+
+button mat-icon {
+    font-size: 21px;
+}
+
+.contenido-alineado mat-icon + h1 {
+    display: inline-block;
+    font-size: 20px;
+}
+
+.contenido-alineado, .contenido-alineado h6 {
+    min-height: 30px;
+    padding: 5px 24px;
+}
+
+.example-full-height {
+    height: 100%;
+}
+
+.contenido-alineado mat-icon {
+    position: relative;
+    top: 10px;
+    margin-right: 20px;
+    font-size: 35px;
+}
+
+.mat-snack-bar-container {
+    padding: 0;
+}
+
+.md-30 {
+    font-size: 30px;
+}
+
+mat-icon {
+    position: relative;
+    top: 0;
+}

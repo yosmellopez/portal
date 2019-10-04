@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="usuario">
+            <h2><span>Usuario</span> {{usuario.idUsuario}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Nombre</span></dt>
+                <dd>
+                    <span>{{usuario.nombUsuario}}</span>
+                </dd>
+                <dt><span>Correo</span></dt>
+                <dd>
+                    <span>{{usuario.email}}</span>
+                </dd>
+                <dt><span>RUC Cliente</span></dt>
+                <dd>
+                    <span>{{usuario.rucClient}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit" mat-raised-button color="primary"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/usuario', usuario.idUsuario, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<form class="form" [formGroup]="formulario" (submit)="enviarDatos()">
+    <h1 mat-dialog-title style="margin: 0 0" draggable-dialog>{{nuevo ? 'Nuevo Cliente' : 'Modificar Cliente '}}
+        <button type="button" mat-icon-button class="close-button" (click)="cancel()">
+            <mat-icon style="font-size: 25px">close</mat-icon>
+        </button>
+        <hr>
+    </h1>
+    <div mat-dialog-content style="min-height: 100%;">
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre del Cliente" formControlName="nombreClient">
+            <mat-error *ngIf="formulario.controls['nombreClient'].errors?.required">Debe introducir el nombre del cliente</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Correo" formControlName="email">
+            <mat-error *ngIf="formulario.controls['email'].errors?.required">Debe introducir un correo</mat-error>
+            <mat-error *ngIf="formulario.controls['email'].errors?.email">Debe introducir un correo válido</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="RUC Cliente" formControlName="rucClient" type="number">
+            <mat-error *ngIf="formulario.controls['rucClient'].errors?.required">Debe introducir un número de RUC</mat-error>
+        </mat-form-field>
+        <div class="row" style="padding: 0 0 15px 15px">
+            <mat-label>Estado Cliente</mat-label>
+            <mat-slide-toggle class="col-sm-6" formControlName="estadoCliente">{{formulario.controls['estadoCliente'].value == 1 ? 'Activo' : 'Desactivado'}}</mat-slide-toggle>
+        </div>
+        <mat-form-field class="full-width">
+            <textarea matInput placeholder="Dirección del Cliente" formControlName="direccionClient"></textarea>
+            <mat-error *ngIf="formulario.controls['direccionClient'].errors?.required">Debe introducir la dirección del cliente.</mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="boton-theme" align="end">
+        <button type="submit" mat-raised-button cdkFocusInitial color="primary">
+            <mat-icon>check_circle</mat-icon>
+            {{nuevo ? 'Guardar' : 'Modificar'}}
+        </button>
+        <button type="button" mat-raised-button (click)="cancel()" color="warn">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</form>

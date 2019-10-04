@@ -1,0 +1,23 @@
+/* after changing this file run 'npm run webpack:build' */
+
+/***************************
+put Sass variables here:
+eg $input-color: red;
+****************************/
+@import '~@angular/material/theming';
+
+@include mat-core();
+// Define an alternate dark theme.
+$dark-primary: mat-palette($mat-green, 900);
+$dark-accent: mat-palette($mat-blue, A700);
+$dark-warn: mat-palette($mat-red, 900);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+$table-primary: mat-palette($mat-green, 900);
+$table-accent: mat-palette($mat-orange, 800);
+$table-warn: mat-palette($mat-red, 900);
+$table-theme: mat-light-theme($table-primary, $table-accent, $table-warn);
+
+.table-actions-theme {
+    @include angular-material-theme($table-theme);
+}

@@ -1,0 +1,52 @@
+<div class="modal-header white-button">
+    <h4 class="modal-title">Inicio de sesión</h4>
+    <a (click)="cancel()">
+        <mat-icon style="font-size: 25px">close</mat-icon>
+    </a>
+</div>
+<div class="modal-body">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication">
+                <strong>Inicio de sesión fallida! </strong> Por favor chequee sus credenciales e intente de nuevo.
+            </div>
+        </div>
+        <div class="col-md-12">
+            <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
+                <div class="row margin">
+                    <div class="col s10" style="position: relative;top: -15px;">
+                        <mat-form-field class="full-width" style="width: 95%">
+                            <input matInput placeholder="Usuario" formControlName="nombUsuario" id="username" #username>
+                            <mat-error *ngIf="loginForm.controls['nombUsuario'].errors?.required">Debe insertar el nombre de usuario</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row margin">
+                    <div class="col s10" style="position: relative;top: -15px;">
+                        <mat-form-field class="full-width" style="width: 95%">
+                            <input matInput placeholder="Contraseña" formControlName="claveUsuario" type="password" #password>
+                            <mat-error *ngIf="loginForm.controls['claveUsuario'].errors?.required">Debe proporcionar una contraseña</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label" for="rememberMe">
+                        <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                </div>
+                <div class="row margin">
+                    <div class="col s10 login-success-color" style="position: relative;top: -15px;">
+                        <button type="submit" mat-raised-button color="primary" class="col s10" style="height: 50px;font-size: 17px" [disabled]="loginForm.invalid">
+                            Iniciar sesión
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <p></p>
+            <div class="alert alert-warning">
+                <a class="alert-link" (click)="requestResetPassword()">¿Ha olvidado su contraseña?</a>
+            </div>
+        </div>
+    </div>
+</div>

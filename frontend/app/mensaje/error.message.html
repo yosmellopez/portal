@@ -1,0 +1,19 @@
+<h1 mat-dialog-title style="margin: 0 0">
+    <mat-icon color="warn" style="float: left;clear:right;position:relative;left:-10px;top: -2px;font-size: 35px;">error</mat-icon>
+    <span style="margin-left: 5px;">Error</span>
+    <button mat-icon-button class="close-button" (click)="cerrarDialog()">
+        <mat-icon style="font-size: 25px">close</mat-icon>
+    </button>
+    <hr>
+</h1>
+<div mat-dialog-content class="contenido-alineado">
+    <h6 mat-dialog-content style="text-align: center">{{data.mensaje}}</h6>
+</div>
+<div mat-dialog-actions align="center">
+    <span class="example-spacer"></span>
+    <button color="primary" mat-raised-button cdkFocusInitial (click)="cerrarDialog()">
+        <mat-icon>check_circle</mat-icon>
+        Aceptar
+    </button>
+    <span class="example-spacer"></span>
+</div>

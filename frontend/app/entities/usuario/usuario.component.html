@@ -1,0 +1,113 @@
+<div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner strokeWidth="2" diameter="70" *ngIf="isLoadingResults" color="primary"></mat-spinner>
+</div>
+<div>
+    <div class="col-sm-11">
+        <h2 id="page-heading" style="font-size: 1.5rem;margin-bottom: 20px">
+            <span>Usuarios</span>
+            <button mat-raised-button color="primary" id="jh-create-entity" class="float-right jh-create-entity create-usuario" (click)="createUsuario()">
+                <fa-icon [icon]="'plus'"></fa-icon>
+                <span class="hidden-sm-down">
+            Nuevo Usuario
+            </span>
+            </button>
+        </h2>
+    </div>
+    <div class="col-sm-12">
+        <form name="searchForm" class="form-inline" [formGroup]="formulario" (ngSubmit)="search()">
+            <mat-accordion style="width: 100%">
+                <mat-expansion-panel style="width: 100%" #expansionPanel>
+                    <mat-expansion-panel-header style="background-color: #4fc3f7">
+                        <mat-panel-title>
+                            <mat-icon>search</mat-icon>
+                            Filtros de usuarios
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Seleccione los filtros para aplicar
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row pt-2">
+                        <div class="col-sm-3">
+                            <mat-form-field>
+                                <input matInput placeholder="Nombre de Usuario" formControlName="nombUsuario">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field>
+                                <input matInput placeholder="Número de RUC" formControlName="rucClient">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field>
+                                <input matInput placeholder="Correo" formControlName="email">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field>
+                                <mat-select matInput placeholder="Rol en el Sistema" formControlName="rol">
+                                    <mat-option *ngFor="let rol of roles" [value]="rol.idRoles">{{rol|rol}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <mat-action-row class="table-actions-theme">
+                        <button mat-raised-button color="primary" type="submit">
+                            <mat-icon>search</mat-icon>
+                            Buscar
+                        </button>
+                        <button mat-raised-button color="warn" (click)="reset()">
+                            <mat-icon>clear_all</mat-icon>
+                            Limpiar campos
+                        </button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+    </div>
+    <div class="alert alert-warning" *ngIf="usuarios?.length === 0">
+        <span>No se encontraron usuarios</span>
+    </div>
+    <div class="table-responsive">
+        <mat-table [dataSource]="dataSource" matSort matSortActive="rucClient" matSortDirection="asc" matSortDisableClear>
+
+            <ng-container matColumnDef="nombUsuario">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Usuario</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.nombUsuario}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="rucClient">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> RUC Cliente</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.rucClient}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Correo</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="rol">
+                <mat-header-cell *matHeaderCellDef> Rol</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.rol | rol}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef class="center-block"> Acciones</mat-header-cell>
+                <mat-cell *matCellDef="let element" class="center-block table-actions-theme">
+                    <button mat-mini-fab color="primary" (click)="editUsuario(element)"
+                            matTooltip="Editar Usuario [{{element.nombUsuario}}]" matTooltipClass="apptooltip">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="warn" (click)="deleteUsuario(element)"
+                            matTooltip="Eliminar Usuario [{{element.nombUsuario}}]" matTooltipClass="apptooltip">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="resultsLength" [pageSize]="15" [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>

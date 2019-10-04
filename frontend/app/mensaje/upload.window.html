@@ -1,0 +1,29 @@
+<h1 mat-dialog-title style="margin: 0 0">
+    <mat-icon color="primary" style="float: left;clear:right;position:relative;left:-10px;top: -2px;font-size: 35px;">info</mat-icon>
+    <button mat-icon-button class="close-button" (click)="cerrarDialog()">
+        <mat-icon style="font-size: 25px">close</mat-icon>
+    </button>
+    <span style="margin-left: 5px;">Subir Archivos</span>
+    <hr>
+</h1>
+<div mat-dialog-content>
+    <mat-dialog-content fxFlex>
+        <mat-list>
+            <mat-list-item *ngFor="let archivo of archivos">
+                <h4 mat-line>{{archivo.name}}</h4>
+                <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[archivo.name].progress | async"></mat-progress-bar>
+            </mat-list-item>
+        </mat-list>
+    </mat-dialog-content>
+</div>
+<div mat-dialog-actions align="center">
+    <span class="spacer"></span>
+    <button color="primary" mat-raised-button cdkFocusInitial (click)="subirArchivos()">
+        <mat-icon>file_upload</mat-icon>
+        Subir Archivos
+    </button>
+    <button type="button" mat-raised-button (click)="cerrarDialog()" color="warn">
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+    </button>
+</div>
