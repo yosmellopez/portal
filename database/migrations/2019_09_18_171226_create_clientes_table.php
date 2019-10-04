@@ -14,7 +14,7 @@ class CreateClientesTable extends Migration
     public function up()
     {
         Schema::table('fe_cliente', function (Blueprint $table) {
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 
