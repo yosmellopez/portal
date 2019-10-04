@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entity\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Matriphe\Md5Hash\Md5Hash;
 
@@ -50,7 +51,10 @@ class UsuarioController extends Controller
     {
         $usuario = new Usuario();
         $data = $request->only($usuario->getFillable());
+        $lastUser = DB::table('fe_usuario')->latest()->first();
         $data["idRoles"] = $request->rol['idRoles'];
+        $lastId = $lastUser->idUsuario;
+        $data["idUsuario"] = $lastId + 1;
         $hash = new Md5Hash();
         $data["claveUsuario"] = $hash->make($data["claveUsuario"]);
         $usuario->fill($data)->save();
