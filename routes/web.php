@@ -30,6 +30,7 @@ Route::get('/{view}/{path}/{resource}/{element}', function () {
     return view('welcome');
 });
 Route::get('download/{idDocumento}', 'FilesController@downloadDocument');
+Route::post('/upload', 'FilesController@upload');
 Route::get('/mailable', function () {
     $documento = Documento::find(1);
     return new DocumentoMail($documento);

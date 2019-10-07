@@ -11,15 +11,27 @@
     "skipLibCheck": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "public",
-    "lib": ["es7", "dom"],
-    "typeRoots": ["node_modules/@types"],
+    "lib": [
+      "es7",
+      "dom"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "baseUrl": "./",
     "paths": {
-      "app/*": ["frontend/app/*"]
+      "app/*": [
+        "frontend/app/*"
+      ]
     },
     "importHelpers": true,
     "allowJs": true
   },
-  "include": ["frontend/app"],
-  "exclude": ["node_modules"]
+  "include": [
+    "frontend/app"
+  ],
+  "exclude": [
+    "node_modules",
+    "vendor"
+  ]
 }

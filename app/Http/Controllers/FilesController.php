@@ -15,46 +15,20 @@ class FilesController extends Controller
      */
     public function upload(Request $request)
     {
-        $this->validate($request, [
-            'primero' => 'required',
-            'segundo' => 'required',
-        ]);
         if ($request->hasFile('primero')) {
-            $file = $request->file('primero');
-//            $filename = $file->getClientOriginalName();
-//            $extension = $file->getClientOriginalExtension();
-//dd($check);
-//            foreach ($request->photos as $photo) {
-            $filename = $file->store('documentos');
-//                ItemDetail::create([
-//                    'item_id' => $items->id,
-//                    'filename' => $filename
-//                ]);
-//            }
-            echo "Upload Successfully";
 
-//                $uploadedFile = $request->file('documento');
-//                $filename = time() . $uploadedFile->getClientOriginalName();
-//
-//                Storage::disk('local')->putFileAs(
-//                    'files/' . $filename,
-//                    $uploadedFile,
-//                    $filename
-//                );
-//                var_dump($uploadedFile->path());
-//                $allElements = $request->all();
-//                if ($request->hasFile('documento')) {
-//                    if ($request->file('documento')->isValid()) {
-//                        $path = $request->documento->store('documento');
-//                        var_dump($path);
-//                        return response()->json(array("message" => "El documento se subio supuestamente sin problemas."));
-//                    } else {
-//                        return response()->json(array("message" => "El documento no es valido"));
-//                    }
-//                } else {
-//                    return response()->json(array("message", "Esto es porque no habia documento", "respuesta" => $allElements));
-//                }
+            $uploadedFile = $request->file('primero');
+            $filename = time() . $uploadedFile->getClientOriginalName();
+
+            Storage::disk('custom')->putFileAs(
+                $filename,
+                $uploadedFile,
+                $filename
+            );
+            var_dump($uploadedFile->path());
+            return response()->json(array("mensaje" => "Habia un elemento"), 200);
         }
+        return response()->json(array("mensaje" => "NO habia datos"), 204);
     }
 
     public function downloadDocument(Request $request, $idDocumento)
