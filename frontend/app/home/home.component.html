@@ -9,7 +9,7 @@
             </h2>
         </div>
         <div class="row">
-            <div class="card col-sm-12">
+            <div class="card col-sm-12" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTOR']">
                 <div class="card-header-success">
                     <h4 class="card-title">Comportamientos de los documentos emitidos {{ tiempo }}.</h4>
                 </div>

@@ -75,7 +75,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <mat-form-field>
-                                    <input matInput placeholder="Número de Comprobante" formControlName="numSerie" [matAutocomplete]="autoSerie">
+                                    <input matInput placeholder="Serie de Comprobante" formControlName="numSerie" [matAutocomplete]="autoSerie">
                                     <mat-autocomplete #autoSerie="matAutocomplete">
                                         <mat-option *ngFor="let serie of series" [value]="serie.serie">
                                             {{serie.serie}}
@@ -83,7 +83,7 @@
                                     </mat-autocomplete>
                                 </mat-form-field>
                                 <mat-form-field>
-                                    <input matInput placeholder="Número" formControlName="numero">
+                                    <input matInput placeholder="Número de Comprobante" formControlName="numero">
                                 </mat-form-field>
                             </div>
                         </div>
