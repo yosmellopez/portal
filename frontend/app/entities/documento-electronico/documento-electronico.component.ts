@@ -283,7 +283,8 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     }
 
     reset() {
-        this.formulario.reset();
+        this.formulario.reset(this.initCurrentSearch);
+        this.currentSearch = this.initCurrentSearch;
     }
 
     registerChangeInDocumentoElectronicos() {
