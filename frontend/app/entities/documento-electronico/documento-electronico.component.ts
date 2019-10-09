@@ -53,7 +53,8 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     dataSource: MatTableDataSource<IDocumentoElectronico> = new MatTableDataSource<IDocumentoElectronico>([]);
     currentAccount: any;
     eventSubscriber: Subscription;
-    currentSearch: string;
+    currentSearch: { rucClient: '', numSerie: '', numero: '', fechaEmisionInicio: any, fechaEmisionFin: any, estadoSunat: '', monedaTransaccion: '', tipoDoc: any };
+    initCurrentSearch: { rucClient: '', numSerie: '', numero: '', fechaEmisionInicio: any, fechaEmisionFin: any, estadoSunat: '', monedaTransaccion: '', tipoDoc: any };
     tipoDocumento: TipoDocumento = {tipo: 'factura', title: 'Facturas'};
     resultsLength = 0;
     isLoadingResults = true;
@@ -84,7 +85,6 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         protected snackBar: MatSnackBar
     ) {
         this.downloadStatus = new EventEmitter<ProgressStatus>();
-        this.currentSearch = this.activatedRoute.snapshot && this.activatedRoute.snapshot.params['search'] ? this.activatedRoute.snapshot.params['search'] : '';
         this.formulario = new FormGroup({
             rucClient: new FormControl('', []),
             numSerie: new FormControl('', []),
@@ -106,6 +106,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
                 this.selectedEndDate = new Date(fecha.year, fecha.month, fecha.date);
             }
         });
+        this.currentSearch = this.initCurrentSearch;
     }
 
     loadAll() {
@@ -175,16 +176,15 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     search() {
         this.isLoadingResults = true;
         const values = this.formulario.value;
-        console.log(values);
-        let searchValues = {...values};
+        this.currentSearch = {...values};
         if (values.fechaEmisionInicio) {
-            searchValues.fechaEmisionInicio = this.datePipe.transform(values.fechaEmisionInicio, 'dd/MM/yyyy');
+            this.currentSearch.fechaEmisionInicio = this.datePipe.transform(values.fechaEmisionInicio, 'dd/MM/yyyy');
         }
         if (values.fechaEmisionFin) {
-            searchValues.fechaEmisionFin = this.datePipe.transform(values.fechaEmisionFin, 'dd/MM/yyyy');
+            this.currentSearch.fechaEmisionFin = this.datePipe.transform(values.fechaEmisionFin, 'dd/MM/yyyy');
         }
-        searchValues.tipoDoc = this.tipoDocumento.tipo;
-        this.documentoElectronicoService.search(searchValues).pipe(
+        this.currentSearch.tipoDoc = this.tipoDocumento.tipo;
+        this.documentoElectronicoService.search(this.currentSearch).pipe(
             filter((res: HttpResponse<IDocumentoElectronico[]>) => res.ok),
             map((res: HttpResponse<IDocumentoElectronico[]>) => res.body)
         ).subscribe((data: IDocumentoElectronico[]) => {
@@ -196,7 +196,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     }
 
     clear() {
-        this.currentSearch = '';
+        this.currentSearch = this.initCurrentSearch;
         this.loadAll();
     }
 
