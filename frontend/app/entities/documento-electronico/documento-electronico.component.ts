@@ -85,27 +85,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         protected snackBar: MatSnackBar
     ) {
         this.downloadStatus = new EventEmitter<ProgressStatus>();
-        this.formulario = new FormGroup({
-            rucClient: new FormControl('', []),
-            numSerie: new FormControl('', []),
-            numero: new FormControl('', []),
-            fechaEmisionInicio: new FormControl('', []),
-            fechaEmisionFin: new FormControl('', []),
-            estadoSunat: new FormControl('', []),
-            monedaTransaccion: new FormControl('', []),
-        });
-        this.formulario.controls['fechaEmisionInicio'].valueChanges.subscribe(value => {
-            if (value) {
-                const fecha = {year: value._i.year, month: value._i.month, date: value._i.date};
-                this.selectedStartDate = new Date(fecha.year, fecha.month, fecha.date);
-            }
-        });
-        this.formulario.controls['fechaEmisionFin'].valueChanges.subscribe(value => {
-            if (value) {
-                const fecha = {year: value._i.year, month: value._i.month, date: value._i.date};
-                this.selectedEndDate = new Date(fecha.year, fecha.month, fecha.date);
-            }
-        });
+        this.createForm();
         this.currentSearch = this.initCurrentSearch;
     }
 
@@ -283,8 +263,8 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     }
 
     reset() {
-        this.formulario.reset(this.initCurrentSearch);
         this.currentSearch = this.initCurrentSearch;
+        this.createForm();
     }
 
     registerChangeInDocumentoElectronicos() {
@@ -328,6 +308,30 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             panelClass: [success ? 'success-snackbar' : 'failure-snackbar'],
             announcementMessage: 'Esto es una prueba',
             data: {description: mensaje, title: title}
+        });
+    }
+
+    createForm() {
+        this.formulario = new FormGroup({
+            rucClient: new FormControl('', []),
+            numSerie: new FormControl('', []),
+            numero: new FormControl('', []),
+            fechaEmisionInicio: new FormControl('', []),
+            fechaEmisionFin: new FormControl('', []),
+            estadoSunat: new FormControl('', []),
+            monedaTransaccion: new FormControl('', []),
+        });
+        this.formulario.controls['fechaEmisionInicio'].valueChanges.subscribe(value => {
+            if (value) {
+                const fecha = {year: value._i.year, month: value._i.month, date: value._i.date};
+                this.selectedStartDate = new Date(fecha.year, fecha.month, fecha.date);
+            }
+        });
+        this.formulario.controls['fechaEmisionFin'].valueChanges.subscribe(value => {
+            if (value) {
+                const fecha = {year: value._i.year, month: value._i.month, date: value._i.date};
+                this.selectedEndDate = new Date(fecha.year, fecha.month, fecha.date);
+            }
         });
     }
 }
