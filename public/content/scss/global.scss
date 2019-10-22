@@ -303,4 +303,197 @@ mat-error {
   font-size: 13px;
 }
 
+.main-panel {
+  padding-left: 300px
+}
+
+.pull-right {
+  float: right !important;
+  clear: right;
+}
+
+/************
+1. 1600px
+************/
+
+@media only screen and (max-width: 1600px) {
+  .main-panel {
+    padding-left: 300px
+  }
+}
+
+/************
+2. 1440px
+************/
+
+@media only screen and (max-width: 1440px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+  .main-panel {
+    padding-left: 300px
+  }
+}
+
+/************
+3. 1380px
+************/
+
+@media only screen and (max-width: 1380px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+  .main-panel {
+    padding-left: 300px
+  }
+}
+
+/************
+3. 1280px
+************/
+
+@media only screen and (max-width: 1280px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+}
+
+/************
+4. 1199px
+************/
+
+@media only screen and (max-width: 1199px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+}
+
+/************
+4. 1100px
+************/
+
+@media only screen and (max-width: 1100px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+}
+
+/************
+5. 1024px
+************/
+
+@media only screen and (max-width: 1024px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+}
+
+/************
+6. 991px
+************/
+
+@media only screen and (max-width: 991px) {
+
+}
+
+/************
+7. 959px
+************/
+
+@media only screen and (max-width: 959px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+}
+
+/************
+8. 880px
+************/
+
+@media only screen and (max-width: 880px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+9. 768px
+************/
+
+@media only screen and (max-width: 768px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+10. 767px
+************/
+
+@media only screen and (max-width: 767px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+11. 575px
+************/
+
+@media only screen and (max-width: 575px) {
+  .mat-column-estadoSunat {
+    display: none;
+  }
+}
+
+/************
+11. 539px
+************/
+
+@media only screen and (max-width: 539px) {
+}
+
+/************
+12. 480px
+************/
+
+@media only screen and (max-width: 480px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+13. 479px
+************/
+
+@media only screen and (max-width: 479px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+14. 400px
+************/
+
+@media only screen and (max-width: 400px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+.table-actions-theme div {
+  margin-bottom: 5px;
+}
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */
