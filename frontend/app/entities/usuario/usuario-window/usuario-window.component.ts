@@ -171,7 +171,6 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
             this.filteredClientes.next(this.clientes.slice());
             return;
         } else {
-            console.log(search);
             search = search.toLowerCase();
         }
         // filter the banks
