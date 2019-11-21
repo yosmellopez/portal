@@ -48,7 +48,12 @@ class SearchController extends Controller
         $estadosSunat = $collection->map(function ($item, $key) {
             return array("estadoSunat" => $item->estadoSunat);
         })->unique("estadoSunat");
-        return response()->json($estadosSunat, 200);
+        $estadosFinales = array();
+        $contador = 0;
+        foreach ($estadosSunat as $estado) {
+            $estadosFinales[$contador++] = $estado;
+        }
+        return response()->json($estadosFinales, 200);
     }
 
     /**
@@ -258,13 +263,17 @@ class SearchController extends Controller
     {
         switch ($estado) {
             case 'Aprobado':
-                return 'V';
-            case 'RechazadoR':
                 return 'R';
+            case 'Rechazado':
+                return 'Z';
             case 'Pendiente Respuesta':
                 return 'D';
-            case 'L':
-                return 'Leido';
+            case 'Leido':
+                return 'L';
+            case 'Baja Aprobada':
+                return 'P';
+            case 'Baja Rechazada':
+                return 'J';
             case 'P':
                 return 'Publicado';
         }

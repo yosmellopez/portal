@@ -252,8 +252,10 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
                         break;
                 }
             },
-            error => {
-                this.downloadStatus.emit({status: ProgressStatusEnum.ERROR});
+            (error: HttpErrorResponse) => {
+                if (error.status === 404) {
+                    this.showToast(`No se encontró el documento ${document.numSerie}.${tipo}`, 'Documento no encontrado', false);
+                }
             }
         );
     }
@@ -300,9 +302,9 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         this.pdfExporter.saveAs(this.tipoDocumento.title);
     }
 
-    showToast(mensaje: string, title: string, success: boolean) {
+    showToast(mensaje: string, title: string = 'Error', success: boolean) {
         this.snackBar.openFromComponent(MensajeToast, {
-            duration: 5000,
+            duration: 4000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
             panelClass: [success ? 'success-snackbar' : 'failure-snackbar'],

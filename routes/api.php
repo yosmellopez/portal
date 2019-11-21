@@ -19,7 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('authenticate', 'Auth\LoginController@login');
-Route::post('upload', 'FilesController@upload');
 Route::post('publicar', 'PublicadorController@publicar');
 Route::get('download/{idDocumento}', 'FilesController@downloadDocument');
 Route::group(['middleware' => ['jwt.verify']], function () {

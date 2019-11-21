@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Entity\Cliente;
 use App\Entity\Documento;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -28,10 +29,22 @@ class PublicadorController extends Controller
 //            return response()->json(['error' => 'credenciales_invalidas'], 401);
 //        }
         try {
+            $dataCliente = $request->only(['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient']);
+            $clienteDb = Cliente::find($dataCliente["rucClient"]);
+            if (!isset($clienteDb)) {
+                $cliente = new Cliente();
+                $dataCliente["estadoCliente"] = 1;
+                $cliente->fill($dataCliente)->save();
+            } else {
+                $cliente = new Cliente();
+                $dataCliente["estadoCliente"] = 1;
+                $cliente->fill($dataCliente)->update();
+            }
             $documentoId = Documento::pluck('idDocumento')->last();
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion"]);
-            $data["idDocumento"] = $documentoId;
+            $data["idDocumento"] = $documentoId + 1;
+            $data["estadoWeb"] = "P";
             $docPdf = $data["docPdf"];
             $docXML = $data["docXml"];
             $docCdr = $data["docCdr"];
@@ -39,9 +52,17 @@ class PublicadorController extends Controller
             $filePdf = base64_decode($docPdf);
             $fileXml = base64_decode($docXML);
             $fileCdr = base64_decode($docCdr);
-            Storage::disk('custom')->put($fileName . '.pdf', $filePdf);
-            Storage::disk('custom')->put($fileName . '.xml', $fileXml);
-            Storage::disk('custom')->put($fileName . '.zip', $fileCdr);
+            $fechaEmision = explode("/", $data["fecEmisionDoc"]);
+            $dateDirectory = join(DIRECTORY_SEPARATOR, array_reverse($fechaEmision));
+            $directory = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"]));
+            Storage::makeDirectory($directory);
+            $localPath = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"], $fileName));
+            Storage::disk('custom')->put($localPath . '.pdf', $filePdf);
+            Storage::disk('custom')->put($localPath . '.xml', $fileXml);
+            Storage::disk('custom')->put($localPath . '.zip', $fileCdr);
+            $data["docPdf"] = $localPath . '.pdf';
+            $data["docXml"] = $localPath . '.xml';
+            $data["docCdr"] = $localPath . '.zip';
             $documento->fill($data)->save();
         } catch (\Exception $e) {
             return response()->json(array("error" => $e->getMessage()), 201);
