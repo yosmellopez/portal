@@ -28,8 +28,10 @@ class PublicadorController extends Controller
 //            return response()->json(['error' => 'credenciales_invalidas'], 401);
 //        }
         try {
+            $documentoId = Documento::pluck('idDocumento')->last();
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion"]);
+            $data["idDocumento"] = $documentoId;
             $docPdf = $data["docPdf"];
             $docXML = $data["docXml"];
             $docCdr = $data["docCdr"];
