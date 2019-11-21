@@ -1,4 +1,18 @@
-<!doctype html> <html class="no-js" lang="en" dir="ltr"> <head> <base href="/"/> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Portal</title> <meta name="description" content="Description for Portal"> <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"> <meta name="theme-color" content="#000000"> <link rel="shortcut icon" href="favicon.ico"/> <link rel="manifest" href="manifest.webapp"/> <link rel="stylesheet" href="content/css/loading.css"> <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <style type="text/css"> body, html {
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+    <head>
+        <base href="/"/>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Portal</title>
+        <meta name="description" content="Description for Portal">
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <meta name="theme-color" content="#000000">
+        <link rel="shortcut icon" href="favicon.ico"/>
+        <link rel="manifest" href="manifest.webapp"/>
+        <link rel="stylesheet" href="content/css/loading.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style type="text/css"> body, html {
                 height: 90%;
             }
 
@@ -51,9 +65,24 @@
                     stroke-dasharray: 89, 200;
                     stroke-dashoffset: -124px;
                 }
-            } </style> <link href="content/main.188c475b7be8e361854b.css" rel="stylesheet"><link href="content/global.cc1229e64047eb9cf7f9.css" rel="stylesheet"></head> <body> <!--[if lt IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]--> <jhi-main> <div class="app-loading"> <div class="applogo"></div> <svg class="spinner" viewBox="25 25 50 50"> <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="1" stroke-miterlimit="10"/> </svg> </div> </jhi-main> <noscript> <h1>You must enable javascript to view this page.</h1> </noscript> <script language="javascript"> // show an error message if the app loading takes more than 5 sec
+            } </style>
+        <link href="content/main.68161ff464bf473bfffc.css" rel="stylesheet">
+        <link href="content/global.cc1229e64047eb9cf7f9.css" rel="stylesheet">
+    </head>
+    <body> <!--[if lt IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
+                href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <jhi-main>
+            <div class="app-loading">
+                <div class="applogo"></div>
+                <svg class="spinner" viewBox="25 25 50 50">
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="1" stroke-miterlimit="10"/>
+                </svg>
+            </div>
+        </jhi-main>
+        <noscript><h1>You must enable javascript to view this page.</h1></noscript>
+        <script language="javascript"> // show an error message if the app loading takes more than 5 sec
             window.onload = function () {
                 setTimeout(showError, 4000);
             }
@@ -63,4 +92,9 @@
                 if (errorElm && errorElm.style) {
                     errorElm.style.display = "block";
                 }
-            } </script> <script type="text/javascript" src="app/polyfills.ad3f7b70d6bdae3f8e29.bundle.js"></script><script type="text/javascript" src="app/main.ad3f7b70d6bdae3f8e29.bundle.js"></script><script type="text/javascript" src="app/global.ad3f7b70d6bdae3f8e29.bundle.js"></script></body> </html>
+            } </script>
+        <script type="text/javascript" src="app/polyfills.a57ecab27b5f8875bf7d.bundle.js"></script>
+        <script type="text/javascript" src="app/main.a57ecab27b5f8875bf7d.bundle.js"></script>
+        <script type="text/javascript" src="app/global.a57ecab27b5f8875bf7d.bundle.js"></script>
+    </body>
+</html>
