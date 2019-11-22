@@ -43,7 +43,6 @@ class PublicadorController extends Controller
             $documentoId = Documento::pluck('idDocumento')->last();
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion"]);
-            $documentoDb = Documento::where("numSerie", $data["numSerie"]);
             $data["idDocumento"] = $documentoId + 1;
             $data["estadoWeb"] = "P";
             $docPdf = $data["docPdf"];
@@ -64,10 +63,10 @@ class PublicadorController extends Controller
             $data["docPdf"] = $localPath . '.pdf';
             $data["docXml"] = $localPath . '.xml';
             $data["docCdr"] = $localPath . '.zip';
-            if (!isset($documentoDb)) {
-                $documento->fill($data)->save();
-            } else {
+            if (Documento::where("numSerie", $data["numSerie"])->first()) {
                 $documento->fill($data)->update();
+            } else {
+                $documento->fill($data)->save();
             }
         } catch (\Exception $e) {
             return response()->json(array("error" => $e->getMessage()), 201);
