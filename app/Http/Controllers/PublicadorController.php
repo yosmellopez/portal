@@ -67,7 +67,7 @@ class PublicadorController extends Controller
             if (!isset($documentoDb)) {
                 $documento->fill($data)->save();
             } else {
-                $documentoDb->fill($data)->update();
+                $documento->fill($data)->update();
             }
         } catch (\Exception $e) {
             return response()->json(array("error" => $e->getMessage()), 201);
