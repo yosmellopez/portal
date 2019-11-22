@@ -109,7 +109,7 @@
     <div class="table-responsive">
         <kendo-pdf-export #pdf>
             <mat-table [dataSource]="dataSource" matSort matSortActive="rucClient" matSortDirection="asc" matSortDisableClear matTableExporter #tableMat #exporter="matTableExporter" hiddenColumns="[5,6,7,8]">
-                <ng-container matColumnDef="rucCliente">
+                <ng-container matColumnDef="rucClient">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> RUC Cliente</mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.rucClient}} </mat-cell>
                 </ng-container>

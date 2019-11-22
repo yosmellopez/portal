@@ -63,7 +63,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     selectedEndDate: Date = new Date();
     selectedStartDate: Date = new Date(1900, 1, 1);
     matcher: ErrorStateMatcher = new ErrorStateMatcher();
-    displayedColumns: string[] = ['rucCliente', 'numSerie', 'fecEmisionDoc', 'estadoSunat', 'total', 'docPdf', 'docXml', 'docCdr', 'correo'];
+    displayedColumns: string[] = ['rucClient', 'numSerie', 'fecEmisionDoc', 'estadoSunat', 'total', 'docPdf', 'docXml', 'docCdr', 'correo'];
     @ViewChild(MatSort, {static: false}) sort: MatSort;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     formulario: FormGroup;

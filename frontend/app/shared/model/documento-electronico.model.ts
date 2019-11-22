@@ -27,7 +27,7 @@ export class DocumentoElectronico implements IDocumentoElectronico {
     public docPdf?: string,
     public docXml?: string,
     public docCdr?: string,
-    public rucCliente?: string,
+    public rucClient?: string,
     public estadoSunat?: string,
     public estadoWeb?: string,
     public monedaTransaccion?: string

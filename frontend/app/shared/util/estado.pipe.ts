@@ -7,6 +7,7 @@ export class EstadoPipe implements PipeTransform {
     transform(value: string, ...args: any[]): any {
         switch (value) {
             case 'R':
+            case 'V':
                 return 'Aprobado';
             case 'Z':
                 return 'Rechazado';
