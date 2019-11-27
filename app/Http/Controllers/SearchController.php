@@ -33,7 +33,12 @@ class SearchController extends Controller
         $tiposMoneda = $collection->map(function ($item, $key) {
             return array("monedaTransaccion" => $item->monedaTransaccion);
         })->unique("monedaTransaccion");
-        return response()->json($tiposMoneda, 200);
+        $monedasFinales = array();
+        $contador = 0;
+        foreach ($tiposMoneda as $moneda) {
+            $monedasFinales[$contador++] = $moneda;
+        }
+        return response()->json($monedasFinales, 200);
     }
 
     /**
@@ -106,7 +111,7 @@ class SearchController extends Controller
         $rucClient = $data["rucClient"];
         $estadoSunat = $data["estadoSunat"];
         $estadoSunat = $this->findEstado($estadoSunat);
-        \DB::connection()->enableQueryLog();
+//        \DB::connection()->enableQueryLog();
         $documentos = DB::table('fe_docelectronico')
             ->when($numSerie, function ($query, $numSerie) {
                 return $query->where('numSerie', 'like', '%' . $numSerie . '%');
@@ -139,8 +144,7 @@ class SearchController extends Controller
             $fechaEmisionInicio->modify("+1 days");
             $documents = array_merge($filteredDocuments->toArray(), $documents);
         }
-        $queries = \DB::getQueryLog();
-//        var_dump($queries);
+//        $queries = \DB::getQueryLog();
         return response()->json($documents);
     }
 
@@ -157,7 +161,6 @@ class SearchController extends Controller
         $nombreUsuario = $data["nombUsuario"];
         $correo = $data["email"];
         $rol = $data["rol"];
-        \DB::connection()->enableQueryLog();
         $usuarios = Usuario::with('rol')
             ->when($nombreUsuario, function ($query, $nombreUsuario) {
                 return $query->where('nombUsuario', 'like', '%' . $nombreUsuario . '%');
@@ -172,8 +175,6 @@ class SearchController extends Controller
                 return $query->where('idRoles', $rol);
             })
             ->get();
-        $queries = \DB::getQueryLog();
-//        var_dump($queries);
         return response()->json($usuarios);
     }
 
@@ -189,7 +190,6 @@ class SearchController extends Controller
         $rucClient = $data["rucClient"];
         $nombreClient = $data["nombreClient"];
         $correo = $data["email"];
-        \DB::connection()->enableQueryLog();
         $usuarios = Cliente::when($nombreClient, function ($query, $nombreClient) {
             return $query->where('nombreClient', 'like', '%' . $nombreClient . '%');
         })->when($correo, function ($query, $correo) {
@@ -197,8 +197,6 @@ class SearchController extends Controller
         })->when($rucClient, function ($query, $rucClient) {
             return $query->where('rucClient', $rucClient);
         })->get();
-        $queries = \DB::getQueryLog();
-//        var_dump($queries);
         return response()->json($usuarios);
     }
 
