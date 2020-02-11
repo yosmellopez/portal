@@ -31,6 +31,7 @@
     "@progress/kendo-drawing": "^1.6.0",
     "bootstrap": "4.3.1",
     "bootswatch": "4.3.1",
+    "cdk-table-exporter": "^1.2.5",
     "chart.js": "^2.9.3",
     "chartjs-plugin-annotation": "^0.5.7",
     "core-js": "3.2.1",
