@@ -1,11 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChildren} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
-import { Account } from 'app/core/user/account.model';
-import { of } from 'rxjs';
 import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
@@ -18,6 +16,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
     imagen: string = '';
     isLoading: boolean = false;
     loginForm: FormGroup;
+    @ViewChildren('#login') loginInput;
 
     constructor(
         private eventManager: JhiEventManager,
@@ -25,7 +24,6 @@ export class SigninComponent implements OnInit, AfterViewInit {
         private stateStorageService: StateStorageService,
         private accountService: AccountService,
         private elementRef: ElementRef,
-        private renderer: Renderer,
         private router: Router,
     ) {
         this.loginForm = new FormGroup({
@@ -36,11 +34,10 @@ export class SigninComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        setTimeout(() => this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#username'), 'focus', []), 0);
+        setTimeout(() => this.loginInput.nativeElement.focus(), 0);
     }
 
     ngOnInit() {
-        console.log(this.accountService.isAuthenticated());
         if (this.accountService.isAuthenticated()) {
             this.router.navigate(['/home']);
         }

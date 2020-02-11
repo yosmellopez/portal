@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import {Component, AfterViewInit, Renderer2, ElementRef, ViewChildren} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { EMAIL_NOT_FOUND_TYPE } from 'app/shared/constants/error.constants';
@@ -12,6 +12,7 @@ export class PasswordResetInitComponent implements AfterViewInit {
   error: string;
   errorEmailNotExists: string;
   success: string;
+  @ViewChildren('#email') emailInput;
   resetRequestForm = this.fb.group({
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]]
   });
@@ -19,12 +20,12 @@ export class PasswordResetInitComponent implements AfterViewInit {
   constructor(
     private passwordResetInitService: PasswordResetInitService,
     private elementRef: ElementRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private fb: FormBuilder
   ) {}
 
   ngAfterViewInit() {
-    this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#email'), 'focus', []);
+    this.emailInput.nativeElement.focus();
   }
 
   requestReset() {

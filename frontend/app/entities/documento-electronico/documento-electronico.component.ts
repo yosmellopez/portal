@@ -10,7 +10,6 @@ import { DocumentoElectronicoService } from './documento-electronico.service';
 import { DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material';
 import { FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { catchError, filter, map, startWith, switchMap } from 'rxjs/operators';
@@ -24,6 +23,7 @@ import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
 import { MatDialog } from '@angular/material/dialog';
 import { Information, MensajeToast } from 'app/mensaje/window.mensaje';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatSort} from "@angular/material/sort";
 
 export const MY_FORMATS = {
     parse: {
@@ -291,7 +291,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
 
     exportarTabla() {
         const properties: Properties = {Author: 'Ventura Soluciones', Title: this.tipoDocumento.title};
-        const excelOptions: ExcelOptions = {fileName: this.tipoDocumento.title, sheet: this.tipoDocumento.tipo, Props: properties};
+        const excelOptions: ExcelOptions = {fileName: this.tipoDocumento.title, sheet: this.tipoDocumento.tipo, Props: properties, columnWidths:[]};
         this.exporter.exportTable(ExportType.XLSX, excelOptions);
     }
 

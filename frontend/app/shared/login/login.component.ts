@@ -1,11 +1,11 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import {Component, AfterViewInit, Renderer2, ElementRef, ViewChildren} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { LoginService } from 'app/core/login/login.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {LoginService} from 'app/core/login/login.service';
+import {StateStorageService} from 'app/core/auth/state-storage.service';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -14,13 +14,14 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class JhiLoginModalComponent implements AfterViewInit {
     authenticationError: boolean;
     loginForm: FormGroup;
+    @ViewChildren('#username') usernameInput;
 
     constructor(
         private eventManager: JhiEventManager,
         private loginService: LoginService,
         private stateStorageService: StateStorageService,
         private elementRef: ElementRef,
-        private renderer: Renderer,
+        private Renderer2: Renderer2,
         private router: Router,
         private dialog: MatDialogRef<JhiLoginModalComponent>
     ) {
@@ -32,7 +33,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        setTimeout(() => this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#username'), 'focus', []), 0);
+        setTimeout(() => this.usernameInput.nativeElement.focus(), 0);
     }
 
     cancel() {
