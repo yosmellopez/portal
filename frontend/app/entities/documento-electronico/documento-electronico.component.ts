@@ -21,7 +21,7 @@ import { Properties } from 'xlsx';
 import { DatePipe } from '@angular/common';
 import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
 import { MatDialog } from '@angular/material/dialog';
-import { Information, MensajeToast } from 'app/mensaje/window.mensaje';
+import { MensajeToast } from 'app/mensaje/window.mensaje';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatSort} from "@angular/material/sort";
 
