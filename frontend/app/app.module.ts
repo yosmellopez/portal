@@ -1,46 +1,71 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
 import './vendor';
-import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
-import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
-import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
-import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
-import { PortalSharedModule } from 'app/shared/shared.module';
-import { PortalCoreModule } from 'app/core/core.module';
-import { PortalAppRoutingModule } from './app-routing.module';
-import { PortalHomeModule } from './home/home.module';
-import { PortalEntityModule } from './entities/entity.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import {AuthInterceptor} from './blocks/interceptor/auth.interceptor';
+import {AuthExpiredInterceptor} from './blocks/interceptor/auth-expired.interceptor';
+import {ErrorHandlerInterceptor} from './blocks/interceptor/errorhandler.interceptor';
+import {NotificationInterceptor} from './blocks/interceptor/notification.interceptor';
+import {PortalSharedModule} from 'app/shared/shared.module';
+import {PortalCoreModule} from 'app/core/core.module';
+import {PortalAppRoutingModule} from './app-routing.module';
+import {PortalHomeModule} from './home/home.module';
+import {PortalEntityModule} from './entities/entity.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import 'hammerjs';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
-import { JhiMainComponent } from './layouts/main/main.component';
-import { NavbarComponent } from './layouts/navbar/navbar.component';
-import { FooterComponent } from './layouts/footer/footer.component';
-import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
-import { ErrorComponent } from './layouts/error/error.component';
-import { JhMaterialModule } from 'app/shared/jh-material.module';
-import { SidebarComponent } from 'app/layouts/sidebar/sidebar.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DATE_FORMATS, NativeDateModule } from '@angular/material/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { getSpanishPaginatorIntl } from 'app/es-locale-paginator';
-import { MatTableExporterModule } from 'mat-table-exporter';
-import { MensajeModule } from 'app/mensaje/mensaje.module';
-import { SigninComponent } from './layouts/signin/signin.component';
-import { MatSelectModule } from '@angular/material/select';
-import { ChartsModule } from 'ng2-charts';
+import {JhiMainComponent} from './layouts/main/main.component';
+import {NavbarComponent} from './layouts/navbar/navbar.component';
+import {FooterComponent} from './layouts/footer/footer.component';
+import {PageRibbonComponent} from './layouts/profiles/page-ribbon.component';
+import {ErrorComponent} from './layouts/error/error.component';
+import {JhMaterialModule} from 'app/shared/jh-material.module';
+import {SidebarComponent} from 'app/layouts/sidebar/sidebar.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MAT_DATE_FORMATS, NativeDateModule} from '@angular/material/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {getSpanishPaginatorIntl} from 'app/es-locale-paginator';
+import {MatTableExporterModule} from 'mat-table-exporter';
+import {MensajeModule} from 'app/mensaje/mensaje.module';
+import {SigninComponent} from './layouts/signin/signin.component';
+import {MatSelectModule} from '@angular/material/select';
+import {ChartsModule} from 'ng2-charts';
 import localePe from '@angular/common/locales/es-PE';
-import { registerLocaleData } from '@angular/common';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
-import { PortalAccountModule } from 'app/account/account.module';
+import {registerLocaleData} from '@angular/common';
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
+import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
+import {PDFExportModule} from '@progress/kendo-angular-pdf-export';
+import {PortalAccountModule} from 'app/account/account.module';
+import {
+    NgxUiLoaderConfig,
+    NgxUiLoaderHttpModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderRouterModule,
+    SPINNER
+} from "ngx-ui-loader";
 
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+    bgsColor: '#4680ff',
+    // bgsOpacity: 0.5,
+    // bgsPosition: POSITION.bottomCenter,
+    // bgsSize: 60,
+    bgsType: SPINNER.threeStrings,
+    fgsColor: '#4680ff',
+    // fgsPosition: POSITION.topCenter,
+    // fgsSize: 60,
+    logoUrl: 'content/images/gespro.png',
+    fgsType: SPINNER.threeStrings,
+    pbColor: 'blue'
+    // pbDirection: PB_DIRECTION.leftToRight,
+    // pbThickness: 5,
+    // text: 'Welcome to ngx-ui-loader'
+    // textColor: '#FFFFFF',
+    // textPosition: POSITION.centerCenter
+};
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -78,7 +103,10 @@ const MY_NATIVE_DATE_FORMATS = {
         MatTableExporterModule,
         MensajeModule,
         MatSelectModule,
-        PDFExportModule
+        PDFExportModule,
+        NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+        NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
+        NgxUiLoaderHttpModule.forRoot({ exclude: ['/api/account'], showForeground: false })
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent],
     providers: [
