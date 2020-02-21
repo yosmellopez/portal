@@ -71,12 +71,6 @@ module.exports = (options) => ({
             { from: './frontend/robots.txt', to: 'robots.txt' }
         ]),
         new HtmlWebpackPlugin({
-            template: './frontend/index.html',
-            chunks: ['polyfills', 'main', 'global'],
-            chunksSortMode: 'manual',
-            inject: 'body'
-        }),
-        new HtmlWebpackPlugin({
             template: './resources/views/welcome.blade.php',
             chunks: ['polyfills', 'main', 'global'],
             chunksSortMode: 'manual',
