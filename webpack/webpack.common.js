@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
+const {BaseHrefWebpackPlugin} = require('base-href-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const utils = require('./utils.js');
@@ -8,7 +8,7 @@ module.exports = (options) => ({
     resolve: {
         extensions: ['.ts', '.js'],
         modules: ['node_modules'],
-        mainFields: [ 'es2015', 'browser', 'module', 'main'],
+        mainFields: ['es2015', 'browser', 'module', 'main'],
         alias: utils.mapTypescriptAliasToWebpackAlias()
     },
     stats: {
@@ -22,9 +22,9 @@ module.exports = (options) => ({
                 options: {
                     minimize: true,
                     caseSensitive: true,
-                    removeAttributeQuotes:false,
-                    minifyJS:false,
-                    minifyCSS:false
+                    removeAttributeQuotes: false,
+                    minifyJS: false,
+                    minifyCSS: false
                 },
                 exclude: /(public\/index.html)/
             },
@@ -45,7 +45,7 @@ module.exports = (options) => ({
                 }
             },
             // Ignore warnings about System.import in Angular
-            { test: /[\/\\]@angular[\/\\].+\.js$/, parser: { system: true } },
+            {test: /[\/\\]@angular[\/\\].+\.js$/, parser: {system: true}},
         ]
     },
     plugins: [
@@ -64,11 +64,11 @@ module.exports = (options) => ({
             }
         }),
         new CopyWebpackPlugin([
-            { from: './frontend/content/', to: 'content' },
-            { from: './frontend/favicon.ico', to: 'favicon.ico' },
-            { from: './frontend/manifest.webapp', to: 'manifest.webapp' },
+            {from: './frontend/content/', to: 'content'},
+            {from: './frontend/favicon.ico', to: 'favicon.ico'},
+            {from: './frontend/manifest.webapp', to: 'manifest.webapp'},
             // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
-            { from: './frontend/robots.txt', to: 'robots.txt' }
+            {from: './frontend/robots.txt', to: 'robots.txt'}
         ]),
         new HtmlWebpackPlugin({
             template: './frontend/index.html',
@@ -77,11 +77,12 @@ module.exports = (options) => ({
             inject: 'body'
         }),
         new HtmlWebpackPlugin({
-            template: './resources/views/welcome.blade.php',
+            template: './frontend/index.html',
+            filename: "./resources/views/welcome.blade.php",
             chunks: ['polyfills', 'main', 'global'],
             chunksSortMode: 'manual',
             inject: 'body'
         }),
-        new BaseHrefWebpackPlugin({ baseHref: '/' })
+        new BaseHrefWebpackPlugin({baseHref: '/'})
     ]
 });
