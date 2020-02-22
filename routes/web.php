@@ -15,19 +15,19 @@ use App\Entity\Documento;
 use App\Mail\DocumentoMail;
 
 Route::get('/', function () {
-    return File::get(public_path() . '/.index.html');
+    return File::get(public_path() . '/index.html');
 });
 Route::get('/{view}', function () {
-    return File::get(public_path() . '/.index.html');
+    return File::get(public_path() . '/index.html');
 });
 Route::get('/{view}/{path}', function () {
-    return File::get(public_path() . '/.index.html');
+    return File::get(public_path() . '/index.html');
 });
 Route::get('/{view}/{path}/{resource}', function () {
-    return File::get(public_path() . '/.index.html');
+    return File::get(public_path() . '/index.html');
 });
 Route::get('/{view}/{path}/{resource}/{element}', function () {
-    return File::get(public_path() . '/.index.html');
+    return File::get(public_path() . '/index.html');
 });
 Route::get('download/{idDocumento}', 'FilesController@downloadDocument');
 Route::post('/upload', 'FilesController@upload');
