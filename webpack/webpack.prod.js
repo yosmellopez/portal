@@ -150,6 +150,12 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
         new WorkboxPlugin.GenerateSW({
           clientsClaim: true,
           skipWaiting: true,
+        }),
+        new HtmlWebpackPlugin({
+            template: './resources/views/welcome.blade.php',
+            chunks: ['polyfills', 'main', 'global'],
+            chunksSortMode: 'manual',
+            inject: 'body'
         })
     ],
     mode: 'production'
