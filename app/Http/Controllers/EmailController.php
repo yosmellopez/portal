@@ -30,7 +30,6 @@ class EmailController extends Controller
             }
         } catch (\Exception $e) {
             $code = $e->getCode();
-            throw new GeneralAPIException($e->getMessage());
             if ($code == 552) {
                 throw new GeneralAPIException("No se pudo enviar el correo porque el contenido es potencialmente dañino. Pongase en contacto con su administrador.");
             }
