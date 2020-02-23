@@ -17,15 +17,15 @@
     "laravel/framework": "5.5.*",
     "laravel/tinker": "~1.0",
     "matriphe/laravel-md5-hash": "^1.0",
-    "tymon/jwt-auth": "~1.0.0-rc.5",
+    "tymon/jwt-auth": "~1.0.0-rc.5.1",
     "ext-fileinfo": "*"
   },
   "require-dev": {
     "filp/whoops": "~2.0",
     "fzaninotto/faker": "~1.4",
     "mockery/mockery": "~1.0",
-    "phpunit/phpunit": "~6.0",
-    "symfony/thanks": "^1.0"
+    "phpunit/phpunit": "~9.0.1",
+    "symfony/thanks": "^1.2.5"
   },
   "autoload": {
     "classmap": [
