@@ -1,25 +1,29 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable, of, Subject} from 'rxjs';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { Account } from 'app/core/user/account.model';
+import {SERVER_API_URL} from 'app/app.constants';
+import {Account} from 'app/core/user/account.model';
+import {map, shareReplay, tap} from "rxjs/operators";
+import {JhiLanguageService} from "ng-jhipster";
+import {SessionStorageService} from "ngx-webstorage";
 
 @Injectable({providedIn: 'root'})
 export class AccountService {
     private userIdentity: Account;
     private authenticated = false;
     private authenticationState = new Subject<any>();
+    private accountCache$: Observable<Account>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private languageService: JhiLanguageService, private sessionStorage: SessionStorageService) {
     }
 
-    fetch(): Observable<HttpResponse<Account>> {
-        return this.http.get<Account>(SERVER_API_URL + 'api/account', {observe: 'response'});
+    fetch(): Observable<Account> {
+        return this.http.get<Account>(SERVER_API_URL + 'api/account');
     }
 
-    save(account: any): Observable<HttpResponse<any>> {
-        return this.http.post(SERVER_API_URL + 'api/account', account, {observe: 'response'});
+    save(account: Account): Observable<Account> {
+        return this.http.post<Account>(SERVER_API_URL + 'api/account', account);
     }
 
     authenticate(identity) {
@@ -28,60 +32,61 @@ export class AccountService {
         this.authenticationState.next(this.userIdentity);
     }
 
-    hasAnyAuthority(authorities: string[]): boolean {
+    hasAnyAuthority(authorities: string[] | string): boolean {
         if (!this.authenticated || !this.userIdentity || !this.userIdentity.rol) {
             return false;
         }
+
+        if (!Array.isArray(authorities)) {
+            authorities = [authorities];
+        }
+        console.log(authorities.includes(this.userIdentity.rol.role));
         return authorities.includes(this.userIdentity.rol.role);
     }
 
-    hasAuthority(authority: string): Promise<boolean> {
+    hasAuthority(authority: string): Observable<boolean> {
         if (!this.authenticated) {
-            return Promise.resolve(false);
+            return of(false);
         }
-        return this.identity().then(
-            account => {
-                return Promise.resolve(account.rol && account.rol.role === authority);
-            },
-            () => {
-                return Promise.resolve(false);
-            }
-        );
+        return this.identity().pipe(map(account => {
+            return account.rol && account.rol.role === authority || false;
+        }));
     }
 
-    identity(force?: boolean): Promise<Account> {
+    identity(force?: boolean): Observable<Account> {
         if (force) {
-            this.userIdentity = undefined;
+            this.accountCache$ = null;
         }
 
-        // check and see if we have retrieved the userIdentity data from the server.
-        // if we have, reuse it by immediately resolving
-        if (this.userIdentity) {
-            return Promise.resolve(this.userIdentity);
+        if (!this.accountCache$) {
+            this.accountCache$ = this.fetch().pipe(
+                tap(
+                    account => {
+                        if (account) {
+                            this.userIdentity = account;
+                            this.authenticated = true;
+                            // After retrieve the account info, the language will be changed to
+                            // the user's preferred language configured in the account setting
+                            if (this.userIdentity.langKey) {
+                                const langKey = this.sessionStorage.retrieve('locale') || this.userIdentity.langKey;
+                                this.languageService.changeLanguage(langKey);
+                            }
+                        } else {
+                            this.userIdentity = null;
+                            this.authenticated = false;
+                        }
+                        this.authenticationState.next(this.userIdentity);
+                    },
+                    () => {
+                        this.userIdentity = null;
+                        this.authenticated = false;
+                        this.authenticationState.next(this.userIdentity);
+                    }
+                ),
+                shareReplay()
+            );
         }
-
-        // retrieve the userIdentity data from the server, update the identity object, and then resolve.
-        return this.fetch()
-            .toPromise()
-            .then(response => {
-                const account: Account = response.body;
-                if (account) {
-                    this.userIdentity = account;
-                    this.authenticated = true;
-                } else {
-                    this.userIdentity = null;
-                    this.authenticated = false;
-                }
-                console.log(account);
-                this.authenticationState.next(this.userIdentity);
-                return this.userIdentity;
-            })
-            .catch(err => {
-                this.userIdentity = null;
-                this.authenticated = false;
-                this.authenticationState.next(this.userIdentity);
-                return null;
-            });
+        return this.accountCache$;
     }
 
     isAuthenticated(): boolean {

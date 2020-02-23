@@ -1,4 +1,4 @@
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
 import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -47,6 +47,9 @@ import {
     NgxUiLoaderRouterModule,
     SPINNER
 } from "ngx-ui-loader";
+import {AppNgxUiLoaderService} from "app/app-ngx-ui-loader.service";
+import {MissingTranslationHandler, TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {JhiConfigService, missingTranslationHandler, translatePartialLoader} from "ng-jhipster";
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     bgsColor: '#4680ff',
@@ -57,7 +60,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     fgsColor: '#4680ff',
     // fgsPosition: POSITION.topCenter,
     // fgsSize: 60,
-    logoUrl: 'content/images/gespro.png',
+    logoUrl: 'content/images/ventura.jpeg',
     fgsType: SPINNER.threeStrings,
     pbColor: 'blue'
     // pbDirection: PB_DIRECTION.leftToRight,
@@ -106,10 +109,23 @@ const MY_NATIVE_DATE_FORMATS = {
         PDFExportModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
         NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
-        NgxUiLoaderHttpModule.forRoot({ exclude: ['/api/account'], showForeground: false })
+        NgxUiLoaderHttpModule.forRoot({exclude: ['/api/account'], showForeground: false}),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: translatePartialLoader,
+                deps: [HttpClient]
+            },
+            missingTranslationHandler: {
+                provide: MissingTranslationHandler,
+                useFactory: missingTranslationHandler,
+                deps: [JhiConfigService]
+            }
+        })
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent],
     providers: [
+        AppNgxUiLoaderService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
@@ -137,6 +153,10 @@ const MY_NATIVE_DATE_FORMATS = {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
         }
+    ],
+    exports: [
+        SidebarComponent,
+        FooterComponent
     ],
     bootstrap: [JhiMainComponent]
 })

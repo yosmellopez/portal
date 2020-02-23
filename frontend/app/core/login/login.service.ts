@@ -15,7 +15,7 @@ export class LoginService {
     return new Promise((resolve, reject) => {
       this.authServerProvider.login(credentials).subscribe(
         data => {
-          this.accountService.identity(true).then(account => {
+          this.accountService.identity(true).subscribe(account=>{
             resolve(data);
           });
           return cb();

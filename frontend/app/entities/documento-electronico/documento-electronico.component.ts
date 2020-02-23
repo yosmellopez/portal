@@ -185,7 +185,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         this.activatedRoute.data.subscribe(({tipo}) => {
             this.tipoDocumento = tipo;
         });
-        this.accountService.identity().then(account => {
+        this.accountService.identity().subscribe(account => {
             this.currentAccount = account;
         });
         this.registerChangeInDocumentoElectronicos();

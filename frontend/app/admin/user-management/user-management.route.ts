@@ -8,13 +8,14 @@ import { UserService } from 'app/core/user/user.service';
 import { UserMgmtComponent } from './user-management.component';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
 import { UserMgmtUpdateComponent } from './user-management-update.component';
+import {map} from "rxjs/operators";
 
 @Injectable({ providedIn: 'root' })
 export class UserResolve implements CanActivate {
   constructor(private accountService: AccountService) {}
 
   canActivate() {
-    return this.accountService.identity().then(account => this.accountService.hasAnyAuthority(['ROLE_ADMIN']));
+    return this.accountService.identity().pipe(map(() => this.accountService.hasAnyAuthority(['ROLE_ADMIN'])));
   }
 }
 

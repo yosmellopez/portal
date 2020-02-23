@@ -25,7 +25,7 @@ export class SettingsComponent implements OnInit {
   constructor(private accountService: AccountService, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.accountService.identity().then(account => {
+    this.accountService.identity().subscribe(account => {
       this.updateForm(account);
     });
   }
@@ -36,7 +36,7 @@ export class SettingsComponent implements OnInit {
       () => {
         this.error = null;
         this.success = 'OK';
-        this.accountService.identity(true).then(account => {
+        this.accountService.identity(true).subscribe(account => {
           this.updateForm(account);
         });
       },

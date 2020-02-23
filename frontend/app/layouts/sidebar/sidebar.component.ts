@@ -40,7 +40,7 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.auth.identity().then(valor => {
+        this.auth.identity().subscribe(valor => {
             if (valor) {
                 this.usuario = valor;
                 this.rutas.forEach(ruta => {

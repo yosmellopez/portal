@@ -1,0 +1,14 @@
+webpackHotUpdate("main",{
+
+/***/ "./frontend/app/layouts/main/main.component.html":
+/*!*******************************************************!*\
+  !*** ./frontend/app/layouts/main/main.component.html ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = \" <router-outlet> <ngx-ui-loader></ngx-ui-loader> <app-spinner></app-spinner> </router-outlet> <div class=\\\"wrapper\\\"> <div class=\\\"sidebar\\\" data-color=\\\"azure\\\" data-background-color=\\\"white\\\"> <jhi-sidebar></jhi-sidebar> <div class=\\\"sidebar-background\\\"></div> </div> <div class=\\\"main-panel\\\" fxLayout=\\\"column\\\" fxLayoutAlign=\\\"stretch\\\" fxFlex=\\\"auto\\\"> <perfect-scrollbar [scrollIndicators]=\\\"true\\\" [config]=\\\"config\\\"> <div> <router-outlet name=\\\"navbar\\\"></router-outlet> </div> <div class=\\\"container-fluid\\\"> <div class=\\\"card jh-card\\\" style=\\\"min-height: 700px\\\"> <router-outlet #outlet=\\\"outlet\\\"></router-outlet> <router-outlet name=\\\"popup\\\"></router-outlet> </div> <jhi-footer></jhi-footer> </div> </perfect-scrollbar> </div> </div> \";//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9mcm9udGVuZC9hcHAvbGF5b3V0cy9tYWluL21haW4uY29tcG9uZW50Lmh0bWw/NDViMyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSIsImZpbGUiOiIuL2Zyb250ZW5kL2FwcC9sYXlvdXRzL21haW4vbWFpbi5jb21wb25lbnQuaHRtbC5qcyIsInNvdXJjZXNDb250ZW50IjpbIm1vZHVsZS5leHBvcnRzID0gXCIgPHJvdXRlci1vdXRsZXQ+IDxuZ3gtdWktbG9hZGVyPjwvbmd4LXVpLWxvYWRlcj4gPGFwcC1zcGlubmVyPjwvYXBwLXNwaW5uZXI+IDwvcm91dGVyLW91dGxldD4gPGRpdiBjbGFzcz1cXFwid3JhcHBlclxcXCI+IDxkaXYgY2xhc3M9XFxcInNpZGViYXJcXFwiIGRhdGEtY29sb3I9XFxcImF6dXJlXFxcIiBkYXRhLWJhY2tncm91bmQtY29sb3I9XFxcIndoaXRlXFxcIj4gPGpoaS1zaWRlYmFyPjwvamhpLXNpZGViYXI+IDxkaXYgY2xhc3M9XFxcInNpZGViYXItYmFja2dyb3VuZFxcXCI+PC9kaXY+IDwvZGl2PiA8ZGl2IGNsYXNzPVxcXCJtYWluLXBhbmVsXFxcIiBmeExheW91dD1cXFwiY29sdW1uXFxcIiBmeExheW91dEFsaWduPVxcXCJzdHJldGNoXFxcIiBmeEZsZXg9XFxcImF1dG9cXFwiPiA8cGVyZmVjdC1zY3JvbGxiYXIgW3Njcm9sbEluZGljYXRvcnNdPVxcXCJ0cnVlXFxcIiBbY29uZmlnXT1cXFwiY29uZmlnXFxcIj4gPGRpdj4gPHJvdXRlci1vdXRsZXQgbmFtZT1cXFwibmF2YmFyXFxcIj48L3JvdXRlci1vdXRsZXQ+IDwvZGl2PiA8ZGl2IGNsYXNzPVxcXCJjb250YWluZXItZmx1aWRcXFwiPiA8ZGl2IGNsYXNzPVxcXCJjYXJkIGpoLWNhcmRcXFwiIHN0eWxlPVxcXCJtaW4taGVpZ2h0OiA3MDBweFxcXCI+IDxyb3V0ZXItb3V0bGV0ICNvdXRsZXQ9XFxcIm91dGxldFxcXCI+PC9yb3V0ZXItb3V0bGV0PiA8cm91dGVyLW91dGxldCBuYW1lPVxcXCJwb3B1cFxcXCI+PC9yb3V0ZXItb3V0bGV0PiA8L2Rpdj4gPGpoaS1mb290ZXI+PC9qaGktZm9vdGVyPiA8L2Rpdj4gPC9wZXJmZWN0LXNjcm9sbGJhcj4gPC9kaXY+IDwvZGl2PiBcIjsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./frontend/app/layouts/main/main.component.html\n");
+
+/***/ })
+
+})

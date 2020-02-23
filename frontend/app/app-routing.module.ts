@@ -1,11 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { errorRoute } from './layouts/error/error.route';
-import { navbarRoute } from './layouts/navbar/navbar.route';
-import { DEBUG_INFO_ENABLED } from 'app/app.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { SigninComponent } from 'app/layouts/signin/signin.component';
-import { HomeComponent } from 'app/home/home.component';
+import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {errorRoute} from './layouts/error/error.route';
+import {navbarRoute} from './layouts/navbar/navbar.route';
+import {DEBUG_INFO_ENABLED} from 'app/app.constants';
+import {UserRouteAccessService} from 'app/core/auth/user-route-access-service';
+import {SigninComponent} from 'app/layouts/signin/signin.component';
+import {HomeComponent} from 'app/home/home.component';
+import {LoginAccessService} from "app/core/auth/login-access-service";
 
 const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
 
@@ -14,23 +15,14 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         RouterModule.forRoot(
             [
                 {
-                    path: 'signin',
-                    component: SigninComponent
+                    path: 'login',
+                    loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+                    canActivate: [LoginAccessService]
                 },
                 {
-                    path: 'home',
-                    component: HomeComponent,
-                    canActivate: [UserRouteAccessService]
-                },
-                {
-                    path: 'admin',
-                    loadChildren: () => import('./admin/admin.module').then(m => m.PortalAdminModule),
-                    canActivate: [UserRouteAccessService]
-                },
-                {
-                    path: 'account',
-                    loadChildren: () => import('./account/account.module').then(m => m.PortalAccountModule),
-                    canActivate: [UserRouteAccessService]
+                    path: '',
+                    loadChildren: () => import('./application/application.module').then(m => m.ApplicationModule),
+                    canActivateChild: [UserRouteAccessService]
                 },
                 ...LAYOUT_ROUTES
             ],
