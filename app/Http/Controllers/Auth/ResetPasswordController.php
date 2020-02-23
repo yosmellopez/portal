@@ -45,4 +45,10 @@ class ResetPasswordController extends Controller
 //        $currentPassword = $request->currentPassword;
         return response()->json(array(), 200);
     }
+
+    public function passwordReset(Request $request)
+    {
+        $email = $request->email;
+        return response()->json(array("correo" => $email), 200);
+    }
 }

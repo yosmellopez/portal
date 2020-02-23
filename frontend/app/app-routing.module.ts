@@ -17,6 +17,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     canActivate: [LoginAccessService]
                 },
                 {
+                    path: 'account',
+                    loadChildren: () => import('./account/account.module').then(m => m.PortalAccountModule),
+                },
+                {
                     path: '',
                     loadChildren: () => import('./application/application.module').then(m => m.ApplicationModule),
                     canActivateChild: [UserRouteAccessService]
