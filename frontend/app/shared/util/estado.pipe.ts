@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Rol } from 'app/shared/model/rol.model';
 
 @Pipe({name: 'estado'})
 export class EstadoPipe implements PipeTransform {

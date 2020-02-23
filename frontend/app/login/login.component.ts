@@ -1,22 +1,22 @@
-import {AfterViewInit, Component, ElementRef, Renderer, ViewChildren} from '@angular/core';
-import { LoginService } from 'app/core/login/login.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewChildren} from '@angular/core';
+import {LoginService} from 'app/core/login/login.service';
+import {StateStorageService} from 'app/core/auth/state-storage.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {JhiEventManager} from 'ng-jhipster';
 import {AccountService} from "app/core/auth/account.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'jhi-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements AfterViewInit, OnInit {
     authenticationError: boolean;
     imagen: string = '';
     isLoading: boolean = false;
     loginForm: FormGroup;
-    @ViewChildren('#login') loginInput;
+    @ViewChild('loginInput', {static: false}) loginInput: ElementRef;
 
     constructor(
         private eventManager: JhiEventManager,
@@ -24,6 +24,7 @@ export class LoginComponent implements AfterViewInit {
         private stateStorageService: StateStorageService,
         private accountService: AccountService,
         private elementRef: ElementRef,
+        private render: Renderer2,
         private router: Router,
     ) {
         this.loginForm = new FormGroup({
@@ -34,7 +35,7 @@ export class LoginComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        setTimeout(() => this.loginInput.nativeElement.focus(), 0);
+        setTimeout(() => this.loginInput.nativeElement.focus(), 200);
     }
 
     ngOnInit() {

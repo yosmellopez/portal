@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError, RouterOutlet } from '@angular/router';
-import { animate, group, keyframes, query, style, transition, trigger } from '@angular/animations';
 import { AccountService } from 'app/core/auth/account.service';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 

@@ -11,7 +11,9 @@ import {
 import {AccountService} from 'app/core/auth/account.service';
 import {LoginModalService} from 'app/core/login/login-modal.service';
 import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
+import {exitCodeFromResult} from "@angular/compiler-cli";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({providedIn: 'root'})
 export class UserRouteAccessService implements CanActivate, CanActivateChild {
@@ -27,7 +29,7 @@ export class UserRouteAccessService implements CanActivate, CanActivateChild {
     }
 
     checkLogin(authorities: string[], url: string): Observable<boolean> {
-        return this.accountService.identity(true).pipe(
+        const result = this.accountService.identity(true).pipe(
             map(account => {
                 console.log(account);
                 if (account) {
@@ -49,6 +51,13 @@ export class UserRouteAccessService implements CanActivate, CanActivateChild {
                 }
             })
         );
+        result.subscribe(() => {
+            return true;
+        }, (error: HttpErrorResponse) => {
+            console.error(error.message);
+            this.router.navigate(['/login']);
+        });
+        return result;
     }
 
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

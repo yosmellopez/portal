@@ -304,7 +304,7 @@ mat-error {
 }
 
 .main-panel {
-  padding-left: 300px
+  //padding-left: 300px
 }
 
 .pull-right {
@@ -318,7 +318,7 @@ mat-error {
 
 @media only screen and (max-width: 1600px) {
   .main-panel {
-    padding-left: 300px
+    padding-left: 0;
   }
 }
 
@@ -344,7 +344,7 @@ mat-error {
     display: none;
   }
   .main-panel {
-    padding-left: 300px
+    padding-left: 0;
   }
 }
 

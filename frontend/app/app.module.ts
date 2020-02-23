@@ -10,7 +10,6 @@ import {NotificationInterceptor} from './blocks/interceptor/notification.interce
 import {PortalSharedModule} from 'app/shared/shared.module';
 import {PortalCoreModule} from 'app/core/core.module';
 import {PortalAppRoutingModule} from './app-routing.module';
-import {PortalHomeModule} from './home/home.module';
 import {PortalEntityModule} from './entities/entity.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -93,7 +92,6 @@ const MY_NATIVE_DATE_FORMATS = {
         FlexLayoutModule,
         PortalSharedModule,
         PortalCoreModule,
-        PortalHomeModule,
         PerfectScrollbarModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         PortalEntityModule,
@@ -123,7 +121,7 @@ const MY_NATIVE_DATE_FORMATS = {
             }
         })
     ],
-    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent],
+    declarations: [JhiMainComponent],
     providers: [
         AppNgxUiLoaderService,
         {

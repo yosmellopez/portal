@@ -6,7 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { DashboardService } from 'app/home/dashboard-service';
+import { DashboardService } from 'app/application/home/dashboard-service';
 import { filter, map, } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { DocumentoElectronico, IDocumentoElectronico } from 'app/shared/model/documento-electronico.model';
