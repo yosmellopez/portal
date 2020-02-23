@@ -45,7 +45,7 @@ class EmailController extends Controller
 //        var_dump($userEmail);
 //        $mailSender = env("MAIL_SENDER");
         try {
-            Mail::to("ylopez@vsperu.com")->send(new ResetPassword($usuario));
+            Mail::to($usuario->email)->send(new ResetPassword($usuario));
             if (Mail::failures()) {
                 return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
             } else {
