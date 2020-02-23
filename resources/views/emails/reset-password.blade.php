@@ -1,11 +1,9 @@
 @component('vendor.mail.markdown.message')
     # E-mail de bienvenida
 
-    Hola estimado cliente, {{ $nombreCliente }}, bienvenido a **Programación y  más** !
+    Hola estimado usuario, {{ $nombreUsuario }}!
 
-    Usted ha recibido este correo debido a su compra en {{ config('app.name') }} y se le ha enviado el documento {{ $numSerie }}
-
-    Espero que el material del sitio te sea de ayuda, y puedas mejorar tus habilidades en programación.
+    Usted ha recibido este correo debido a que ha solicitado cambiar su contraseña en {{ config('app.name') }}
 
     Saludos, y que estés bien !
 @endcomponent

@@ -32,7 +32,7 @@ class DocumentoMail extends Mailable
     {
         $nombreCliente = $this->documento->cliente->nombreClient;
         return $this->from('ylopez@vsperu.com', 'Portal de Facturación Electrónica')
-            ->subject('Mailtrap Confirmation')
+            ->subject('Documento Electrónico')
             ->markdown('emails.documento')
             ->with([
                 "rucCliente" => $this->documento->rucClient,

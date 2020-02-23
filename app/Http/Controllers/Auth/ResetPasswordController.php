@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Entity\Usuario;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EmailController;
+use App\Mail\ResetPassword;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller
 {
@@ -49,6 +53,13 @@ class ResetPasswordController extends Controller
     public function passwordReset(Request $request)
     {
         $email = $request->email;
-        return response()->json(array("correo" => $email), 200);
+        $usuario = Usuario::where("email", $email)->first();
+        if ($usuario) {
+            $emailController = new EmailController();
+            $emailController->sendEmailToUser($request, $usuario);
+            return response()->json(array("correo" => $email), 200);
+        } else {
+            return response()->json(array("msg" => "Correo no encontrado en la base de datos.", "correo" => $email, "usuario" => $usuario), 404);
+        }
     }
 }

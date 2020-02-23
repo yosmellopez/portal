@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Entity\Cliente;
 use App\Entity\Documento;
+use App\Mail\DocumentoMail;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Matriphe\Md5Hash\Md5Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -63,11 +65,15 @@ class PublicadorController extends Controller
             $data["docPdf"] = $localPath . '.pdf';
             $data["docXml"] = $localPath . '.xml';
             $data["docCdr"] = $localPath . '.zip';
-            if (Documento::where("numSerie", $data["numSerie"])->first()) {
-                $documento->fill($data)->update();
+            $documentoDb = Documento::where("numSerie", $data["numSerie"])->first();
+            if ($documentoDb) {
+                $data["idDocumento"] = $documentoDb->idDocumento;
+                $documentoDb->fill($data)->update();
             } else {
                 $documento->fill($data)->save();
             }
+            $documentoController = new EmailController();
+            $documentoController->sendEmail($request, $data["idDocumento"]);
         } catch (\Exception $e) {
             return response()->json(array("error" => $e->getMessage()), 201);
         }
