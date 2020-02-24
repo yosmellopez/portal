@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Entity\Usuario;
+use App\Entity\UsuarioToken;
+use App\Exceptions\GeneralAPIException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmailController;
-use App\Mail\ResetPassword;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Artisan;
 
 class ResetPasswordController extends Controller
 {
@@ -55,8 +56,23 @@ class ResetPasswordController extends Controller
         $email = $request->email;
         $usuario = Usuario::where("email", $email)->first();
         if ($usuario) {
-            $emailController = new EmailController();
-            $emailController->sendEmailToUser($request, $usuario);
+            try {
+                $token = openssl_random_pseudo_bytes(64);
+                $token = bin2hex($token);
+                $userToken = new UsuarioToken();
+                $userToken->token = $token;
+                $userToken->email = $email;
+                $fechaActual = date_create();
+                $fechaExpiracion = $fechaActual->modify("+3 day");
+                $userToken->token_expiration = $fechaExpiracion;
+                $userToken->save();
+                $emailController = new EmailController();
+                $emailController->sendEmailToUser($request, $usuario);
+            } catch (GeneralAPIException $e) {
+
+            } catch (Exception $e) {
+                Artisan::call('migrate', array('--path' => 'database/migrations'));
+            }
             return response()->json(array("correo" => $email), 200);
         } else {
             return response()->json(array("msg" => "Correo no encontrado en la base de datos.", "correo" => $email, "usuario" => $usuario), 404);

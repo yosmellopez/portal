@@ -13,9 +13,11 @@ class CreateRolsTable extends Migration
      */
     public function up()
     {
-        Schema::table('fe_roles', function (Blueprint $table) {
-//            $table->string("role")->nullable();
-        });
+        if (!Schema::hasTable('fe_roles')) {
+            Schema::table('fe_roles', function (Blueprint $table) {
+                $table->string("role")->nullable();
+            });
+        }
     }
 
     /**

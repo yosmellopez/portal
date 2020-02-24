@@ -13,8 +13,10 @@ class CreateDocumentosTable extends Migration
      */
     public function up()
     {
-        Schema::table('fe_docelectronico', function (Blueprint $table) {
-        });
+        if (!Schema::hasTable('fe_docelectronico')) {
+            Schema::table('fe_docelectronico', function (Blueprint $table) {
+            });
+        }
     }
 
     /**

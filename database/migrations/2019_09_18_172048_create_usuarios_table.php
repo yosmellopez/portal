@@ -13,13 +13,15 @@ class CreateUsuariosTable extends Migration
      */
     public function up()
     {
-        Schema::table('fe_usuario', function (Blueprint $table) {
+        if (!Schema::hasTable('fe_usuario')) {
+            Schema::table('fe_usuario', function (Blueprint $table) {
 //            $table->string('api_token', 512)
 //                ->unique()
 //                ->nullable()
 //                ->default(null);
 //            $table->timestamps();/
-        });
+            });
+        }
     }
 
     /**

@@ -18,7 +18,8 @@
     "laravel/tinker": "~1.0",
     "matriphe/laravel-md5-hash": "^1.0",
     "tymon/jwt-auth": "~1.0.0-rc.5.1",
-    "ext-fileinfo": "*"
+    "ext-fileinfo": "*",
+    "ext-openssl": "*"
   },
   "require-dev": {
     "filp/whoops": "~2.0",
