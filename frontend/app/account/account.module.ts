@@ -12,9 +12,11 @@ import {PasswordResetFinishComponent} from './password-reset/finish/password-res
 import {SettingsComponent} from './settings/settings.component';
 import {accountState} from './account.route';
 import {PasswordLenghtModule} from 'app/password-lenght/password-lenght.module';
+import {AccountComponent} from "app/account/account.component";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @NgModule({
-    imports: [PortalSharedModule, RouterModule.forChild(accountState), PasswordLenghtModule],
+    imports: [PortalSharedModule, RouterModule.forChild(accountState), PasswordLenghtModule, PerfectScrollbarModule],
     declarations: [
         ActivateComponent,
         RegisterComponent,
@@ -22,7 +24,8 @@ import {PasswordLenghtModule} from 'app/password-lenght/password-lenght.module';
         PasswordStrengthBarComponent,
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
-        SettingsComponent
+        SettingsComponent,
+        AccountComponent
     ],
     exports: [PasswordResetInitComponent]
 })
