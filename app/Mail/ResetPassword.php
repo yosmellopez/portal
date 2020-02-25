@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Entity\Usuario;
+use App\Entity\UsuarioToken;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -12,15 +13,17 @@ class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
     protected $usuario;
+    protected $usuarioToken;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Usuario $usuario)
+    public function __construct(Usuario $usuario, UsuarioToken $usuarioToken)
     {
         $this->usuario = $usuario;
+        $this->usuarioToken = $usuarioToken;
     }
 
     /**
@@ -35,6 +38,7 @@ class ResetPassword extends Mailable
             ->markdown('emails.reset-password')
             ->with([
                 "nombreUsuario" => $this->usuario->nombUsuario,
+                "usuarioToken" => $this->usuarioToken->token
             ]);
     }
 }
