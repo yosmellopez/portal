@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('authenticate', 'Auth\LoginController@login');
 Route::post('account/reset-password/init', 'Auth\ResetPasswordController@passwordReset');
+Route::post('account/reset-password/finish', 'Auth\ResetPasswordController@changePassword');
 Route::post('token/validate', 'Auth\ResetPasswordController@validateToken');
 Route::post('publicar', 'PublicadorController@publicar');
 Route::get('download/{idDocumento}', 'FilesController@downloadDocument');

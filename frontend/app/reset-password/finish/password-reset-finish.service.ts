@@ -10,11 +10,11 @@ export class PasswordResetFinishService {
     constructor(private http: HttpClient) {
     }
 
-    save(keyAndPassword: any): Observable<any> {
-        return this.http.post(SERVER_API_URL + 'api/account/reset-password/finish', keyAndPassword);
+    save(keyAndPassword: any): Observable<HttpResponse<ResetResponse>> {
+        return this.http.post<ResetResponse>(SERVER_API_URL + 'api/account/reset-password/finish', keyAndPassword, {observe: 'response'});
     }
 
     validateToken(keyAndPassword: string): Observable<HttpResponse<ResetResponse>> {
-        return this.http.post<HttpResponse<ResetResponse>>(SERVER_API_URL + 'api/token/validate', {token: keyAndPassword});
+        return this.http.post<ResetResponse>(SERVER_API_URL + 'api/token/validate', {token: keyAndPassword}, {observe: 'response'});
     }
 }

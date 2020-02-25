@@ -10,6 +10,7 @@ use App\Http\Controllers\EmailController;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Matriphe\Md5Hash\Md5Hash;
 
 class ResetPasswordController extends Controller
 {
@@ -48,22 +49,35 @@ class ResetPasswordController extends Controller
         if ($usuarioToken) {
             $tokenExpiration = date_create($usuarioToken->token_expiration);
             $fechaActual = date_create();
-            if ($fechaActual > $tokenExpiration) {
-                return response()->json(array("success" => true, "msg" => "El token es valido", "fechaActual" => $fechaActual, "fechaExpiracion" => $tokenExpiration), 200);
+            if ($fechaActual < $tokenExpiration) {
+                return response()->json(array("success" => true, "msg" => "El token es valido"), 200);
             }
-            return response()->json(array("success" => false, "msg" => "El token proporcionado ha expirado."), 200);
+            return response()->json(array("success" => false, "msg" => "El token proporcionado ha expirado.", "fechaActual" => $fechaActual, "fechaExpiracion" => $tokenExpiration), 200);
         }
         return response()->json(array("success" => false, "msg" => "El token proporcionado no existe."), 200);
     }
 
     public function changePassword(Request $request)
     {
-//        $user = $request->user();
-////        var_dump($user);
-//        $md5Hasher = new Md5Hash();
-//        $newPassword = $request->newPassword;
-//        $currentPassword = $request->currentPassword;
-        return response()->json(array(), 200);
+        $newPassword = $request->newPassword;
+        $token = $request->token;
+        $usuarioToken = UsuarioToken::where("token", $token)->first();
+        if ($usuarioToken) {
+            $tokenExpiration = date_create($usuarioToken->token_expiration);
+            $fechaActual = date_create();
+            if ($fechaActual < $tokenExpiration) {
+                $usuarioDb = Usuario::where("email", $usuarioToken->email)->with("rol")->first();
+                $data = array();
+                if (!isset($newPassword)) {
+                    $hash = new Md5Hash();
+                    $data["claveUsuario"] = $hash->make($newPassword);
+                }
+                $usuarioDb->fill($data)->save();
+                return response()->json(array("success" => true, "msg" => "Se ha cambiado la contraseña exitosamente."), 200);
+            }
+            return response()->json(array("success" => false, "msg" => "Su contraseña no se pudo cambiar. Recuerde que el token de cambio de contraseña solo está activo 24 horas."), 200);
+        }
+        return response()->json(array("success" => false, "msg" => "El token proporcionado no existe."), 200);
     }
 
     public function passwordReset(Request $request)
@@ -78,7 +92,7 @@ class ResetPasswordController extends Controller
                 $userToken->token = $token;
                 $userToken->email = $email;
                 $fechaActual = date_create();
-                $fechaExpiracion = $fechaActual->modify("+3 day");
+                $fechaExpiracion = $fechaActual->modify("+1 day");
                 $userToken->token_expiration = $fechaExpiracion;
                 $userToken->save();
                 $emailController = new EmailController();

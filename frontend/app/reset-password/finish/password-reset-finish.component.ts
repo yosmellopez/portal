@@ -47,7 +47,6 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
                     map((res: HttpResponse<ResetResponse>) => res.body))
                 .subscribe((respuesta: ResetResponse) => {
                     if (respuesta.success) {
-                        this.success = 'OK';
                         this.error = null;
                         this.keyMissing = false;
                     } else {
@@ -74,19 +73,24 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
         if (password !== confirmPassword) {
             this.doNotMatch = 'ERROR';
         } else {
-            this.passwordResetFinishService.save({key: this.key, newPassword: password}).subscribe(
-                () => {
-                    this.success = 'OK';
-                },
-                () => {
-                    this.success = null;
-                    this.error = 'ERROR';
-                }
-            );
+            this.passwordResetFinishService.save({token: this.key, newPassword: password})
+                .pipe(
+                    filter((res: HttpResponse<ResetResponse>) => res.ok),
+                    map((res: HttpResponse<ResetResponse>) => res.body))
+                .subscribe((respuesta: ResetResponse) => {
+                        if (respuesta.success) {
+                            this.success = 'OK';
+                        } else {
+                            this.message = respuesta.msg;
+                            this.success = null;
+                            this.error = 'ERROR';
+                        }
+                    },
+                    () => {
+                        this.success = null;
+                        this.error = 'ERROR';
+                    }
+                );
         }
-    }
-
-    login() {
-        this.modalRef = this.loginModalService.open();
     }
 }
