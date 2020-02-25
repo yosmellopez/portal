@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {AccountService} from 'app/core/auth/account.service';
+import {Account} from 'app/core/user/account.model';
 
 // declare const $: any;
 declare interface RouteInfo {
@@ -13,16 +13,76 @@ declare interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    {path: '/documentos/factura', title: 'Factura de Venta', icon: 'assignment_turned', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/boleta', title: 'Boleta de Venta', icon: 'assignment', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/nota-credito', title: 'Nota de crédito', icon: 'content_paste', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/nota-debito', title: 'Nota de débito', icon: 'receipt', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/comprobante-percepcion', title: 'Comprobante de percepción', icon: 'description', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/comprobante-retencion', title: 'Comprobante de Retención', icon: 'assignment_late', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/comunicacion-baja', title: 'Comunicación Baja', icon: 'assignment_returned', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/guia-remision', title: 'Guía de Remisión', icon: 'list', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/resumen-boleta', title: 'Resumen Diario Boleta', icon: 'today', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
-    {path: '/documentos/registro-documentos', title: 'Registro Documentos', icon: 'create', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']},
+    {
+        path: '/documentos/factura',
+        title: 'Factura de Venta',
+        icon: 'assignment_turned',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/boleta',
+        title: 'Boleta de Venta',
+        icon: 'assignment',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/nota-credito',
+        title: 'Nota de crédito',
+        icon: 'content_paste',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/nota-debito',
+        title: 'Nota de débito',
+        icon: 'receipt',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/comprobante-percepcion',
+        title: 'Comprobante de percepción',
+        icon: 'description',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/comprobante-retencion',
+        title: 'Comprobante de Retención',
+        icon: 'assignment_late',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/comunicacion-baja',
+        title: 'Comunicación Baja',
+        icon: 'assignment_returned',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/guia-remision',
+        title: 'Guía de Remisión',
+        icon: 'list',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/resumen-boleta',
+        title: 'Resumen Diario Boleta',
+        icon: 'today',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
+    {
+        path: '/documentos/registro-documentos',
+        title: 'Registro Documentos',
+        icon: 'create',
+        class: '',
+        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
+    },
     {path: '/clientes', title: 'Clientes', icon: 'group', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR']},
     {path: '/usuarios', title: 'Usuarios', icon: 'account_box', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR']},
 ];
@@ -52,6 +112,10 @@ export class SidebarComponent implements OnInit {
         this.route.data.subscribe(data => {
             // console.log(data);
         });
+    }
+
+    isAuthenticated() {
+        return this.auth.isAuthenticated();
     }
 
     isMobileMenu() {

@@ -1,4 +1,4 @@
-<div class="logo">
+<div class="logo" *ngIf="isAuthenticated()">
     <a href="/" class="simple-text">
         <div class="logo-img">
             <img src="../../../content/img/angular.png"/>
@@ -6,7 +6,7 @@
         Portal Ventura
     </a>
 </div>
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper" *ngIf="isAuthenticated()">
     <div *ngIf="isMobileMenu()">
         <form class="navbar-form">
       <span class="bmd-form-group">

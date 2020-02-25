@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="azure" data-background-color="white">
+    <div class="sidebar" data-color="azure" data-background-color="white" *ngIf="auth.isAuthenticated()">
         <jhi-sidebar></jhi-sidebar>
         <div class="sidebar-background"></div>
     </div>

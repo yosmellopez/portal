@@ -27,7 +27,7 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
         SettingsComponent,
         AccountComponent
     ],
-    exports: [PasswordResetInitComponent]
+    exports: [PasswordResetInitComponent, PasswordStrengthBarComponent]
 })
 export class PortalAccountModule {
 }

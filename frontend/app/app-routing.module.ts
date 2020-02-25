@@ -15,6 +15,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     path: 'login',
                     loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
                     canActivate: [LoginAccessService]
+                },                {
+                    path: 'reset',
+                    loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule),
+                    canActivate: [LoginAccessService]
                 },
                 {
                     path: 'account',
