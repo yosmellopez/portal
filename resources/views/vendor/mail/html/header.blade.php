@@ -2,7 +2,9 @@
     <td class="header">
         <a href="{{ $url }}">
             {{ $slot }}
-            <img src="https://felectronica.yapa.pe/flotas/assets/images/logo.png" width="300" height="200">
+            ![Some option text][logo]
+
+            [logo]: {{asset('/content/img/cover.jpeg')}} "Logo"
         </a>
     </td>
 </tr>

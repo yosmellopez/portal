@@ -17,14 +17,6 @@
         <img src="https://portalventura.herokuapp.com/content/9db278d630f5fabd8e7ba16c2e329a3a.png" data-auto-embed="attachment">
     </p>
 
-    <tr>
-        <td class="header">
-            <a href="{{ $url }}">
-                {{ Illuminate\Mail\Markdown::parse($slot) }}
-            </a>
-        </td>
-    </tr>
-
     Saludos, y que estés bien !
 @endcomponent
 

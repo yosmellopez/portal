@@ -1,4 +1,4 @@
-import { IRol, Rol } from 'app/shared/model/rol.model';
+import {IRol, Rol} from 'app/shared/model/rol.model';
 
 export interface IUsuario {
     idUsuario?: number;
@@ -20,4 +20,9 @@ export class Usuario implements IUsuario {
         public estadoUsuario?: string,
         public rol?: Rol) {
     }
+}
+
+export interface ResetResponse {
+    success: boolean;
+    msg: string;
 }

@@ -41,6 +41,21 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
+    public function validateToken(Request $request)
+    {
+        $token = $request->token;
+        $usuarioToken = UsuarioToken::where("token", $token)->first();
+        if ($usuarioToken) {
+            $tokenExpiration = date_create($usuarioToken->token_expiration);
+            $fechaActual = date_create();
+            if ($fechaActual > $tokenExpiration) {
+                return response()->json(array("success" => true, "msg" => "El token es valido", "fechaActual" => $fechaActual, "fechaExpiracion" => $tokenExpiration), 200);
+            }
+            return response()->json(array("success" => false, "msg" => "El token proporcionado ha expirado."), 200);
+        }
+        return response()->json(array("success" => false, "msg" => "El token proporcionado no existe."), 200);
+    }
+
     public function changePassword(Request $request)
     {
 //        $user = $request->user();
@@ -69,7 +84,7 @@ class ResetPasswordController extends Controller
                 $emailController = new EmailController();
                 $emailController->sendEmailToUser($request, $usuario, $userToken);
             } catch (GeneralAPIException $e) {
-
+                return response()->json(array("error" => $e->getMessage()), 200);
             } catch (Exception $e) {
                 Artisan::call('migrate', array('--path' => 'database/migrations'));
             }

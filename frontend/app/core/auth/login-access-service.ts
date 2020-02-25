@@ -18,7 +18,7 @@ export class LoginAccessService implements CanActivate {
 
     checkLogin(): Observable<boolean> {
         this.accountService
-            .identity(true)
+            .identity()
             .pipe(
                 map(account => {
                     if (account) {
