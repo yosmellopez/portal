@@ -15,3 +15,20 @@
 
     Saludos, y que estés bien !
 @endcomponent
+
+@component('mail::message')
+    # Order Shipped
+
+    Your order has been shipped!
+
+    @component('mail::button', ['url' => $url])
+        View Order
+    @endcomponent
+
+    Purchased product:
+
+    ![product](https://domain.com/products/product-1.png)
+
+    Thanks,<br>
+    {{ config('app.name') }}
+@endcomponent
