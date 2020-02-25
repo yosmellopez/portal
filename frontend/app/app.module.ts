@@ -49,6 +49,7 @@ import {
 import {AppNgxUiLoaderService} from "app/app-ngx-ui-loader.service";
 import {MissingTranslationHandler, TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {JhiConfigService, missingTranslationHandler, translatePartialLoader} from "ng-jhipster";
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from "@angular/material-moment-adapter";
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     bgsColor: '#4680ff',
@@ -90,6 +91,8 @@ const MY_NATIVE_DATE_FORMATS = {
         BrowserModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
+        MatDatepickerModule,
+        MatMomentDateModule,
         PortalSharedModule,
         PortalCoreModule,
         PerfectScrollbarModule,
@@ -144,6 +147,7 @@ const MY_NATIVE_DATE_FORMATS = {
             useClass: NotificationInterceptor,
             multi: true
         },
+        {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
         {provide: MAT_DATE_FORMATS, useValue: MY_NATIVE_DATE_FORMATS},
         {provide: LOCALE_ID, useValue: 'es'},
         {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl()},

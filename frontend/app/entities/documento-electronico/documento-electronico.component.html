@@ -47,7 +47,7 @@
                                     <div class="col-sm-6">
                                         <mat-form-field>
                                             <input matInput [matDatepicker]="fechaInicio" placeholder="Seleccione fecha inicio" formControlName="fechaEmisionInicio"
-                                                   [min]="minDate" [max]="selectedEndDate" [errorStateMatcher]="matcher">
+                                                   [errorStateMatcher]="matcher" [matDatepickerFilter]="filterDaysInicial" (click)="showFechaInicio()" (focus)="showFechaInicio()">
                                             <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
                                             <mat-datepicker #fechaInicio></mat-datepicker>
                                         </mat-form-field>
@@ -55,7 +55,7 @@
                                     <div class="col-sm-6">
                                         <mat-form-field>
                                             <input matInput [matDatepicker]="fechaFin" placeholder="Seleccione fecha fin" formControlName="fechaEmisionFin"
-                                                   [min]="selectedStartDate" [max]="maxDate" [errorStateMatcher]="matcher">
+                                                   [errorStateMatcher]="matcher" [matDatepickerFilter]="filterDaysFinal" (click)="showFechaFin()" (focus)="showFechaFin()">
                                             <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
                                             <mat-datepicker #fechaFin></mat-datepicker>
                                         </mat-form-field>
@@ -135,7 +135,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="docPdf">
-                    <mat-header-cell *matHeaderCellDef class="center-block"> PDF Documento</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef class="center-block"> PDF</mat-header-cell>
                     <mat-cell *matCellDef="let element" class="center-block table-actions-theme">
                         <button mat-mini-fab color="primary" (click)="downloadDocument(element,'pdf')"
                                 matTooltip="Descargar pdf [{{element.numSerie}}]" matTooltipClass="apptooltip">
@@ -145,7 +145,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="docXml">
-                    <mat-header-cell *matHeaderCellDef class="center-block"> XML Documento</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef class="center-block"> XML</mat-header-cell>
                     <mat-cell *matCellDef="let element" class="center-block">
                         <button mat-mini-fab color="primary" (click)="downloadDocument(element,'xml')" class="btn-success-color"
                                 matTooltip="Descargar xml [{{element.numSerie}}]" matTooltipClass="apptooltip">
@@ -155,7 +155,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="docCdr">
-                    <mat-header-cell *matHeaderCellDef class="center-block"> CDR Documento</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef class="center-block"> CDR</mat-header-cell>
                     <mat-cell *matCellDef="let element" class="center-block">
                         <button mat-mini-fab color="primary" (click)="downloadDocument(element,'cdr')" class="btn-info-color"
                                 matTooltip="Descargar CDR [{{element.numSerie}}]" matTooltipClass="apptooltip">

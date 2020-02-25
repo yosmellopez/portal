@@ -1,29 +1,40 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { merge, of, Subscription } from 'rxjs';
+import {AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {HttpErrorResponse, HttpEventType, HttpResponse} from '@angular/common/http';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {merge, of, Subscription} from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
-import { DocumentoElectronico, IDocumentoElectronico, TipoDocumento } from 'app/shared/model/documento-electronico.model';
-import { AccountService } from 'app/core/auth/account.service';
-import { DocumentoElectronicoService } from './documento-electronico.service';
-import { DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MatPaginator } from '@angular/material/paginator';
-import { FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { catchError, filter, map, startWith, switchMap } from 'rxjs/operators';
-import { AppResponseBody, Estado, MessageResponse, ProgressStatus, ProgressStatusEnum, Serie, TipoMoneda } from 'app/shared/model/generic-model';
+import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
+import {DocumentoElectronico, IDocumentoElectronico, TipoDocumento} from 'app/shared/model/documento-electronico.model';
+import {AccountService} from 'app/core/auth/account.service';
+import {DocumentoElectronicoService} from './documento-electronico.service';
+import {DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {MatPaginator} from '@angular/material/paginator';
+import {FormControl, FormGroup, FormGroupDirective, NgForm} from '@angular/forms';
+import {MatTableDataSource} from '@angular/material/table';
+import {catchError, filter, map, startWith, switchMap} from 'rxjs/operators';
+import {
+    AppResponseBody,
+    Estado,
+    MessageResponse,
+    ProgressStatus,
+    ProgressStatusEnum,
+    Serie,
+    TipoMoneda
+} from 'app/shared/model/generic-model';
 import * as FileSaver from 'file-saver';
-import { ExportType, MatTableExporterDirective, ExcelOptions } from 'mat-table-exporter';
-import { MatExpansionPanel } from '@angular/material/expansion';
-import { Properties } from 'xlsx';
-import { DatePipe } from '@angular/common';
-import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
-import { MatDialog } from '@angular/material/dialog';
-import { MensajeToast } from 'app/mensaje/window.mensaje';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {ExportType, MatTableExporterDirective, ExcelOptions} from 'mat-table-exporter';
+import {MatExpansionPanel} from '@angular/material/expansion';
+import {Properties} from 'xlsx';
+import {PDFExportComponent} from '@progress/kendo-angular-pdf-export';
+import {MatDialog} from '@angular/material/dialog';
+import {MensajeToast} from 'app/mensaje/window.mensaje';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatSort} from "@angular/material/sort";
+import {MatDatepicker} from "@angular/material/datepicker";
+// @ts-ignore
+import * as moment from 'moment';
+import {Moment} from 'moment';
 
 export const MY_FORMATS = {
     parse: {
@@ -71,6 +82,8 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     @ViewChild('exporter', {static: false}) exporter: MatTableExporterDirective;
     @ViewChild('pdf', {static: false}) pdfExporter: PDFExportComponent;
     @ViewChild('expansionPanel', {static: false}) expansionPanel: MatExpansionPanel;
+    @ViewChild('fechaInicio', {static: true}) fechaInicio: MatDatepicker<Moment>;
+    @ViewChild('fechaFin', {static: true}) fechaFin: MatDatepicker<Moment>;
     @Output() public downloadStatus: EventEmitter<ProgressStatus>;
 
     constructor(
@@ -80,7 +93,6 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         protected activatedRoute: ActivatedRoute,
         protected route: Router,
         protected accountService: AccountService,
-        protected datePipe: DatePipe,
         protected dialog: MatDialog,
         protected snackBar: MatSnackBar
     ) {
@@ -158,10 +170,10 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         const values = this.formulario.value;
         this.currentSearch = {...values};
         if (values.fechaEmisionInicio) {
-            this.currentSearch.fechaEmisionInicio = this.datePipe.transform(values.fechaEmisionInicio, 'dd/MM/yyyy');
+            this.currentSearch.fechaEmisionInicio = moment(values.fechaEmisionInicio, 'dd/MM/yyyy');
         }
         if (values.fechaEmisionFin) {
-            this.currentSearch.fechaEmisionFin = this.datePipe.transform(values.fechaEmisionFin, 'dd/MM/yyyy');
+            this.currentSearch.fechaEmisionFin = moment(values.fechaEmisionFin, 'dd/MM/yyyy');
         }
         this.currentSearch.tipoDoc = this.tipoDocumento.tipo;
         this.documentoElectronicoService.search(this.currentSearch).pipe(
@@ -191,7 +203,15 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         this.registerChangeInDocumentoElectronicos();
         this.route.events.subscribe(route => {
             this.expansionPanel.close();
-            this.formulario.reset({rucClient: '', numSerie: '', numero: '', fechaEmisionInicio: '', fechaEmisionFin: '', estadoSunat: '', monedaTransaccion: ''});
+            this.formulario.reset({
+                rucClient: '',
+                numSerie: '',
+                numero: '',
+                fechaEmisionInicio: '',
+                fechaEmisionFin: '',
+                estadoSunat: '',
+                monedaTransaccion: ''
+            });
             if (route instanceof NavigationEnd && paso) {
                 this.loadAll();
             }
@@ -235,7 +255,10 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             data => {
                 switch (data.type) {
                     case HttpEventType.DownloadProgress:
-                        this.downloadStatus.emit({status: ProgressStatusEnum.IN_PROGRESS, percentage: Math.round((data.loaded / data.total) * 100)});
+                        this.downloadStatus.emit({
+                            status: ProgressStatusEnum.IN_PROGRESS,
+                            percentage: Math.round((data.loaded / data.total) * 100)
+                        });
                         break;
                     case HttpEventType.Response:
                         switch (tipo) {
@@ -291,7 +314,12 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
 
     exportarTabla() {
         const properties: Properties = {Author: 'Ventura Soluciones', Title: this.tipoDocumento.title};
-        const excelOptions: ExcelOptions = {fileName: this.tipoDocumento.title, sheet: this.tipoDocumento.tipo, Props: properties, columnWidths:[]};
+        const excelOptions: ExcelOptions = {
+            fileName: this.tipoDocumento.title,
+            sheet: this.tipoDocumento.tipo,
+            Props: properties,
+            columnWidths: []
+        };
         this.exporter.exportTable(ExportType.XLSX, excelOptions);
     }
 
@@ -313,6 +341,14 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         });
     }
 
+    showFechaFin() {
+        this.fechaFin.open();
+    }
+
+    showFechaInicio() {
+        this.fechaInicio.open();
+    }
+
     createForm() {
         this.formulario = new FormGroup({
             rucClient: new FormControl('', []),
@@ -323,19 +359,33 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             estadoSunat: new FormControl('', []),
             monedaTransaccion: new FormControl('', []),
         });
-        this.formulario.controls['fechaEmisionInicio'].valueChanges.subscribe(value => {
-            if (value) {
-                const fecha = {year: value._i.year, month: value._i.month, date: value._i.date};
-                this.selectedStartDate = new Date(fecha.year, fecha.month, fecha.date);
-            }
-        });
-        this.formulario.controls['fechaEmisionFin'].valueChanges.subscribe(value => {
-            if (value) {
-                const fecha = {year: value._i.year, month: value._i.month, date: value._i.date};
-                this.selectedEndDate = new Date(fecha.year, fecha.month, fecha.date);
-            }
-        });
     }
+
+    filterDaysInicial = (fecha: Moment) => {
+        const fechaFinal = this.formulario.controls['fechaEmisionFin'].value as Moment;
+        const fechaActual = moment();
+        if (fechaFinal) {
+            return (
+                (fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear()) &&
+                (fecha.year() < fechaFinal.year() ? true : fecha.year() > fechaFinal.year() ? false : fecha.dayOfYear() < fechaFinal.dayOfYear())
+            );
+        } else {
+            return fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear();
+        }
+    };
+
+    filterDaysFinal = (fecha: Moment) => {
+        const fechaInicial = this.formulario.controls['fechaEmisionInicio'].value as Moment;
+        const fechaActual = moment();
+        if (fechaInicial) {
+            return (
+                (fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear()) &&
+                (fecha.year() > fechaInicial.year() ? true : fecha.year() < fechaInicial.year() ? false : fecha.dayOfYear() > fechaInicial.dayOfYear())
+            );
+        } else {
+            return fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear();
+        }
+    };
 }
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {

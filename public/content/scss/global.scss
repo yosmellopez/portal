@@ -307,6 +307,10 @@ mat-error {
   //padding-left: 300px
 }
 
+.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr {
+  width: 50px;
+}
+
 .pull-right {
   float: right !important;
   clear: right;
