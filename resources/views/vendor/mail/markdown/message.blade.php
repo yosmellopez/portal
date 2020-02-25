@@ -1,3 +1,6 @@
+@component('mail::header', ['url' => 'https://portalventura.herokuapp.com/content/9db278d630f5fabd8e7ba16c2e329a3a.png'])
+    ![{{ $app_name }}]({{ asset('/content/img/cover.jpeg') }})
+@endcomponent
 @component('mail::layout')
     {{-- Header --}}
     @slot('header')

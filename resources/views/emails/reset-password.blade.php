@@ -13,22 +13,34 @@
 
     [logo]: {{asset('/content/img/cover.jpeg')}} "Logo"
 
+    <p>
+        <img src="https://portalventura.herokuapp.com/content/9db278d630f5fabd8e7ba16c2e329a3a.png" data-auto-embed="attachment">
+    </p>
+
+    <tr>
+        <td class="header">
+            <a href="{{ $url }}">
+                {{ Illuminate\Mail\Markdown::parse($slot) }}
+            </a>
+        </td>
+    </tr>
+
     Saludos, y que estés bien !
 @endcomponent
 
-@component('mail::message')
-    # Order Shipped
+{{--@component('mail::message')--}}
+{{--    # Order Shipped--}}
 
-    Your order has been shipped!
+{{--    Your order has been shipped!--}}
 
-    @component('mail::button', ['url' => $url])
-        View Order
-    @endcomponent
+{{--    @component('mail::button', ['url' => $url])--}}
+{{--        View Order--}}
+{{--    @endcomponent--}}
 
-    Purchased product:
+{{--    Purchased product:--}}
 
-    ![product](https://domain.com/products/product-1.png)
+{{--    ![product](https://domain.com/products/product-1.png)--}}
 
-    Thanks,<br>
-    {{ config('app.name') }}
-@endcomponent
+{{--    Thanks,<br>--}}
+{{--    {{ config('app.name') }}--}}
+{{--@endcomponent--}}
