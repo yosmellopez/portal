@@ -126,6 +126,7 @@ return [
     'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'logo' => env('APP_LOGO', '/content/images/logo_1.png'),
 
     /*
     |--------------------------------------------------------------------------

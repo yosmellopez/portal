@@ -83,7 +83,7 @@ class ResetPasswordController extends Controller
     public function passwordReset(Request $request)
     {
         $email = $request->email;
-        $usuario = Usuario::where("email", $email)->first();
+        $usuario = Usuario::with("cliente")->where("email", $email)->first();
         if ($usuario) {
             try {
                 $token = openssl_random_pseudo_bytes(64);

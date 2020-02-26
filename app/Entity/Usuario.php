@@ -32,6 +32,11 @@ class Usuario extends Authenticatable implements JWTSubject
         return $this->belongsTo('App\Entity\Rol', 'idRoles');
     }
 
+    public function cliente()
+    {
+        return $this->hasOne('App\Entity\Cliente', 'rucClient', "rucClient");
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

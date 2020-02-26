@@ -7,13 +7,13 @@ use App\Entity\UsuarioToken;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
     protected $usuario;
     protected $usuarioToken;
+    protected $cliente;
 
     /**
      * Create a new message instance.
@@ -24,6 +24,7 @@ class ResetPassword extends Mailable
     {
         $this->usuario = $usuario;
         $this->usuarioToken = $usuarioToken;
+        $this->cliente = $usuario->cliente;
     }
 
     /**
@@ -35,10 +36,11 @@ class ResetPassword extends Mailable
     {
         return $this->from('ylopez@vsperu.com', 'Portal de Facturación Electrónica')
             ->subject('Reinicio de Contraseña')
-            ->markdown('emails.reset-password')
+            ->view('emails.reset-password')
             ->with([
                 "nombreUsuario" => $this->usuario->nombUsuario,
-                "usuarioToken" => $this->usuarioToken->token
+                "usuarioToken" => $this->usuarioToken->token,
+                "direccion" => $this->cliente->direccionClient
             ]);
     }
 }
