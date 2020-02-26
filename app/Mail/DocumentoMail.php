@@ -33,7 +33,7 @@ class DocumentoMail extends Mailable
         $nombreCliente = $this->documento->cliente->nombreClient;
         return $this->from('ylopez@vsperu.com', 'Portal de Facturación Electrónica')
             ->subject('Documento Electrónico')
-            ->markdown('emails.documento')
+            ->view('emails.documento')
             ->with([
                 "rucCliente" => $this->documento->rucClient,
                 "nombreCliente" => $nombreCliente,

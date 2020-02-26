@@ -40,7 +40,6 @@ export class AccountService {
         if (!Array.isArray(authorities)) {
             authorities = [authorities];
         }
-        console.log(authorities.includes(this.userIdentity.rol.role));
         return authorities.includes(this.userIdentity.rol.role);
     }
 
