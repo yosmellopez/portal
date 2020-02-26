@@ -33,7 +33,7 @@
 
             .block-grid,
             .col {
-                min-width: 320px !important;
+                min-width: 285px !important;
                 max-width: 100% !important;
                 display: block !important;
             }
@@ -110,21 +110,21 @@
 </head>
 <body class="clean-body" style="margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #b8cce2;">
     <table bgcolor="#b8cce2" cellpadding="0" cellspacing="0" class="nl-container" role="presentation"
-           style="table-layout: fixed; vertical-align: top; min-width: 320px; Margin: 0 auto; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #b8cce2; width: 100%;" valign="top"
+           style="table-layout: fixed; vertical-align: top; min-width: 285px; Margin: 0 auto; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #b8cce2; width: 100%;" valign="top"
            width="100%">
         <tbody>
             <tr style="vertical-align: top;" valign="top">
                 <td style="word-break: break-word; vertical-align: top;" valign="top">
-                    <div style="background-color:transparent;">
-                        <div class="block-grid two-up no-stack" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                    <div style="background-color:transparent;margin-top: 20px">
+                        <div class="block-grid two-up no-stack" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
 
-                                <div class="col num6" style="max-width: 320px; min-width: 280px; display: table-cell; vertical-align: top; width: 280px;">
+                                <div class="col num6" style="max-width: 285px; min-width: 280px; display: table-cell; vertical-align: top; width: 280px;">
                                     <div style="width:100% !important;">
                                         <div style="border-top:1px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 10px; padding-left: 10px;">
                                             <div align="left" class="img-container left" style="padding-right: 0px;padding-left: 0px;">
                                                 <div style="font-size:1px;line-height:15px"> </div>
-                                                <img alt="Image" border="0" class="left" src="images/ecommerce-template_logo.png"
+                                                <img alt="Image" border="0" class="left" src="{{ $message->embed(public_path() . config('app.logo')) }}"
                                                      style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 166px; display: block;" title="Image" width="166"/>
                                                 <div style="font-size:1px;line-height:15px"> </div>
 
@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col num6" style="max-width: 320px; min-width: 280px; display: table-cell; vertical-align: top; width: 280px;">
+                                <div class="col num6" style="max-width: 285px; min-width: 280px; display: table-cell; vertical-align: top; width: 280px;">
                                     <div style="width:100% !important;">
 
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 10px; padding-left: 10px;">
@@ -143,7 +143,7 @@
                                             <div style="color:#555555;font-family:TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif;line-height:1.2;padding-top:15px;padding-right:0px;padding-bottom:15px;padding-left:0px;">
                                                 <div style="font-size: 12px; line-height: 1.2; font-family: TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif; color: #555555; mso-line-height-alt: 14px;">
                                                     <p style="font-size: 14px; line-height: 1.2; text-align: right; font-family: TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">
-                                                        <em>Month Year</em></p>
+                                                        <em>{{ date('F Y') }} </em></p>
                                                 </div>
                                             </div>
 
@@ -156,10 +156,10 @@
                         </div>
                     </div>
                     <div style="background-color:transparent;">
-                        <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
-                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc">
 
-                                <div class="col num12" style="min-width: 320px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
                                     <div style="width:100% !important;">
 
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
@@ -192,49 +192,44 @@
                         </div>
                     </div>
                     <div style="background-color:transparent;">
-                        <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
 
-                                <div class="col num12" style="min-width: 320px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
                                     <div style="width:100% !important;">
 
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
 
                                             <div align="center" class="img-container center" style="padding-right: 0px;padding-left: 0px;">
-                                                <img align="center" alt="Image" border="0" class="center" src="images/okok.gif"
+                                                <img align="center" alt="Image" border="0" class="center" src="{{ $message->embed(public_path() . '/content/images/okok.gif') }}"
                                                      style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 252px; display: block;" title="Image" width="252"/>
-
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div style="background-color:transparent;">
-                        <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
-                                <div class="col num12" style="min-width: 320px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
                                     <div style="width:100% !important;">
 
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:10px; padding-right: 0px; padding-left: 0px;">
 
                                             <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:5px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; text-align: center; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong><span style="font-size: 18px;">Thank you for placing your order</span></strong>
-                                                    </p>
-                                                    <p style="font-size: 14px; line-height: 1.2; text-align: center; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong><span style="font-size: 18px;">with our store!</span></strong>
+                                                    <p style="font-size: 14px; line-height: 1.2; text-align: center; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">
+                                                        <strong><span style="font-size: 18px;">{{$nombreCliente}}</span></strong>
                                                     </p>
                                                 </div>
                                             </div>
 
                                             <div style="color:#71777D;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:25px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.2; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; color: #71777D; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; text-align: center; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">This email is
-                                                        to confirm your recent order.</p>
+                                                    <p style="font-size: 14px; line-height: 1.2; text-align: center; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">
+                                                        Este es un correo para confirmar su compra.</p>
                                                 </div>
                                             </div>
 
@@ -247,141 +242,77 @@
                         </div>
                     </div>
                     <div style="background-color:transparent;">
-                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #1c1c1c;">
+                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #1c1c1c;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#1c1c1c;">
-
-                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 320px; max-width: 368px; width: 373px;">
+                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 285px; max-width: 368px; width: 286px;">
                                     <div style="width:100% !important;">
-                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px;
+                                         padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
                                             <div style="color:#FFFFFF;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #FFFFFF; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">PRODUCTS</p>
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">PRODUCTOS</p>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-
-                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 184px; width: 186px;">
+                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 285px; min-width: 184px; width: 296px;">
                                     <div style="width:100% !important;">
-
-                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent;
+                                         padding-top:0px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
                                             <div style="color:#FFFFFF;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:20px;padding-bottom:10px;padding-left:20px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #FFFFFF; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><span style="font-size: 14px;">PRICE</span></p>
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><span style="font-size: 14px;">PRECIO</span></p>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div style="background-color:transparent;">
-                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word;
+                         background-color: #fcfcfc;padding-bottom: 13px;padding-top: 20px;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
-
-                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 320px; max-width: 368px; width: 373px;">
+                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 285px; max-width: 368px; width: 286px;">
                                     <div style="width:100% !important;">
-
-                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:15px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-
-                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:20px;padding-bottom:10px;padding-left:20px;">
-                                                <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><span style="color: #000000; font-size: 14px;"><a href="https://beefree.io"
-                                                                                                                                                                                                                  style="text-decoration: none; color: #000000;"
-                                                                                                                                                                                                                  target="_blank">1 x Name of your product #1</a></span>
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 184px; width: 186px;">
-                                    <div style="width:100% !important;">
-
-                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:15px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-
-                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:20px;padding-bottom:10px;padding-left:20px;">
-                                                <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">$300</p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div style="background-color:transparent;">
-                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
-                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
-
-                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 320px; max-width: 368px; width: 373px;">
-                                    <div style="width:100% !important;">
-
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-
-                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:20px;padding-bottom:10px;padding-left:20px;">
+                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><span style="color: #000000; font-size: 14px;"><a href="https://beefree.io"
-                                                                                                                                                                                                                  style="text-decoration: none; color: #000000;"
-                                                                                                                                                                                                                  target="_blank">1 x Name of your product #1</a></span>
-                                                    </p>
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>Tipo de Documento</strong><br/></p>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-
-                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 184px; width: 186px;">
-
-                                    <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-
-                                        <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:20px;padding-bottom:10px;padding-left:20px;">
-                                            <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">$300</p>
+                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 285px; min-width: 184px; width: 296px;">
+                                    <div style="width:100% !important;">
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
+                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
+                                                <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>{{$tipoDocumento}}</strong></p>
+                                                </div>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div style="background-color:transparent;">
-                        <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
-
-                                <div class="col num12" style="min-width: 320px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
                                     <div style="width:100% !important;">
-
-                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
-
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
                                             <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation"
                                                    style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
                                                    valign="top" width="100%">
                                                 <tbody>
                                                     <tr style="vertical-align: top;" valign="top">
                                                         <td class="divider_inner"
-                                                            style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;"
+                                                            style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 10px; padding-bottom: 15px; padding-left: 10px;"
                                                             valign="top">
                                                             <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content" role="presentation"
                                                                    style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #CCCCCC; width: 100%;"
@@ -396,70 +327,175 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div style="background-color:transparent;">
-                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;padding-bottom: 13px">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
-
-                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 320px; max-width: 368px; width: 373px;">
+                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 285px; max-width: 368px; width: 286px;">
                                     <div style="width:100% !important;">
-
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-
+                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
+                                                <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>Serie / Numero</strong><br/></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 285px; min-width: 184px; width: 296px;">
+                                    <div style="width:100% !important;">
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
+                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
+                                                <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>{{$serieNumero}}</strong></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color:transparent;">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                    <div style="width:100% !important;">
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation"
+                                                   style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
+                                                   valign="top" width="100%">
+                                                <tbody>
+                                                    <tr style="vertical-align: top;" valign="top">
+                                                        <td class="divider_inner"
+                                                            style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 10px; padding-bottom: 15px; padding-left: 10px;"
+                                                            valign="top">
+                                                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content" role="presentation"
+                                                                   style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #CCCCCC; width: 100%;"
+                                                                   valign="top" width="100%">
+                                                                <tbody>
+                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top"><span></span></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color:transparent;">
+                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;padding-bottom: 13px">
+                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
+                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 285px; max-width: 368px; width: 286px;">
+                                    <div style="width:100% !important;">
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
+                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
+                                                <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>Fecha de Emisión</strong><br/></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 285px; min-width: 184px; width: 296px;">
+                                    <div style="width:100% !important;">
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
+                                            <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
+                                                <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>{{$fechaEmision}}</strong></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color:transparent;">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                    <div style="width:100% !important;">
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation"
+                                                   style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
+                                                   valign="top" width="100%">
+                                                <tbody>
+                                                    <tr style="vertical-align: top;" valign="top">
+                                                        <td class="divider_inner"
+                                                            style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 10px; padding-bottom: 15px; padding-left: 10px;"
+                                                            valign="top">
+                                                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content" role="presentation"
+                                                                   style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #CCCCCC; width: 100%;"
+                                                                   valign="top" width="100%">
+                                                                <tbody>
+                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top"><span></span></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background-color:transparent;">
+                        <div class="block-grid mixed-two-up" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;padding-bottom: 13px">
+                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
+                                <div class="col num8" style="display: table-cell; vertical-align: top; min-width: 285px; max-width: 368px; width: 286px;">
+                                    <div style="width:100% !important;">
+                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
                                             <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
                                                     <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>TOTAL</strong><br/></p>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-
-                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 184px; width: 186px;">
+                                <div class="col num4" style="display: table-cell; vertical-align: top; max-width: 285px; min-width: 184px; width: 296px;">
                                     <div style="width:100% !important;">
-
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
-
                                             <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:5px;padding-right:20px;padding-bottom:5px;padding-left:20px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>$600</strong></p>
+                                                    <p style="font-size: 14px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 17px; margin: 0;"><strong>{{$total}} {{$moneda}}</strong></p>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div style="background-color:transparent;">
-                        <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
-
-                                <div class="col num12" style="min-width: 320px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
                                     <div style="width:100% !important;">
-
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
-
                                             <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation"
                                                    style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
                                                    valign="top" width="100%">
                                                 <tbody>
                                                     <tr style="vertical-align: top;" valign="top">
                                                         <td class="divider_inner"
-                                                            style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 15px; padding-right: 10px; padding-bottom: 15px; padding-left: 10px;"
+                                                            style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 10px; padding-bottom: 15px; padding-left: 10px;"
                                                             valign="top">
                                                             <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content" role="presentation"
                                                                    style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #CCCCCC; width: 100%;"
@@ -474,20 +510,18 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
+
                     <div style="background-color:transparent;">
-                        <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
 
-                                <div class="col num12" style="min-width: 320px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
                                     <div style="width:100% !important;">
 
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
@@ -502,27 +536,30 @@
                                                                    valign="top">
                                                                 <tbody>
                                                                     <tr align="center" style="vertical-align: top; display: inline-block; text-align: center;" valign="top">
-                                                                        <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;" valign="top"><a href="https://www.facebook.com/"
-                                                                                                                                                                                                             target="_blank"><img alt="Facebook"
-                                                                                                                                                                                                                                  height="32"
-                                                                                                                                                                                                                                  src="images/facebook2x.png"
-                                                                                                                                                                                                                                  style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
-                                                                                                                                                                                                                                  title="Facebook"
-                                                                                                                                                                                                                                  width="32"/></a></td>
-                                                                        <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;" valign="top"><a href="https://twitter.com/"
-                                                                                                                                                                                                             target="_blank"><img alt="Twitter"
-                                                                                                                                                                                                                                  height="32"
-                                                                                                                                                                                                                                  src="images/twitter2x.png"
-                                                                                                                                                                                                                                  style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
-                                                                                                                                                                                                                                  title="Twitter"
-                                                                                                                                                                                                                                  width="32"/></a></td>
-                                                                        <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;" valign="top"><a href="https://plus.google.com/"
-                                                                                                                                                                                                             target="_blank"><img alt="Google+"
-                                                                                                                                                                                                                                  height="32"
-                                                                                                                                                                                                                                  src="images/googleplus2x.png"
-                                                                                                                                                                                                                                  style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
-                                                                                                                                                                                                                                  title="Google+"
-                                                                                                                                                                                                                                  width="32"/></a></td>
+                                                                        <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;" valign="top">
+                                                                            <a href="https://www.facebook.com/" target="_blank">
+                                                                                <img alt="Facebook"
+                                                                                     height="32"
+                                                                                     src="{{ $message->embed(public_path() . '/content/images/facebook2x.png') }}"
+                                                                                     style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
+                                                                                     title="Facebook"
+                                                                                     width="32"/></a></td>
+                                                                        <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;" valign="top">
+                                                                            <a href="https://twitter.com/" target="_blank">
+                                                                                <img alt="Twitter"
+                                                                                     height="32"
+                                                                                     src="{{ $message->embed(public_path() . '/content/images/twitter2x.png') }}"
+                                                                                     style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
+                                                                                     title="Twitter"
+                                                                                     width="32"/></a></td>
+                                                                        <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 3px; padding-left: 3px;" valign="top">
+                                                                            <a href="https://plus.google.com/" target="_blank">
+                                                                                <img alt="Google+"
+                                                                                     height="32"
+                                                                                     src="{{ $message->embed(public_path() . '/content/images/googleplus2x.png') }}"
+                                                                                     style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
+                                                                                     title="Google+"
+                                                                                     width="32"/></a></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -536,7 +573,7 @@
                                                 <tbody>
                                                     <tr style="vertical-align: top;" valign="top">
                                                         <td class="divider_inner"
-                                                            style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 15px; padding-right: 10px; padding-bottom: 15px; padding-left: 10px;"
+                                                            style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 10px; padding-bottom: 15px; padding-left: 10px;"
                                                             valign="top">
                                                             <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content" role="presentation"
                                                                    style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #CCCCCC; width: 100%;"
@@ -560,11 +597,11 @@
                             </div>
                         </div>
                     </div>
-                    <div style="background-color:transparent;">
-                        <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
+                    <div style="background-color:transparent;margin-bottom: 20px">
+                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 560px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #fcfcfc;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#fcfcfc;">
 
-                                <div class="col num12" style="min-width: 320px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
+                                <div class="col num12" style="min-width: 285px; max-width: 560px; display: table-cell; vertical-align: top; width: 560px;">
                                     <div style="width:100% !important;">
 
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">

@@ -16,7 +16,7 @@ class EmailController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function sendEmail(Request $request, $idDocumento)
     {
@@ -34,9 +34,9 @@ class EmailController extends Controller
         } catch (\Exception $e) {
             $code = $e->getCode();
             if ($code == 552) {
-                throw new GeneralAPIException("No se pudo enviar el correo porque el contenido es potencialmente dañino. Pongase en contacto con su administrador.");
+                throw new GeneralAPIException("No se pudo enviar el correo porque el contenido es potencialmente dañino. Pongase en contacto con su administrador." . $e->getMessage());
             }
-            throw new GeneralAPIException("No se pudo enviar el correo. Pongase en contacto con su administrador.");
+            throw new GeneralAPIException("No se pudo enviar el correo. Pongase en contacto con su administrador. " . $e->getMessage());
         }
     }
 

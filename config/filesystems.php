@@ -57,7 +57,7 @@ return [
 
         'custom' => [
             'driver' => 'local',
-            'root' => "C:/wamp64/www/files/",
+            'root' => "D:\Programacion\EspacioPHP",
         ],
 
         's3' => [
