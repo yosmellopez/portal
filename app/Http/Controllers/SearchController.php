@@ -99,11 +99,11 @@ class SearchController extends Controller
         $monedaTransaccion = $data["monedaTransaccion"];
         $fechaEmisionInicio = $data["fechaEmisionInicio"];
         if (!isset($fechaEmisionInicio)) {
-            $fechaEmisionInicio = "01/01/2019";
+            $fechaEmisionInicio = "01/01/1900";
         }
         $fechaEmisionInicio = \DateTime::createFromFormat("d/m/Y", $fechaEmisionInicio);
         $fechaEmisionFin = $data["fechaEmisionFin"];
-        if (!isset($fechaEmisionFin)) {
+        if (!isset($fechaEmisionFin) || empty($fechaEmisionFin) || is_null($fechaEmisionFin)) {
             $fechaEmisionFin = date('d/m/Y');
         }
         $fechaEmisionFin = \DateTime::createFromFormat("d/m/Y", $fechaEmisionFin);
@@ -145,6 +145,7 @@ class SearchController extends Controller
             $documents = array_merge($filteredDocuments->toArray(), $documents);
         }
 //        $queries = \DB::getQueryLog();
+//        var_dump($queries);
         return response()->json($documents);
     }
 

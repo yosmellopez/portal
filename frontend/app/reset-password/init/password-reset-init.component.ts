@@ -32,6 +32,7 @@ export class PasswordResetInitComponent implements AfterViewInit {
         this.isLoading = true;
         this.authenticationError = false;
         this.error = null;
+        this.success = null;
         this.errorEmailNotExists = null;
 
         this.passwordResetInitService.save(this.resetRequestForm.get(['email']).value).subscribe(

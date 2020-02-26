@@ -69,10 +69,6 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     tipoDocumento: TipoDocumento = {tipo: 'factura', title: 'Facturas'};
     resultsLength = 0;
     isLoadingResults = true;
-    minDate: Date = new Date(1900, 1, 1);
-    maxDate: Date = new Date();
-    selectedEndDate: Date = new Date();
-    selectedStartDate: Date = new Date(1900, 1, 1);
     matcher: ErrorStateMatcher = new ErrorStateMatcher();
     displayedColumns: string[] = ['rucClient', 'numSerie', 'fecEmisionDoc', 'estadoSunat', 'total', 'docPdf', 'docXml', 'docCdr', 'correo'];
     @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -88,7 +84,6 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
 
     constructor(
         protected documentoElectronicoService: DocumentoElectronicoService,
-        protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected activatedRoute: ActivatedRoute,
         protected route: Router,
@@ -170,10 +165,16 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         const values = this.formulario.value;
         this.currentSearch = {...values};
         if (values.fechaEmisionInicio) {
-            this.currentSearch.fechaEmisionInicio = moment(values.fechaEmisionInicio, 'dd/MM/yyyy');
+            const fechaInicio = values.fechaEmisionInicio as Moment;
+            this.currentSearch.fechaEmisionInicio = fechaInicio.format('DD/MM/YYYY');
+        } else {
+            this.currentSearch.fechaEmisionInicio = moment("1990-01-01").format('DD/MM/YYYY');
         }
         if (values.fechaEmisionFin) {
-            this.currentSearch.fechaEmisionFin = moment(values.fechaEmisionFin, 'dd/MM/yyyy');
+            const fechaFin = values.fechaEmisionFin as Moment;
+            this.currentSearch.fechaEmisionFin = fechaFin.format('DD/MM/YYYY');
+        } else {
+            this.currentSearch.fechaEmisionFin = moment().format('DD/MM/YYYY');
         }
         this.currentSearch.tipoDoc = this.tipoDocumento.tipo;
         this.documentoElectronicoService.search(this.currentSearch).pipe(
@@ -293,7 +294,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     }
 
     registerChangeInDocumentoElectronicos() {
-        this.eventSubscriber = this.eventManager.subscribe('documentoElectronicoListModification', response => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('documentoElectronicoListModification', () => this.loadAll());
     }
 
     protected onError(errorMessage: string) {
@@ -386,11 +387,4 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             return fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear();
         }
     };
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        const isSubmitted = form && form.submitted;
-        return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-    }
 }

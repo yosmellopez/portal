@@ -34,7 +34,7 @@ export class ClienteWindowComponent implements OnInit {
             nombreClient: new FormControl(nombreClient, [Validators.required]),
             email: new FormControl(email, [Validators.required, Validators.email]),
             rucClient: new FormControl(rucClient, [Validators.required]),
-            direccionClient: new FormControl(direccionClient, [Validators.required]),
+            direccionClient: new FormControl(direccionClient, []),
             estadoCliente: new FormControl(estadoCliente === '1', [Validators.required]),
         });
     }

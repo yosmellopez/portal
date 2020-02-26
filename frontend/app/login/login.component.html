@@ -1,80 +1,82 @@
-<div style="position:fixed;min-height:100%;min-width:100%;background-size: 100% 100%;background-image: url('../../../content/img/background.png')">
-    <div class="header bg-gradient-primary py-5 py-lg-8">
-        <div class="container">
-            <div class="header-body text-center">
-                <div class="row justify-content-center">
-                    <div class="col-lg-5 col-md-6">
-                        <h1 class="text-black-50">Bienvenidos al Portal de Facturación Electrónica.</h1>
+<perfect-scrollbar [config]="config" [scrollIndicators]="true">
+    <div style="position:fixed;min-height:100%;min-width:100%;background-size: 100% 100%;background-image: url('../../../content/img/background.png')">
+        <div class="header bg-gradient-primary py-5 py-lg-8">
+            <div class="container">
+                <div class="header-body text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5 col-md-6">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container mt--8 pb-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="card bg-secondary shadow border-0" disabled="true">
-                    <div class="card-header bg-transparent pb-3">
-                        <div class="text-dark text-center mt-2 mb-1">
-                            <h3>Inicio de Sesión</h3>
+        <div class="container mt--8 pb-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-7">
+                    <div class="card bg-secondary shadow border-0" disabled="true">
+                        <div class="card-header bg-transparent pb-3">
+                            <div class="text-dark text-center mt-2 mb-1">
+                                <h3>Inicio de Sesión</h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-dark mb-4">
-                            <small>
+                        <div class="card-body">
+                            <div class="text-center text-dark mb-4">
+                                <img src="../../content/img/logo.png" style="with:auto;height: auto;max-height: 160px;max-width: 160px;">
+                            </div>
+                            <div class="text-center text-dark mb-4">
                                 Inicie Sesión con sus credenciales.
-                            </small>
-                        </div>
-                        <form role="form" (ngSubmit)="login()" [formGroup]="loginForm">
-                            <div class="form-group mb-3">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
+                            </div>
+                            <form role="form" (ngSubmit)="login()" [formGroup]="loginForm">
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             <mat-icon style="position: relative;top: 2px">person_outline</mat-icon>
                                         </span>
+                                        </div>
+                                        <input class="form-control" #loginInput placeholder="Nombre de Usuario" type="text" id="username" name="username" autofocus formControlName="nombUsuario">
                                     </div>
-                                    <input class="form-control" #loginInput placeholder="Nombre de Usuario" type="text" id="username" name="username" autofocus formControlName="nombUsuario">
+                                    <span class="invalid-feedback" style="display: block;" role="alert"><strong>{{ imagen }}</strong></span>
                                 </div>
-                                <span class="invalid-feedback" style="display: block;" role="alert"><strong>{{ imagen }}</strong></span>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
+                                <div class="form-group">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             <mat-icon style="position: relative;top: 2px">vpn_key</mat-icon>
                                         </span>
+                                        </div>
+                                        <input class="form-control" name="password" placeholder="Contraseña" type="password" formControlName="claveUsuario">
                                     </div>
-                                    <input class="form-control" name="password" placeholder="Contraseña" type="password" formControlName="claveUsuario">
+                                    <span class="invalid-feedback" style="display: block;" role="alert"><strong></strong></span>
                                 </div>
-                                <span class="invalid-feedback" style="display: block;" role="alert"><strong></strong></span>
-                            </div>
-                            <div class="center-block text-center" style="min-height: 30px;position: relative;top: 5px">
-                                <div *ngIf="authenticationError">
-                                    <span class="text-danger">Nombre de usuario o contraseña incorrectos.</span>
+                                <div class="center-block text-center" style="min-height: 30px;position: relative;top: 5px">
+                                    <div *ngIf="authenticationError">
+                                        <span class="text-danger">Nombre de usuario o contraseña incorrectos.</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="center-block text-center" style="min-height: 40px;position: relative;top: -35px">
-                                <mat-spinner strokeWidth="2" diameter="40" style="position: relative;left: 45%" *ngIf="isLoading"></mat-spinner>
-                            </div>
-                            <div class="text-center table-actions-theme">
-                                <button mat-raised-button [color]="authenticationError?'warn':'primary'" [disabled]="loginForm.invalid">
-                                    <mat-icon>lock_open</mat-icon>
-                                    Iniciar Sesión
-                                    <mat-icon>keyboard_arrow_right</mat-icon>
-                                </button>
-                            </div>
-                            <div class="center-block text-center" style="min-height: 40px;position: relative;">
+                                <div class="center-block text-center" style="min-height: 40px;position: relative;top: -35px">
+                                    <mat-spinner strokeWidth="2" diameter="40" style="position: relative;left: 45%" *ngIf="isLoading"></mat-spinner>
+                                </div>
+                                <div class="text-center table-actions-theme">
+                                    <button mat-raised-button [color]="authenticationError?'warn':'primary'" [disabled]="loginForm.invalid">
+                                        <mat-icon>lock_open</mat-icon>
+                                        Iniciar Sesión
+                                        <mat-icon>keyboard_arrow_right</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="center-block text-center" style="min-height: 40px;position: relative;">
 
-                            </div>
-                        </form>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3" style="margin-top: -75px !important;padding-left: 30px;color: #0a0c0d;">
-                    <div class="col-6">
-                        <a class="text-dark" routerLink="/reset/init">¿Olvidó su contraseña?</a>
+                    <div class="row mt-3" style="margin-top: -75px !important;padding-left: 30px;color: #0a0c0d;">
+                        <div class="col-6">
+                            <a class="text-dark" routerLink="/reset/init">¿Olvidó su contraseña?</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</perfect-scrollbar>

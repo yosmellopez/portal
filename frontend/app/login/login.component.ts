@@ -5,6 +5,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {JhiEventManager} from 'ng-jhipster';
 import {AccountService} from "app/core/auth/account.service";
+import {PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
 
 @Component({
     selector: 'jhi-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
     imagen: string = '';
     isLoading: boolean = false;
     loginForm: FormGroup;
+    public config: PerfectScrollbarConfigInterface = {};
     @ViewChild('loginInput', {static: false}) loginInput: ElementRef;
 
     constructor(

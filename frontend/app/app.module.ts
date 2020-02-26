@@ -16,10 +16,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import 'hammerjs';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import {JhiMainComponent} from './layouts/main/main.component';
-import {NavbarComponent} from './layouts/navbar/navbar.component';
 import {FooterComponent} from './layouts/footer/footer.component';
-import {PageRibbonComponent} from './layouts/profiles/page-ribbon.component';
-import {ErrorComponent} from './layouts/error/error.component';
 import {JhMaterialModule} from 'app/shared/jh-material.module';
 import {SidebarComponent} from 'app/layouts/sidebar/sidebar.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -29,7 +26,6 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {getSpanishPaginatorIntl} from 'app/es-locale-paginator';
 import {MatTableExporterModule} from 'mat-table-exporter';
 import {MensajeModule} from 'app/mensaje/mensaje.module';
-import {SigninComponent} from './layouts/signin/signin.component';
 import {MatSelectModule} from '@angular/material/select';
 import {ChartsModule} from 'ng2-charts';
 import localePe from '@angular/common/locales/es-PE';
@@ -38,7 +34,6 @@ import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
 import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 import {PDFExportModule} from '@progress/kendo-angular-pdf-export';
-import {PortalAccountModule} from 'app/account/account.module';
 import {
     NgxUiLoaderConfig,
     NgxUiLoaderHttpModule,

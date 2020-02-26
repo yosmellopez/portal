@@ -1,28 +1,28 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { merge, of, Subscription } from 'rxjs';
+import {Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {merge, of, Subscription} from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { catchError, filter, map, startWith, switchMap } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import {catchError, filter, map, startWith, switchMap} from 'rxjs/operators';
+import {JhiEventManager, JhiAlertService} from 'ng-jhipster';
 
-import { IUsuario, Usuario } from 'app/shared/model/usuario.model';
-import { AccountService } from 'app/core/auth/account.service';
-import { UsuarioService } from './usuario.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { ICliente } from 'app/shared/model/cliente.model';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { AppResponseBody } from 'app/shared/model/generic-model';
-import { MatDialog } from '@angular/material/dialog';
-import { UsuarioWindowComponent } from 'app/entities/usuario/usuario-window/usuario-window.component';
-import { Confirm, Information, MensajeToast } from 'app/mensaje/window.mensaje';
-import { ClienteService } from 'app/entities/cliente/cliente.service';
-import { IRol } from 'app/shared/model/rol.model';
-import { RolService } from 'app/entities/usuario/rol.service';
-import { FormControl, FormGroup } from '@angular/forms';
-import { IDocumentoElectronico } from 'app/shared/model/documento-electronico.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {IUsuario, Usuario} from 'app/shared/model/usuario.model';
+import {AccountService} from 'app/core/auth/account.service';
+import {UsuarioService} from './usuario.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {ICliente} from 'app/shared/model/cliente.model';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {AppResponseBody} from 'app/shared/model/generic-model';
+import {MatDialog} from '@angular/material/dialog';
+import {UsuarioWindowComponent} from 'app/entities/usuario/usuario-window/usuario-window.component';
+import {Confirm, Information, MensajeToast} from 'app/mensaje/window.mensaje';
+import {ClienteService} from 'app/entities/cliente/cliente.service';
+import {IRol} from 'app/shared/model/rol.model';
+import {RolService} from 'app/entities/usuario/rol.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {IDocumentoElectronico} from 'app/shared/model/documento-electronico.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'jhi-usuario',
@@ -37,7 +37,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
     resultsLength = 0;
     formulario: FormGroup;
     isLoadingResults = true;
-    displayedColumns: string[] = ['nombUsuario', 'rucClient', 'email', 'rol', 'acciones'];
+    displayedColumns: string[] = ['nombUsuario', 'rucClient', 'email', 'rol', 'activo', 'acciones'];
     dataSource: MatTableDataSource<IUsuario> = new MatTableDataSource<IUsuario>([]);
     @ViewChild(MatSort, {static: false}) sort: MatSort;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
@@ -189,7 +189,8 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
 
     deleteUsuario(usuario: Usuario) {
         const dialogRef = this.dialog.open(Confirm, {
-            data: {accion: 'Eliminar', description: `¿Desea eliminar el usuario ${usuario.nombUsuario}?`}, width: '400px'
+            data: {accion: 'Eliminar', description: `¿Desea eliminar el usuario ${usuario.nombUsuario}?`},
+            width: '400px'
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

@@ -82,7 +82,11 @@
 
             <ng-container matColumnDef="estadoCliente">
                 <mat-header-cell *matHeaderCellDef mat-sort-header class="center-block"> Estado</mat-header-cell>
-                <mat-cell *matCellDef="let element" class="center-block"> {{element.estadoCliente == '1' ? "Activo" : "Desabilitado"}}</mat-cell>
+                <mat-cell *matCellDef="let element" class="center-block">
+                    <mat-chip-list class="table-actions-theme" style="padding-top: 10px;">
+                        <mat-chip [color]="element.estadoCliente == '1' ? 'primary' : 'warn'" selected> {{element.estadoCliente == '1' ? "Activo" : "Desabilitado"}}</mat-chip>
+                    </mat-chip-list>
+                </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="acciones">

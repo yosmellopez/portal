@@ -1,5 +1,5 @@
 <form class="form" [formGroup]="formulario" (submit)="enviarDatos()">
-    <h1 mat-dialog-title style="margin: 0 0" draggable-dialog>{{nuevo ? 'Nuevo Cliente' : 'Modificar Cliente '}}
+    <h1 mat-dialog-title style="margin: 0 0" draggable-dialog>{{nuevo ? 'Nuevo Cliente' : 'Modificar Cliente - ' + clienteId}}
         <button type="button" mat-icon-button class="close-button" (click)="cancel()">
             <mat-icon style="font-size: 25px">close</mat-icon>
         </button>

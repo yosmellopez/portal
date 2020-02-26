@@ -2,6 +2,7 @@
 @import '~bootstrap/scss/functions';
 @import '~bootswatch/dist/flatly/variables';
 @import '~bootstrap/scss/variables';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
 
 /* ==============================================================
 Bootstrap tweaks
@@ -44,6 +45,11 @@ a:hover {
 
 .dropdown-item:hover {
   color: $dropdown-link-hover-color;
+}
+
+.mat-column-nombreClient {
+  width: 40%;
+  min-width: 40%;
 }
 
 /* ==========================================================================

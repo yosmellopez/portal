@@ -35,21 +35,25 @@ class DocumentoMail extends Mailable
         $docXml = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docXml));
         $docCdr = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docCdr));
         $nombreCliente = $this->documento->cliente->nombreClient;
+        $tipoDocumento = $this->findTipoDoc($this->documento->tipoDoc);
+        $estadoDocumento = $this->findEstado($this->documento->estadoSunat);
+        $numeroSerie = $this->documento->numSerie;
         return $this->from('ylopez@vsperu.com', 'Portal de Facturación Electrónica')
-            ->subject('Documento Electrónico')
+            ->subject($tipoDocumento . " [$numeroSerie] $estadoDocumento")
             ->view('emails.documento')
             ->with([
                 "rucCliente" => $this->documento->rucClient,
                 "nombreCliente" => $nombreCliente,
-                "numSerie" => $this->documento->numSerie,
+                "numSerie" => $numeroSerie,
                 "docPdf" => $this->documento->docPdf,
                 "docXml" => $this->documento->docXml,
                 "docCdr" => $this->documento->docCdr,
                 "total" => $this->documento->total,
                 "moneda" => $this->documento->monedaTransaccion,
-                "tipoDocumento" => $this->findTipoDoc($this->documento->tipoDoc),
-                "serieNumero" => $this->documento->numSerie,
+                "tipoDocumento" => $tipoDocumento,
+                "serieNumero" => $numeroSerie,
                 "fechaEmision" => $this->documento->fecEmisionDoc,
+                "estadoDocumento" => $estadoDocumento,
             ])
             ->attach($docPdf, [
                 'as' => basename($this->documento->docPdf),
@@ -87,6 +91,22 @@ class DocumentoMail extends Mailable
 //                return "Resumen Boleta";
             default:
                 return "01";
+        }
+    }
+
+    private function findEstado($estado = "R")
+    {
+        switch ($estado) {
+            case 'R':
+                return 'Aprobado';
+            case 'Z':
+                return 'Rechazado';
+            case 'D':
+                return 'Pendiente Respuesta';
+            case 'P':
+                return 'Baja Aprobada';
+            case 'J':
+                return 'Baja Rechazada';
         }
     }
 }

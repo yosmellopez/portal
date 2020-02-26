@@ -91,6 +91,15 @@
                 <mat-cell *matCellDef="let element"> {{element.rol | rol}}</mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="activo">
+                <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-chip-list class="table-actions-theme" style="padding-top: 10px;">
+                        <mat-chip [color]="element.estadoUsuario == '1' ? 'primary' : 'warn'" selected> {{element.estadoUsuario == '1' ? "Activo" : "Desabilitado"}}</mat-chip>
+                    </mat-chip-list>
+                </mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="acciones">
                 <mat-header-cell *matHeaderCellDef class="center-block"> Acciones</mat-header-cell>
                 <mat-cell *matCellDef="let element" class="center-block table-actions-theme">

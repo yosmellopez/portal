@@ -50,6 +50,10 @@
                                                    [errorStateMatcher]="matcher" [matDatepickerFilter]="filterDaysInicial" (click)="showFechaInicio()" (focus)="showFechaInicio()">
                                             <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
                                             <mat-datepicker #fechaInicio></mat-datepicker>
+                                            <button mat-button *ngIf="formulario.get('fechaEmisionInicio').value" matSuffix mat-icon-button
+                                                    aria-label="Clear" (click)="formulario.get('fechaEmisionInicio').setValue('')">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-6">
@@ -58,6 +62,10 @@
                                                    [errorStateMatcher]="matcher" [matDatepickerFilter]="filterDaysFinal" (click)="showFechaFin()" (focus)="showFechaFin()">
                                             <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
                                             <mat-datepicker #fechaFin></mat-datepicker>
+                                            <button mat-button *ngIf="formulario.get('fechaEmisionFin').value" matSuffix mat-icon-button
+                                                    aria-label="Clear" (click)="formulario.get('fechaEmisionFin').setValue('')">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
                                         </mat-form-field>
                                     </div>
                                 </div>
