@@ -8,14 +8,14 @@ const routes: Routes = [
         path: 'init',
         component: PasswordResetInitComponent,
         data: {
-            pageTitle: 'login.acceso.title'
+            pageTitle: 'Reinicio de Contraseña | Portal Facturación Electrónica'
         }
     },
     {
         path: 'finish',
         component: PasswordResetFinishComponent,
         data: {
-            pageTitle: 'login.acceso.title'
+            pageTitle: 'Cambiar Contraseña | Portal Facturación Electrónica'
         }
     }
 ];

@@ -57,7 +57,7 @@ export const documentoElectronicoRoute: Routes = [
         component: DocumentoElectronicoComponent,
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_RECEPTOR'],
-            pageTitle: 'Documentos Electronicos',
+            pageTitle: 'Lista de Documentos Electrónicos',
             animation: 'isRight'
         },
         resolve: {
@@ -73,7 +73,7 @@ export const documentoElectronicoRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_RECEPTOR'],
-            pageTitle: 'DocumentoElectronicos',
+            pageTitle: 'Detalle del Documento Electrónico',
             animation: 'isLeft'
         },
         canActivate: [UserRouteAccessService]

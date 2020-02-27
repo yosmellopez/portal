@@ -33,7 +33,7 @@ export const usuarioRoute: Routes = [
         component: UsuarioComponent,
         data: {
             authorities: ['ROLE_RECEPTOR', 'ROLE_ADMIN'],
-            pageTitle: 'Usuarios'
+            pageTitle: 'Lista de Usuarios'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -45,7 +45,7 @@ export const usuarioRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_RECEPTOR', 'ROLE_ADMIN'],
-            pageTitle: 'Usuarios'
+            pageTitle: 'Ver detalles de usuario'
         },
         canActivate: [UserRouteAccessService]
     },

@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: LoginComponent,
         data: {
-            pageTitle: 'login.acceso.title'
+            pageTitle: 'Inicio de Sesión de Usuario | Portal Facturación Electrónica'
         }
     }
 ];
