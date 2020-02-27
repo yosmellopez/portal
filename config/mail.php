@@ -85,7 +85,7 @@ return [
     */
 
     'username' => env('MAIL_USERNAME', "ylopez@vsperu.com"),
-    'password' => env('MAIL_PASSWORD',"elpasswordmiodegmail"),
+    'password' => env('MAIL_PASSWORD', "elpasswordmiodegmail"),
 
     /*
     |--------------------------------------------------------------------------
@@ -117,5 +117,5 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
+    'throttleToMessagesPerMin' => env('MAIL_THROTTLE_TO_MESSAGES_PER_MIN', null),
 ];

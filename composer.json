@@ -12,13 +12,14 @@
     "ext-fileinfo": "*",
     "ext-intl": "*",
     "ext-openssl": "*",
-    "doctrine/dbal": "^2.9",
-    "eduardokum/laravel-mail-auto-embed": "^1.0",
+    "doctrine/dbal": "^2.10.1",
+    "eduardokum/laravel-mail-auto-embed": "^1.0.4",
     "fideloper/proxy": "~3.3",
     "jenssegers/date": "^3.5",
     "laravel/framework": "5.5.*",
     "laravel/tinker": "~1.0",
-    "matriphe/laravel-md5-hash": "^1.0",
+    "matriphe/laravel-md5-hash": "^1.0.1",
+    "mxl/laravel-queue-rate-limit": "1.0.2",
     "tymon/jwt-auth": "~1.0.0-rc.5.1"
   },
   "require-dev": {

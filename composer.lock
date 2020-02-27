@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5028d185deaa0b37fd6ee1db92b3dfdc",
+    "content-hash": "cf28ccf4185f6877aa0e5f5a87c29e91",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1335,6 +1335,63 @@
             ],
             "abandoned": "dragonmantank/cron-expression",
             "time": "2019-12-28T04:23:06+00:00"
+        },
+        {
+            "name": "mxl/laravel-queue-rate-limit",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mxl/laravel-queue-rate-limit.git",
+                "reference": "6f19d4a0546f8e5309de82be4753d5a44b5fc784"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mxl/laravel-queue-rate-limit/zipball/6f19d4a0546f8e5309de82be4753d5a44b5fc784",
+                "reference": "6f19d4a0546f8e5309de82be4753d5a44b5fc784",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "^5.5",
+                "illuminate/contracts": "^5.5",
+                "illuminate/log": "^5.5",
+                "illuminate/queue": "^5.5",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MichaelLedin\\LaravelQueueRateLimit\\QueueServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MichaelLedin\\LaravelQueueRateLimit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Ledin",
+                    "email": "mledin89@gmail.com"
+                }
+            ],
+            "description": "Simple Laravel queue rate limiting",
+            "homepage": "https://github.com/mxl/laravel-queue-rate-limit",
+            "keywords": [
+                "Rate",
+                "laravel",
+                "limit",
+                "queue"
+            ],
+            "time": "2020-02-11T08:53:51+00:00"
         },
         {
             "name": "namshi/jose",

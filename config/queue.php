@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_DRIVER', 'sync'),
+    'default' => env('QUEUE_DRIVER', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,4 +82,10 @@ return [
         'table' => 'failed_jobs',
     ],
 
+    'rateLimits' => [
+        'mail' => [ // queue name
+            'allows' => 1, // 1 job
+            'every' => 5 // per 5 seconds
+        ]
+    ]
 ];
