@@ -12,14 +12,16 @@ class DocumentoMail extends Mailable
 {
     use Queueable, SerializesModels;
     protected $documento;
+    protected $userEmail;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Documento $documento)
+    public function __construct(Documento $documento, $userEmail)
     {
+        $this->userEmail = $userEmail;
         $this->documento = $documento;
     }
 
@@ -38,7 +40,7 @@ class DocumentoMail extends Mailable
         $tipoDocumento = $this->findTipoDoc($this->documento->tipoDoc);
         $estadoDocumento = $this->findEstado($this->documento->estadoSunat);
         $numeroSerie = $this->documento->numSerie;
-        return $this->from('ylopez@vsperu.com', 'Portal de Facturación Electrónica')
+        return $this->from($this->userEmail, 'Portal de Facturación Electrónica')
             ->subject($tipoDocumento . " [$numeroSerie] $estadoDocumento")
             ->view('emails.documento')
             ->with([

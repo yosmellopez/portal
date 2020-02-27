@@ -73,7 +73,7 @@ class PublicadorController extends Controller
                 $documento->fill($data)->save();
             }
             $documentoController = new EmailController();
-            $documentoController->sendEmail($request, $data["idDocumento"]);
+            $documentoController->sendEmail($data["idDocumento"]);
         } catch (\Exception $e) {
             return response()->json(array("error" => $e->getMessage()), 201);
         }

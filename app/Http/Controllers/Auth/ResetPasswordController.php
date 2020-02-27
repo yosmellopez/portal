@@ -96,7 +96,7 @@ class ResetPasswordController extends Controller
                 $userToken->token_expiration = $fechaExpiracion;
                 $userToken->save();
                 $emailController = new EmailController();
-                $emailController->sendEmailToUser($request, $usuario, $userToken);
+                $emailController->sendEmailToUser($usuario, $userToken);
             } catch (GeneralAPIException $e) {
                 return response()->json(array("error" => $e->getMessage()), 200);
             } catch (Exception $e) {

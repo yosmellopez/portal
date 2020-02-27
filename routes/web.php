@@ -13,21 +13,22 @@
 
 use App\Entity\Documento;
 use App\Mail\DocumentoMail;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
-    return File::get(public_path() . '/index.html');
+    return runMigrations();
 });
 Route::get('/{view}', function () {
-    return File::get(public_path() . '/index.html');
+    return runMigrations();
 });
 Route::get('/{view}/{path}', function () {
-    return File::get(public_path() . '/index.html');
+    return runMigrations();
 });
 Route::get('/{view}/{path}/{resource}', function () {
-    return File::get(public_path() . '/index.html');
+    return runMigrations();
 });
 Route::get('/{view}/{path}/{resource}/{element}', function () {
-    return File::get(public_path() . '/index.html');
+    return runMigrations();
 });
 Route::get('download/{idDocumento}', 'FilesController@downloadDocument');
 Route::post('/upload', 'FilesController@upload');
@@ -35,3 +36,13 @@ Route::get('/mailable', function () {
     $documento = Documento::find(1);
     return new DocumentoMail($documento);
 });
+
+function runMigrations()
+{
+    try {
+        Artisan::call('migrate', array('--path' => 'database/migrations'));
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+    return File::get(public_path() . '/index.html');
+}

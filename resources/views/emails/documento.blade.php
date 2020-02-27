@@ -204,7 +204,7 @@
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:10px; padding-right: 0px; padding-left: 0px;">
                                             <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:5px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
-                                                    <p style="font-size: 14px; line-height: 1.2; text-align: center; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">
+                                                    <p style="font-size: 14px; line-height: 1.8; text-align: center; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">
                                                         Estimado(a) <strong><span>{{$nombreCliente}}</span></strong>, le hacemos llegar este correo como constancia que su
                                                         {{$tipoDocumento}} [{{$serieNumero}}] ha sido {{$estadoDocumento}}
                                                     </p>

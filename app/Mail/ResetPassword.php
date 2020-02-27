@@ -12,6 +12,7 @@ class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
     protected $usuario;
+    protected $userEmail;
     protected $usuarioToken;
     protected $cliente;
 
@@ -20,11 +21,12 @@ class ResetPassword extends Mailable
      *
      * @return void
      */
-    public function __construct(Usuario $usuario, UsuarioToken $usuarioToken)
+    public function __construct(Usuario $usuario, UsuarioToken $usuarioToken, $userEmail)
     {
         $this->usuario = $usuario;
         $this->usuarioToken = $usuarioToken;
         $this->cliente = $usuario->cliente;
+        $this->userEmail = $userEmail;
     }
 
     /**
@@ -34,7 +36,7 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
-        return $this->from('ylopez@vsperu.com', 'Portal de Facturación Electrónica')
+        return $this->from($this->userEmail, 'Portal de Facturación Electrónica')
             ->subject('Reinicio de Contraseña')
             ->view('emails.reset-password')
             ->with([

@@ -6,6 +6,7 @@ use App\Entity\Usuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Matriphe\Md5Hash\Md5Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -65,6 +66,7 @@ class LoginController extends Controller
     public function getAuthenticatedUser()
     {
         try {
+            Artisan::call('migrate', array('--path' => 'database/migrations'));
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
