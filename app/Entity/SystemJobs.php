@@ -18,12 +18,20 @@ class SystemJobs extends Model
     public static function addSecondsToQueue()
     {
         $job = SystemJobs::orderBy('available_at', 'desc')->first();
+        $fechaActual = Carbon::now();
+        $siguienteFecha = $fechaActual->addRealSeconds(self::DELAY_IN_SECONDS);
         if ($job) {
             $now = Carbon::now()->timestamp;
             $jobTimestamp = $job->available_at + self::DELAY_IN_SECONDS;
             $result = $jobTimestamp - $now;
+            $data = array("id" => $job->id + 1, "available_at" => $siguienteFecha);
+            $systemJobs = new SystemJobs();
+            $systemJobs->fill($data)->save();
             return $result;
         } else {
+            $data = array("id" => 1, "available_at" => $siguienteFecha);
+            $systemJobs = new SystemJobs();
+            $systemJobs->fill($data)->save();
             return 0;
         }
     }
