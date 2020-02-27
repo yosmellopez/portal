@@ -2,3 +2,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/eay3cg3bu96g/public_html/
     - /bin/cp -R /home/eay3cg3bu96g/repositories/portal $DEPLOYPATH
+    - composer self-update
+    - composer install --no-interaction
