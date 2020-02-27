@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/eay3cg3bu96g/public_html/
+    - /bin/cp -R /home/eay3cg3bu96g/repositories/portal $DEPLOYPATH
