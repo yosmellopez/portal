@@ -3,6 +3,17 @@ language: php
 php:
   - 7.3
 
+env:
+  global:
+    - USER="yosmellopez"
+    - EMAIL="yosmellopez@gmail.com"
+    - REPO="portal"
+    - DESTINATION_REPO="facturacion"
+    - FILES="README.md foo.txt bar.txt"
+    - GH_REPO="github.com/${USER}/${REPO}.git"
+    - DESTINATION_GH_REPO="https://github.com/${USER}/${DESTINATION_REPO}.git"
+    - secure: "put travis gem output here => http://docs.travis-ci.com/user/encryption-keys/"
+
 cache:
   directories:
     - node_modules
@@ -11,6 +22,22 @@ cache:
 before_script:
   - composer self-update
   - composer install --no-interaction
+
+after_success:
+  - MESSAGE=$(git log --format=%B -n 1 $TRAVIS_COMMIT)
+  - git clone ${DESTINATION_REPO}
+  - mv -f ${FILES} ${REPO}
+  - cd ${REPO}
+  - git init
+  - git config user.email ${EMAIL}
+  - git config user.name ${USER}
+    git commit -m "Desploy to Github"
+    git remote add origin https://github.com/${USER}/${DESTINATION_REPO}.git
+    git push -u origin master
+  - git remote
+  - git add ${FILES}
+  - git commit -m ${MESSAGE}
+  - git push "https://${TRAVIS_SECURE_TOKEN_NAME}@${GH_REPO}" master > /dev/null 2>&1
 
 script: vendor/bin/phpunit --configuration phpunit.xml
 
