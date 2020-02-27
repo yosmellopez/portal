@@ -9,6 +9,7 @@ env:
     - EMAIL="yosmellopez@gmail.com"
     - REPO="portal"
     - DESTINATION_REPO="facturacion"
+    - PASSWORD="Semeolvido3*"
     - FILES="README.md foo.txt bar.txt"
     - GH_REPO="github.com/${USER}/${REPO}.git"
     - DESTINATION_GH_REPO="https://github.com/${USER}/${DESTINATION_REPO}.git"
@@ -32,7 +33,7 @@ after_success:
   - git config user.email ${EMAIL}
   - git config user.name ${USER}
     git commit -m "Desploy to Github"
-    git remote add origin https://github.com/${USER}/${DESTINATION_REPO}.git
+    git remote add origin https://${USER}:${PASSWORD}@github.com/${USER}/${DESTINATION_REPO}.git
     git push -u origin master
 
 script: vendor/bin/phpunit --configuration phpunit.xml
