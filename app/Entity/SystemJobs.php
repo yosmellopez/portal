@@ -22,7 +22,8 @@ class SystemJobs extends Model
         $siguienteFecha = $fechaActual->addRealSeconds(self::DELAY_IN_SECONDS);
         if ($job) {
             $now = Carbon::now()->timestamp;
-            $jobTimestamp = $job->available_at + self::DELAY_IN_SECONDS;
+            $fechaAnterior = Carbon::createFromFormat('Y-m-d H:i:s', $job->available_at);
+            $jobTimestamp = $fechaAnterior->addRealSeconds(self::DELAY_IN_SECONDS)->timestamp;
             $result = $jobTimestamp - $now;
             $data = array("id" => $job->id + 1, "available_at" => $siguienteFecha);
             $systemJobs = new SystemJobs();

@@ -13,7 +13,7 @@ class CreateClientesTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('fe_cliente')) {
+        if (!Schema::hasTable('fe_cliente') || !Schema::hasColumn('fe_cliente','deleted_at')) {
             Schema::table('fe_cliente', function (Blueprint $table) {
                 $table->softDeletes();
             });

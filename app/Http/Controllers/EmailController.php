@@ -24,8 +24,7 @@ class EmailController extends Controller
         $documento = Documento::find($idDocumento);
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         try {
-            Mail::to("ylopez@vsperu.com")->later(SystemJobs::addSecondsToQueue(), new DocumentoMail($documento, $userEmail));
-            sleep(5);
+            Mail::to("ylopez@vsperu.com")->send(new DocumentoMail($documento, $userEmail));
             if (Mail::failures()) {
                 return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
             } else {
@@ -44,8 +43,7 @@ class EmailController extends Controller
     {
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         try {
-            Mail::to($usuario->email)->later(SystemJobs::addSecondsToQueue(), new ResetPassword($usuario, $usuarioToken, $userEmail));
-            sleep(5);
+            Mail::to($usuario->email)->send(new ResetPassword($usuario, $usuarioToken, $userEmail));
             if (Mail::failures()) {
                 return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
             } else {
