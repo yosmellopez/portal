@@ -18,12 +18,14 @@ class EmailController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws GeneralAPIException
      */
     public function sendEmail($idDocumento)
     {
         $documento = Documento::find($idDocumento);
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         try {
+            $correo = $documento->cliente->email;
             Mail::to("ylopez@vsperu.com")->send(new DocumentoMail($documento, $userEmail));
             if (Mail::failures()) {
                 return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));

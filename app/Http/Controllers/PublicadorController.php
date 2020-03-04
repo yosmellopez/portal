@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Entity\Cliente;
 use App\Entity\Documento;
+use App\Exceptions\GeneralAPIException;
 use App\Mail\DocumentoMail;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -75,7 +76,10 @@ class PublicadorController extends Controller
             $documentoController = new EmailController();
             $documentoController->sendEmail($data["idDocumento"]);
         } catch (\Exception $e) {
-            return response()->json(array("error" => $e->getMessage()), 201);
+            if ($e instanceof GeneralAPIException) {
+                return response()->json(array("mensaje" => "Se registró existosamente el documento pero: " . $e->getMessage()), 201);
+            }
+            return response()->json(array("error" => $e->getMessage()), 400);
         }
         return response()->json(array("mensaje" => $data), 201);
     }
