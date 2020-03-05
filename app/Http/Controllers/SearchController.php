@@ -138,15 +138,21 @@ class SearchController extends Controller
         for ($i = 0; $i < $days; $i++) {
             $filteredDocuments = collect($documentos)->filter(function ($item) use ($fechaEmisionInicio) {
                 $currentDate = \DateTime::createFromFormat("d/m/Y", $item->fecEmisionDoc);
-                $diferencia = $fechaEmisionInicio->diff($currentDate);
-                return $diferencia->days == 0;
+                if (!$currentDate) {
+                    $currentDate = \DateTime::createFromFormat("Y/m/d", $item->fecEmisionDoc);
+                }
+                if ($currentDate) {
+                    $diferencia = $fechaEmisionInicio->diff($currentDate);
+                    return $diferencia->days == 0;
+                }
+                return false;
             });
             $fechaEmisionInicio->modify("+1 days");
             $documents = array_merge($filteredDocuments->toArray(), $documents);
         }
 //        $queries = \DB::getQueryLog();
 //        var_dump($queries);
-        return response()->json($documents);
+        return response()->json($documents, 200);
     }
 
     /**
