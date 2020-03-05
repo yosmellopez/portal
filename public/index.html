@@ -1,5 +1,5 @@
 <!doctype html> <html class="no-js" lang="en" dir="ltr"> <head> <base href="/"/> <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>Portal</title> <meta name="description" content="Description for Portal"> <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"> <meta name="theme-color" content="#000000"> <link rel="shortcut icon" href="favicon.ico"/> <link rel="manifest" href="manifest.webapp"/> <link rel="stylesheet" href="content/css/loading.css"> <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <style type="text/css"> body, html {
-                height: 90%;
+                height: 100%;
             }
 
             .app-loading {
