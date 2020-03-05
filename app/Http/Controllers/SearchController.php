@@ -135,7 +135,7 @@ class SearchController extends Controller
         $interval = $fechaEmisionFin->diff($fechaEmisionInicio);
         $days = $interval->days;
         $documents = array();
-        for ($i = 0; $i < $days; $i++) {
+        for ($i = 0; $i <= $days; $i++) {
             $filteredDocuments = collect($documentos)->filter(function ($item) use ($fechaEmisionInicio) {
                 $currentDate = \DateTime::createFromFormat("d/m/Y", $item->fecEmisionDoc);
                 if (!$currentDate) {
@@ -147,7 +147,7 @@ class SearchController extends Controller
                 }
                 return false;
             });
-            $fechaEmisionInicio->modify("+1 days");
+            $fechaEmisionInicio = $fechaEmisionInicio->modify("+1 days");
             $documents = array_merge($filteredDocuments->toArray(), $documents);
         }
 //        $queries = \DB::getQueryLog();

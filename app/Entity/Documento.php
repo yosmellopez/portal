@@ -13,6 +13,9 @@ class Documento extends Model
     protected $map = [
         'tipoDocumento' => 'tipoDoc'
     ];
+    protected $casts = [
+        'fecEmisionDoc' => 'datetime:Y-d-m',
+    ];
 
     public function cliente()
     {
