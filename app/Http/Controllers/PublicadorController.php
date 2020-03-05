@@ -81,7 +81,7 @@ class PublicadorController extends Controller
             }
             return response()->json(array("error" => $e->getMessage()), 400);
         }
-        return response()->json(array("mensaje" => "Documento " . $data["numSerie"] . " registrado correctamente"), 201);
+        return response()->json(array("mensaje" => "Documento [" . $data["numSerie"] . "] registrado correctamente"), 201);
     }
 
     public function username()
