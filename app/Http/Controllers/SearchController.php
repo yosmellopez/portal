@@ -24,7 +24,7 @@ class SearchController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function listTipoMoneda()
     {
@@ -44,7 +44,7 @@ class SearchController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function listEstadoSunat()
     {
@@ -64,7 +64,7 @@ class SearchController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function listNumeroSerie()
     {
@@ -89,7 +89,7 @@ class SearchController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function searchDocumentos(Request $request)
     {
@@ -159,7 +159,7 @@ class SearchController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function searchUsuarios(Request $request)
     {
@@ -182,14 +182,14 @@ class SearchController extends Controller
                 return $query->where('idRoles', $rol);
             })
             ->get();
-        return response()->json($usuarios);
+        return response()->json($usuarios, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function searchClientes(Request $request)
     {
@@ -204,7 +204,7 @@ class SearchController extends Controller
         })->when($rucClient, function ($query, $rucClient) {
             return $query->where('rucClient', $rucClient);
         })->get();
-        return response()->json($usuarios);
+        return response()->json($usuarios, 200);
     }
 
     /**
@@ -212,7 +212,7 @@ class SearchController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function downloadDocument(Request $request, $id)
     {
