@@ -18,11 +18,11 @@ export class LoginAccessService implements CanActivate {
 
     checkLogin(): Observable<boolean> {
         this.accountService
-            .identity()
+            .identity(true)
             .pipe(
                 map(account => {
                     if (account) {
-                        this.router.navigate(['']);
+                        this.router.navigate(['/home']);
                     }
                     this.respuesta = of(true);
                     return true;

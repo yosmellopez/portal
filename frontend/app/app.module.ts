@@ -45,6 +45,8 @@ import {AppNgxUiLoaderService} from "app/app-ngx-ui-loader.service";
 import {MissingTranslationHandler, TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {JhiConfigService, missingTranslationHandler, translatePartialLoader} from "ng-jhipster";
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from "@angular/material-moment-adapter";
+import {ConfigPipe} from "app/shared/config-pipe";
+import {ConfigService} from "app/shared/config-service";
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     bgsColor: '#4680ff',
@@ -121,7 +123,7 @@ const MY_NATIVE_DATE_FORMATS = {
     ],
     declarations: [JhiMainComponent],
     providers: [
-        AppNgxUiLoaderService,
+        AppNgxUiLoaderService, ConfigService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

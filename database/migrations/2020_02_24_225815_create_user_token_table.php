@@ -35,6 +35,6 @@ class CreateUserTokenTable extends Migration
      */
     public function down()
     {
-        Schema::drop('flights');
+        Schema::drop('fe_usuario_token');
     }
 }

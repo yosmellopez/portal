@@ -1,6 +1,6 @@
 <nav class="navbar navbar-primary navbar-expand-md bg-primary mat-elevation-z4" *ngIf="isAuthenticated()">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-        <span class="navbar-title">Portal de Facturación Electrónica</span>
+        <span class="navbar-title">{{'app.headerTitle'|configure}}</span>
     </a>
     <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
         <fa-icon icon="bars"></fa-icon>

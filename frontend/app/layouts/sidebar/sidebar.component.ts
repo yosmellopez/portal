@@ -58,7 +58,7 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '/documentos/comunicacion-baja',
         title: 'Comunicación Baja',
-        icon: 'assignment_returned',
+        icon: 'cancel',
         class: '',
         authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
     },
@@ -73,13 +73,6 @@ export const ROUTES: RouteInfo[] = [
         path: '/documentos/resumen-boleta',
         title: 'Resumen Diario Boleta',
         icon: 'today',
-        class: '',
-        authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
-    },
-    {
-        path: '/documentos/registro-documentos',
-        title: 'Registro Documentos',
-        icon: 'create',
         class: '',
         authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
     },

@@ -42,7 +42,7 @@ function runMigrations()
     try {
         Artisan::call('migrate', array('--path' => 'database/migrations'));
     } catch (Exception $e) {
-        $e->getMessage();
+        var_dump($e->getMessage());
     }
     return File::get(public_path() . '/index.html');
 }

@@ -299,7 +299,9 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
 
     protected onError(errorMessage: string) {
         this.isLoadingResults = false;
-        this.showToast(errorMessage, 'Error', false);
+        if (this.accountService.isAuthenticated()) {
+            this.showToast(errorMessage, 'Error', false);
+        }
     }
 
     sendEmail(documento: DocumentoElectronico) {

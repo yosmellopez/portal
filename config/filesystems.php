@@ -57,7 +57,7 @@ return [
 
         'custom' => [
             'driver' => 'local',
-            'root' => "D:\Programacion\EspacioPHP",
+            'root' => "/app",
         ],
 
         's3' => [

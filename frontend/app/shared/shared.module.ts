@@ -15,12 +15,13 @@ import {FooterComponent} from "app/layouts/footer/footer.component";
 import {SidebarComponent} from "app/layouts/sidebar/sidebar.component";
 import {SigninComponent} from "app/layouts/signin/signin.component";
 import {RouterModule} from "@angular/router";
+import {ConfigPipe} from "app/shared/config-pipe";
 
 @NgModule({
     imports: [JhMaterialModule, PortalSharedLibsModule, RouterModule],
-    declarations: [JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective, EstadoPipe, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent],
+    declarations: [JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective, EstadoPipe, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent, ConfigPipe],
     entryComponents: [JhiLoginModalComponent],
-    exports: [JhMaterialModule, PortalSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective, EstadoPipe, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent]
+    exports: [JhMaterialModule, PortalSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective, EstadoPipe, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent, ConfigPipe]
 })
 export class PortalSharedModule {
 }

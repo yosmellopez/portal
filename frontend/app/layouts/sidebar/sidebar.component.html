@@ -1,9 +1,11 @@
-<div class="logo" *ngIf="isAuthenticated()">
-    <a href="/" class="simple-text">
-        <div class="logo-img">
-            <img src="../../../content/img/angular.png"/>
+<div class="logo" style="width: 100%" *ngIf="isAuthenticated()">
+    <a href="/" class="simple-text center-block">
+        <div class="logo-img" style="margin-bottom: 10px;">
+            <img src="../../../content/img/logo.png" style="max-height: 80px"/>
         </div>
-        Portal Ventura
+        <span>
+            {{'app.sidebarTitle'|configure}}
+        </span><br/>
     </a>
 </div>
 <div class="sidebar-wrapper" *ngIf="isAuthenticated()">

@@ -1,13 +1,14 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MAT_SNACK_BAR_DATA, MatDialogRef, MatSnackBarRef } from '@angular/material';
-import { ConfirmMensaje, Mensaje } from 'app/shared/model/generic-model';
-import { Usuario } from 'app/shared/model/usuario.model';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MAT_SNACK_BAR_DATA, MatDialogRef, MatSnackBarRef} from '@angular/material';
+import {ConfirmMensaje, Mensaje} from 'app/shared/model/generic-model';
+import {Usuario} from 'app/shared/model/usuario.model';
 
 @Component({
-    selector: 'confirm-mensaje',
+    selector: 'jhi-confirm-mensaje',
     templateUrl: './confirm.message.html',
     styleUrls: ['./mensaje.component.scss'],
 })
+// tslint:disable-next-line:component-class-suffix
 export class Confirm {
     accion: string = 'Eliminar';
     description: string = 'Eliminar';
@@ -25,10 +26,11 @@ export class Confirm {
 }
 
 @Component({
-    selector: 'information-mensaje',
+    selector: 'jhi-information-mensaje',
     templateUrl: './information.message.html',
     styleUrls: ['./mensaje.component.scss'],
 })
+// tslint:disable-next-line:component-class-suffix
 export class Information {
     constructor(public dialogRef: MatDialogRef<Information>, @Inject(MAT_DIALOG_DATA) public data: any) {
     }
@@ -39,10 +41,11 @@ export class Information {
 }
 
 @Component({
-    selector: 'error-mensaje',
+    selector: 'jhi-error-mensaje',
     templateUrl: './error.message.html',
     styleUrls: ['./mensaje.component.scss'],
 })
+// tslint:disable-next-line:component-class-suffix
 export class MensajeError {
     constructor(public dialogRef: MatDialogRef<MensajeError>, @Inject(MAT_DIALOG_DATA) public data: any) {
     }
@@ -53,10 +56,11 @@ export class MensajeError {
 }
 
 @Component({
-    selector: 'mensaje-toast',
+    selector: 'jhi-mensaje-toast',
     templateUrl: './mensaje.toast.html',
     styleUrls: ['./mensaje.component.scss'],
 })
+// tslint:disable-next-line:component-class-suffix
 export class MensajeToast {
     mensaje: Mensaje;
     success: boolean = true;
