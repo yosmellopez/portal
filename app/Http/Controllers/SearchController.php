@@ -139,7 +139,7 @@ class SearchController extends Controller
             $filteredDocuments = collect($documentos)->filter(function ($item) use ($fechaEmisionInicio) {
                 $currentDate = \DateTime::createFromFormat("d/m/Y", $item->fecEmisionDoc);
                 if (!$currentDate) {
-                    $currentDate = \DateTime::createFromFormat("Y/m/d", $item->fecEmisionDoc);
+                    $currentDate = \DateTime::createFromFormat("Y-m-d", $item->fecEmisionDoc);
                 }
                 if ($currentDate) {
                     $diferencia = $fechaEmisionInicio->diff($currentDate);
