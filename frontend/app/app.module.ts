@@ -47,14 +47,14 @@ import {JhiConfigService, missingTranslationHandler, translatePartialLoader} fro
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from "@angular/material-moment-adapter";
 import {ConfigPipe} from "app/shared/config-pipe";
 import {ConfigService} from "app/shared/config-service";
-
+// background-color: rgb(79, 195, 247);
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-    bgsColor: '#4680ff',
+    bgsColor: '#4fc3f7',
     // bgsOpacity: 0.5,
     // bgsPosition: POSITION.bottomCenter,
     // bgsSize: 60,
     bgsType: SPINNER.threeBounce,
-    fgsColor: '#4680ff',
+    fgsColor: '#4fc3f7',
     // fgsPosition: POSITION.topCenter,
     // fgsSize: 60,
     logoUrl: 'content/images/ventura.jpeg',
