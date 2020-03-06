@@ -118,4 +118,12 @@ return [
         ],
     ],
     'throttleToMessagesPerMin' => env('MAIL_THROTTLE_TO_MESSAGES_PER_MIN', null),
+
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+        ],
+    ],
 ];

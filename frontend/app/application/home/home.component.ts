@@ -1,20 +1,23 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { forkJoin, Observable, of, Subscription } from 'rxjs';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {forkJoin, Observable, of, Subscription} from 'rxjs';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {JhiEventManager} from 'ng-jhipster';
 
-import { LoginModalService } from 'app/core/login/login-modal.service';
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
-import { DashboardService } from 'app/application/home/dashboard-service';
-import { filter, map, } from 'rxjs/operators';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { DocumentoElectronico, IDocumentoElectronico } from 'app/shared/model/documento-electronico.model';
-import { MatTableDataSource } from '@angular/material/table';
-import { ChartDataSets, ChartOptions } from 'chart.js';
-import { BaseChartDirective, Color, Label, ThemeService } from 'ng2-charts';
+import {LoginModalService} from 'app/core/login/login-modal.service';
+import {AccountService} from 'app/core/auth/account.service';
+import {Account} from 'app/core/user/account.model';
+import {DashboardService} from 'app/application/home/dashboard-service';
+import {filter, map,} from 'rxjs/operators';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {DocumentoElectronico, IDocumentoElectronico} from 'app/shared/model/documento-electronico.model';
+import {MatTableDataSource} from '@angular/material/table';
+import {ChartDataSets, ChartOptions} from 'chart.js';
+import {BaseChartDirective, Color, Label, ThemeService} from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import { TimeData } from 'app/shared/model/generic-model';
+import {TimeData} from 'app/shared/model/generic-model';
+import {MensajeToast} from "app/mensaje/window.mensaje";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
 
 type Theme = 'light-theme' | 'dark-theme';
 
@@ -84,8 +87,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         private accountService: AccountService,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
+        private route: Router,
         private dashboardService: DashboardService,
-        private themeService: ThemeService
+        private themeService: ThemeService,
+        protected snackBar: MatSnackBar
     ) {
     }
 
@@ -116,7 +121,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.lastAprovedDataSource.connect().next(this.lastAprovedDocuments);
             this.lastRejectedDataSource.connect().next(this.lastRejectedDocuments);
             this.lastLowedDataSource.connect().next(this.lastLowedDocuments);
-        }, (res: HttpErrorResponse) => this.onError(res.message));
+        }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     observarDocumentos(observable: Observable<HttpResponse<IDocumentoElectronico[]>>): Observable<IDocumentoElectronico[]> {
@@ -136,8 +141,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected onError(errorMessage: string) {
+    protected onError(response: HttpErrorResponse) {
         this.isLoadingResults = false;
+        if (response.status === 401) {
+            this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
+            this.route.navigate(['/login']);
+        }
+        if (this.accountService.isAuthenticated()) {
+            this.showToast(response.message, 'Error', false);
+        }
     }
 
     isAuthenticated() {
@@ -179,6 +191,17 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.themeService.setColorschemesOptions(overrides);
     }
 
+    showToast(mensaje: string, title: string, success: boolean) {
+        this.snackBar.openFromComponent(MensajeToast, {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: [success ? 'success-snackbar' : 'failure-snackbar'],
+            announcementMessage: 'Esto es una prueba',
+            data: {description: mensaje, title: title}
+        });
+    }
+
     setCurrentTheme(theme: Theme) {
         this.selectedTheme = theme;
     }
@@ -186,20 +209,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     public lineChartOptions: (ChartOptions & { annotation: any }) = {
         responsive: true,
         scales: {
-            xAxes: [{}],
-            yAxes: [{
-                id: 'y-axis-0',
-                position: 'left',
-            }, {
-                id: 'y-axis-1',
-                position: 'right',
-                gridLines: {
-                    color: 'rgba(255,0,0,0.3)',
-                },
-                ticks: {
-                    fontColor: 'red',
+            xAxes: [
+                {
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Documentos Emitidos por Fechas'
+                    }
                 }
-            }]
+            ],
+            yAxes: [
+                {
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Monto Total'
+                    }
+                }
+            ]
         },
         annotation: {
             annotations: [{
@@ -239,7 +264,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.isLoadingResults = false;
             this.lineChartLabels = timeData.columns;
             this.lineChartData = timeData.documentos;
-        }, (res: HttpErrorResponse) => this.onError(res.message));
+        }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     public mensual() {
@@ -249,7 +274,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.isLoadingResults = false;
             this.lineChartLabels = timeData.columns;
             this.lineChartData = timeData.documentos;
-        }, (res: HttpErrorResponse) => this.onError(res.message));
+        }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     public anual(): void {
@@ -259,6 +284,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.isLoadingResults = false;
             this.lineChartLabels = timeData.columns;
             this.lineChartData = timeData.documentos;
-        }, (res: HttpErrorResponse) => this.onError(res.message));
+        }, (res: HttpErrorResponse) => this.onError(res));
     }
 }

@@ -117,7 +117,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
                 this.documentoElectronicos = data;
                 this.dataSource.connect().next(this.documentoElectronicos);
                 this.isLoadingResults = false;
-            }, (res: HttpErrorResponse) => this.onError(res.message)
+            }, (res: HttpErrorResponse) => this.onError(res)
         );
         const monedasTipo = this.documentoElectronicoService.getTiposMonedas();
         if (monedasTipo.length === 0) {
@@ -127,7 +127,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             ).subscribe((data: TipoMoneda[]) => {
                     this.tiposMoneda = data;
                     this.documentoElectronicoService.setTiposMoneda(this.tiposMoneda);
-                }, (res: HttpErrorResponse) => this.onError(res.message)
+                }, (res: HttpErrorResponse) => this.onError(res)
             );
         } else {
             this.tiposMoneda = monedasTipo;
@@ -140,7 +140,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             ).subscribe((data: Estado[]) => {
                     this.estados = data;
                     this.documentoElectronicoService.setEstados(this.estados);
-                }, (res: HttpErrorResponse) => this.onError(res.message)
+                }, (res: HttpErrorResponse) => this.onError(res)
             );
         } else {
             this.estados = estadosTemp;
@@ -153,7 +153,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             ).subscribe((data: Serie[]) => {
                     this.series = data;
                     this.documentoElectronicoService.setSeries(this.series);
-                }, (res: HttpErrorResponse) => this.onError(res.message)
+                }, (res: HttpErrorResponse) => this.onError(res)
             );
         } else {
             this.series = seriesTemp;
@@ -185,7 +185,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
                 this.dataSource.connect().next(this.documentoElectronicos);
                 this.isLoadingResults = false;
             },
-            (res: HttpErrorResponse) => this.onError(res.message));
+            (res: HttpErrorResponse) => this.onError(res));
     }
 
     clear() {
@@ -247,7 +247,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             .subscribe((res: IDocumentoElectronico[]) => {
                 this.documentoElectronicos = res;
                 this.dataSource.connect().next(this.documentoElectronicos);
-            }, (res: HttpErrorResponse) => this.onError(res.message));
+            }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     downloadDocument(document: DocumentoElectronico, tipo: string) {
@@ -297,10 +297,14 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         this.eventSubscriber = this.eventManager.subscribe('documentoElectronicoListModification', () => this.loadAll());
     }
 
-    protected onError(errorMessage: string) {
+    protected onError(response: HttpErrorResponse) {
         this.isLoadingResults = false;
+        if (response.status === 401) {
+            this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
+            this.route.navigate(['/login']);
+        }
         if (this.accountService.isAuthenticated()) {
-            this.showToast(errorMessage, 'Error', false);
+            this.showToast(response.message, 'Error', false);
         }
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entity\Documento;
+use Carbon\Carbon;
 use Jenssegers\Date\Date;
 
 class DashboardController extends Controller
@@ -11,7 +12,7 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function lastEmmitedDocuments()
     {
@@ -24,7 +25,7 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function lastAprovedDocuments()
     {
@@ -37,7 +38,7 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function lastRejectedDocuments()
     {
@@ -50,7 +51,7 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function lastLowedDocuments()
     {
@@ -63,7 +64,7 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function weekDocuments()
     {
@@ -75,8 +76,8 @@ class DashboardController extends Controller
         foreach ($tiposDocumento as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
-            $today = new \DateTime();
-            $today->modify("-6 day");
+            $today = Carbon::now();
+            $today = $today->subDays(6);
             for ($i = 0; $i < 7; $i++) {
                 $formattedDate = $today->format("d/m/Y");
                 $total = $collection->filter(function ($value, $key) use ($tipoDoc, $formattedDate) {
@@ -86,7 +87,7 @@ class DashboardController extends Controller
                 if (count($days) < 7) {
                     $days[] = $date;
                 }
-                $today->modify("+1 day");
+                $today = $today->addDay();
                 $data[] = number_format($total, 2, '.', '');
             }
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);
@@ -97,7 +98,7 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function monthDocuments()
     {
@@ -109,8 +110,8 @@ class DashboardController extends Controller
         foreach ($tiposDocumento as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
-            $today = Date::now();
-            $today->subMonths(5);
+            $today = Carbon::now();
+            $today = $today->subMonths(6);
             for ($i = 0; $i < 6; $i++) {
                 $formattedDate = $today->format("m/Y");
                 $total = $collection->filter(function ($value, $key) use ($tipoDoc, $formattedDate) {
@@ -122,7 +123,7 @@ class DashboardController extends Controller
                 if (count($days) < 6) {
                     $days[] = ucfirst($date);
                 }
-                $today->addMonth();
+                $today = $today->addMonth();
                 $data[] = number_format($total, 2, '.', '');
             }
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);
@@ -133,7 +134,7 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function yearDocuments()
     {
@@ -145,12 +146,15 @@ class DashboardController extends Controller
         foreach ($tiposDocumento as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
-            $today = new \DateTime();
-            $today->modify("-4 year");
+            $today = Carbon::now();
+            $today = $today->subYears(4);
             for ($i = 0; $i < 5; $i++) {
                 $formattedDate = $today->format("Y");
                 $total = $collection->filter(function ($value, $key) use ($tipoDoc, $formattedDate) {
                     $fecha = date_create_from_format("d/m/Y", $value->fecEmisionDoc);
+                    if (!$fecha) {
+                        $fecha = date_create_from_format("Y-d-m", $value->fecEmisionDoc);
+                    }
                     $mes = $fecha->format("Y");
                     return $formattedDate == $mes && $tipoDoc == $value->tipoDoc;
                 })->sum("total");
@@ -158,7 +162,7 @@ class DashboardController extends Controller
                 if (count($days) < 5) {
                     $days[] = $date;
                 }
-                $today->modify("+1 year");
+                $today = $today->addYear();
                 $data[] = number_format($total, 2, '.', '');
             }
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);

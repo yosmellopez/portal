@@ -1,24 +1,24 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { merge, of, Subscription } from 'rxjs';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {merge, of, Subscription} from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { catchError, filter, map, startWith, switchMap } from 'rxjs/operators';
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import {catchError, filter, map, startWith, switchMap} from 'rxjs/operators';
+import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
 
-import { Cliente, ICliente } from 'app/shared/model/cliente.model';
-import { AccountService } from 'app/core/auth/account.service';
-import { ClienteService } from './cliente.service';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { AppResponseBody } from 'app/shared/model/generic-model';
-import { Confirm, MensajeToast } from 'app/mensaje/window.mensaje';
-import { MatDialog } from '@angular/material/dialog';
-import { ClienteWindowComponent } from 'app/entities/cliente/cliente-window/cliente-window.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormControl, FormGroup } from '@angular/forms';
-import { IUsuario } from 'app/shared/model/usuario.model';
+import {Cliente, ICliente} from 'app/shared/model/cliente.model';
+import {AccountService} from 'app/core/auth/account.service';
+import {ClienteService} from './cliente.service';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import {AppResponseBody} from 'app/shared/model/generic-model';
+import {Confirm, MensajeToast} from 'app/mensaje/window.mensaje';
+import {MatDialog} from '@angular/material/dialog';
+import {ClienteWindowComponent} from 'app/entities/cliente/cliente-window/cliente-window.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {FormControl, FormGroup} from '@angular/forms';
+import {IUsuario} from 'app/shared/model/usuario.model';
 
 @Component({
     selector: 'jhi-cliente',
@@ -41,6 +41,7 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
         protected clienteService: ClienteService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
+        protected route: Router,
         protected activatedRoute: ActivatedRoute,
         protected accountService: AccountService,
         protected dialog: MatDialog,
@@ -73,7 +74,7 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.clientes = res;
                     this.dataSource.connect().next(this.clientes);
                 },
-                (res: HttpErrorResponse) => this.onError(res.message)
+                (res: HttpErrorResponse) => this.onError(res)
             );
     }
 
@@ -88,7 +89,7 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
             this.clientes = data;
             this.dataSource.connect().next(this.clientes);
             this.isLoadingResults = false;
-        }, (res: HttpErrorResponse) => this.onError(res.message));
+        }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     clear() {
@@ -115,9 +116,15 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
         this.eventSubscriber = this.eventManager.subscribe('clienteListModification', () => this.loadAll());
     }
 
-    protected onError(errorMessage: string) {
+    protected onError(response: HttpErrorResponse) {
         this.isLoadingResults = false;
-        this.jhiAlertService.error(errorMessage, null, null);
+        if (response.status === 401) {
+            this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
+            this.route.navigate(['/login']);
+        }
+        if (this.accountService.isAuthenticated()) {
+            this.showToast(response.message, 'Error', false);
+        }
     }
 
     ngAfterViewInit() {
@@ -146,7 +153,7 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.isLoadingResults = false;
                 this.clientes = res;
                 this.dataSource.connect().next(this.clientes);
-            }, (res: HttpErrorResponse) => this.onError(res.message));
+            }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     editCliente(cliente: Cliente) {
@@ -173,7 +180,8 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
 
     deleteCliente(cliente: Cliente) {
         const dialogRef = this.dialog.open(Confirm, {
-            data: {accion: 'Eliminar', description: `¿Desea eliminar el cliente ${cliente.nombreClient}?`}, width: '400px'
+            data: {accion: 'Eliminar', description: `¿Desea eliminar el cliente ${cliente.nombreClient}?`},
+            width: '400px'
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -182,7 +190,7 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
                 ).subscribe((response: HttpResponse<any>) => {
                     this.showToast(`Cliente ${cliente.nombreClient} eliminado exitosamente`, 'Cliente Eliminado', true);
                     this.paginator.page.emit();
-                }, (res: HttpErrorResponse) => this.onError(res.message));
+                }, (res: HttpErrorResponse) => this.onError(res));
             }
         });
     }

@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {merge, of, Subscription} from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {catchError, filter, map, startWith, switchMap} from 'rxjs/operators';
@@ -46,6 +46,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
         protected usuarioService: UsuarioService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
+        protected route: Router,
         protected activatedRoute: ActivatedRoute,
         protected accountService: AccountService,
         protected rolService: RolService,
@@ -68,7 +69,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 .subscribe((res: IRol[]) => {
                         this.roles = res;
                         this.rolService.setRoles(res);
-                    }, (res: HttpErrorResponse) => this.onError(res.message)
+                    }, (res: HttpErrorResponse) => this.onError(res)
                 );
         else {
             this.roles = this.rolService.getRoles();
@@ -89,7 +90,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 (res: IUsuario[]) => {
                     this.isLoadingResults = false;
                     this.usuarios = res;
-                }, (res: HttpErrorResponse) => this.onError(res.message)
+                }, (res: HttpErrorResponse) => this.onError(res)
             );
     }
 
@@ -104,7 +105,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
             this.usuarios = data;
             this.dataSource.connect().next(this.usuarios);
             this.isLoadingResults = false;
-        }, (res: HttpErrorResponse) => this.onError(res.message));
+        }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     clear() {
@@ -131,9 +132,15 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
         this.eventSubscriber = this.eventManager.subscribe('usuarioListModification', response => this.loadAll());
     }
 
-    protected onError(errorMessage: string) {
+    protected onError(response: HttpErrorResponse) {
         this.isLoadingResults = false;
-        this.jhiAlertService.error(errorMessage, null, null);
+        if (response.status === 401) {
+            this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
+            this.route.navigate(['/login']);
+        }
+        if (this.accountService.isAuthenticated()) {
+            this.showToast(response.message, 'Error', false);
+        }
     }
 
     ngAfterViewInit() {
@@ -162,7 +169,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.isLoadingResults = false;
                 this.usuarios = res;
                 this.dataSource.connect().next(this.usuarios);
-            }, (res: HttpErrorResponse) => this.onError(res.message));
+            }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     editUsuario(usuario: Usuario) {
@@ -199,7 +206,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 ).subscribe((response: HttpResponse<any>) => {
                     this.showToast(`Usuario ${usuario.nombUsuario} eliminado exitosamente`, 'Usuario Eliminado', true);
                     this.paginator.page.emit();
-                }, (res: HttpErrorResponse) => this.onError(res.message));
+                }, (res: HttpErrorResponse) => this.onError(res));
             }
         });
     }
