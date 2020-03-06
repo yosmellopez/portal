@@ -18,11 +18,11 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                 },                {
                     path: 'reset',
                     loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule),
-                    canActivate: [LoginAccessService]
                 },
                 {
                     path: 'account',
                     loadChildren: () => import('./account/account.module').then(m => m.PortalAccountModule),
+                    canActivateChild: [UserRouteAccessService]
                 },
                 {
                     path: '',

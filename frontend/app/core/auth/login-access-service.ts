@@ -21,6 +21,7 @@ export class LoginAccessService implements CanActivate {
             .identity(true)
             .pipe(
                 map(account => {
+                    console.log(account);
                     if (account) {
                         this.router.navigate(['/home']);
                     }
