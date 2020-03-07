@@ -10,7 +10,7 @@ import {DocumentoElectronicoService} from './documento-electronico.service';
 import {DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {MatPaginator} from '@angular/material/paginator';
-import {FormControl, FormGroup, FormGroupDirective, NgForm} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
 import {catchError, filter, map, startWith, switchMap} from 'rxjs/operators';
 import {
