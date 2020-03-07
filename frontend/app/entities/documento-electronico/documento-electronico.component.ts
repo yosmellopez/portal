@@ -3,7 +3,7 @@ import {HttpErrorResponse, HttpEventType, HttpResponse} from '@angular/common/ht
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {merge, of, Subscription} from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
+import {JhiEventManager} from 'ng-jhipster';
 import {DocumentoElectronico, IDocumentoElectronico, TipoDocumento} from 'app/shared/model/documento-electronico.model';
 import {AccountService} from 'app/core/auth/account.service';
 import {DocumentoElectronicoService} from './documento-electronico.service';
