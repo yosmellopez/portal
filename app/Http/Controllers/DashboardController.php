@@ -116,6 +116,9 @@ class DashboardController extends Controller
                 $formattedDate = $today->format("m/Y");
                 $total = $collection->filter(function ($value, $key) use ($tipoDoc, $formattedDate) {
                     $fecha = date_create_from_format("d/m/Y", $value->fecEmisionDoc);
+                    if (!$fecha) {
+                        $fecha = date_create_from_format("Y-d-m", $value->fecEmisionDoc);
+                    }
                     $mes = $fecha->format("m/Y");
                     return $formattedDate == $mes && $tipoDoc == $value->tipoDoc;
                 })->sum("total");
