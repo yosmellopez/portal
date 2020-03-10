@@ -9,7 +9,7 @@ class Documento extends Model
     public $timestamps = false;
     protected $table = 'fe_docelectronico';
     protected $primaryKey = 'idDocumento';
-    protected $fillable = ["idDocumento", "numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion"];
+    protected $fillable = ["idDocumento", "numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion", "token"];
     protected $map = [
         'tipoDocumento' => 'tipoDoc'
     ];

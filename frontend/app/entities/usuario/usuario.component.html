@@ -56,7 +56,7 @@
                             <mat-icon>search</mat-icon>
                             Buscar
                         </button>
-                        <button mat-raised-button color="warn" (click)="reset()">
+                        <button type="button" mat-raised-button color="warn" (click)="reset()">
                             <mat-icon>clear_all</mat-icon>
                             Limpiar campos
                         </button>
@@ -64,9 +64,6 @@
                 </mat-expansion-panel>
             </mat-accordion>
         </form>
-    </div>
-    <div class="alert alert-warning" *ngIf="usuarios?.length === 0">
-        <span>No se encontraron usuarios</span>
     </div>
     <div class="table-responsive">
         <mat-table [dataSource]="dataSource" matSort matSortActive="rucClient" matSortDirection="asc" matSortDisableClear>
@@ -92,10 +89,10 @@
             </ng-container>
 
             <ng-container matColumnDef="activo">
-                <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Estado</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                     <mat-chip-list class="table-actions-theme" style="padding-top: 10px;">
-                        <mat-chip [color]="element.estadoUsuario == '1' ? 'primary' : 'warn'" selected> {{element.estadoUsuario == '1' ? "Activo" : "Desabilitado"}}</mat-chip>
+                        <mat-chip [color]="element.estadoUsuario == '1' ? 'primary' : 'warn'" selected (click)="cambiarEstadoUsuario(element)"> {{element.estadoUsuario == '1' ? "Activo" : "Desabilitado"}}</mat-chip>
                     </mat-chip-list>
                 </mat-cell>
             </ng-container>

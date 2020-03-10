@@ -16,6 +16,7 @@ class CreateQueeJobTable extends Migration
         if (!Schema::hasTable('system_jobs')) {
             Schema::create('system_jobs', function (Blueprint $table) {
                 $table->bigIncrements('id');
+                $table->primary("id", "system_jobs_pk");
                 $table->dateTime("available_at");
             });
         }

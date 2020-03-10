@@ -174,7 +174,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
 
     editUsuario(usuario: Usuario) {
         const dialogRef = this.dialog.open(UsuarioWindowComponent, {
-            data: usuario, width: '500px'
+            data: usuario, width: '550px'
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -185,7 +185,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
 
     createUsuario() {
         const dialogRef = this.dialog.open(UsuarioWindowComponent, {
-            data: new Usuario(), width: '500px'
+            data: new Usuario(), width: '550px'
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -224,5 +224,17 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
 
     reset() {
         this.formulario.reset();
+        this.loadAll();
+    }
+
+    cambiarEstadoUsuario(usuario: IUsuario) {
+        this.isLoadingResults = true;
+        usuario.estadoUsuario = usuario.estadoUsuario === '1' ? '0' : '1';
+        this.usuarioService.update(usuario).pipe(
+            filter((res: HttpResponse<IUsuario>) => res.ok)
+        ).subscribe(() => this.loadAll(), responseError => {
+            usuario.estadoUsuario = usuario.estadoUsuario === '1' ? '0' : '1';
+            this.onError(responseError);
+        });
     }
 }

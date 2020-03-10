@@ -206,7 +206,19 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
+    cambiarEstadoUsuario(cliente: ICliente) {
+        this.isLoadingResults = true;
+        cliente.estadoCliente = cliente.estadoCliente === '1' ? '0' : '1';
+        this.clienteService.update(cliente).pipe(
+            filter((res: HttpResponse<ICliente>) => res.ok)
+        ).subscribe(() => this.loadAll(), responseError => {
+            cliente.estadoCliente = cliente.estadoCliente === '1' ? '0' : '1';
+            this.onError(responseError);
+        });
+    }
+
     reset() {
         this.formulario.reset();
+        this.loadAll();
     }
 }

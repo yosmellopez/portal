@@ -16,6 +16,7 @@ class CreateDocumentosTable extends Migration
         if (!Schema::hasTable('fe_docelectronico')) {
             Schema::create('fe_docelectronico', function (Blueprint $table) {
                 $table->bigIncrements("idDocumento");
+                $table->primary("idDocumento", "fe_docelectronico_pk");
                 $table->string("numSerie")->nullable();
                 $table->date("fecEmisionDoc")->nullable();
                 $table->string("estadoSunat")->nullable();
@@ -28,7 +29,13 @@ class CreateDocumentosTable extends Migration
                 $table->string("docCdr", 500)->nullable();
                 $table->string("rucClient", 11)->nullable();
                 $table->string("monedaTransaccion")->nullable();
+                $table->string("token")->nullable();
                 $table->foreign("rucClient")->references('rucClient')->on('fe_cliente');
+            });
+        }
+        if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'token')) {
+            Schema::table("fe_docelectronico", function (Blueprint $table) {
+                $table->string("token")->nullable();
             });
         }
     }
