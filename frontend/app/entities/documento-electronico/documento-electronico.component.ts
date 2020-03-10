@@ -161,31 +161,33 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     }
 
     search() {
-        this.isLoadingResults = true;
-        const values = this.formulario.value;
-        this.currentSearch = {...values};
-        if (values.fechaEmisionInicio) {
-            const fechaInicio = values.fechaEmisionInicio as Moment;
-            this.currentSearch.fechaEmisionInicio = fechaInicio.format('DD/MM/YYYY');
-        } else {
-            this.currentSearch.fechaEmisionInicio = moment("1990-01-01").format('DD/MM/YYYY');
+        if (this.formulario.valid) {
+            this.isLoadingResults = true;
+            const values = this.formulario.value;
+            this.currentSearch = {...values};
+            if (values.fechaEmisionInicio) {
+                const fechaInicio = values.fechaEmisionInicio as Moment;
+                this.currentSearch.fechaEmisionInicio = fechaInicio.format('DD/MM/YYYY');
+            } else {
+                this.currentSearch.fechaEmisionInicio = moment("1990-01-01").format('DD/MM/YYYY');
+            }
+            if (values.fechaEmisionFin) {
+                const fechaFin = values.fechaEmisionFin as Moment;
+                this.currentSearch.fechaEmisionFin = fechaFin.format('DD/MM/YYYY');
+            } else {
+                this.currentSearch.fechaEmisionFin = moment().format('DD/MM/YYYY');
+            }
+            this.currentSearch.tipoDoc = this.tipoDocumento.tipo;
+            this.documentoElectronicoService.search(this.currentSearch).pipe(
+                filter((res: HttpResponse<IDocumentoElectronico[]>) => res.ok),
+                map((res: HttpResponse<IDocumentoElectronico[]>) => res.body)
+            ).subscribe((data: IDocumentoElectronico[]) => {
+                    this.documentoElectronicos = data;
+                    this.dataSource.connect().next(this.documentoElectronicos);
+                    this.isLoadingResults = false;
+                },
+                (res: HttpErrorResponse) => this.onError(res));
         }
-        if (values.fechaEmisionFin) {
-            const fechaFin = values.fechaEmisionFin as Moment;
-            this.currentSearch.fechaEmisionFin = fechaFin.format('DD/MM/YYYY');
-        } else {
-            this.currentSearch.fechaEmisionFin = moment().format('DD/MM/YYYY');
-        }
-        this.currentSearch.tipoDoc = this.tipoDocumento.tipo;
-        this.documentoElectronicoService.search(this.currentSearch).pipe(
-            filter((res: HttpResponse<IDocumentoElectronico[]>) => res.ok),
-            map((res: HttpResponse<IDocumentoElectronico[]>) => res.body)
-        ).subscribe((data: IDocumentoElectronico[]) => {
-                this.documentoElectronicos = data;
-                this.dataSource.connect().next(this.documentoElectronicos);
-                this.isLoadingResults = false;
-            },
-            (res: HttpErrorResponse) => this.onError(res));
     }
 
     clear() {
