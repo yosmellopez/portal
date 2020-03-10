@@ -71,7 +71,6 @@ class DocumentoMail extends Mailable
             ]);
     }
 
-
     private function findTipoDoc($tipo = "factura")
     {
         switch ($tipo) {

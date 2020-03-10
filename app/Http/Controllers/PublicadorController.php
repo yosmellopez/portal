@@ -22,7 +22,7 @@ class PublicadorController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function publicar(Request $request)
     {
@@ -67,10 +67,14 @@ class PublicadorController extends Controller
             $data["docXml"] = $localPath . '.xml';
             $data["docCdr"] = $localPath . '.zip';
             $documentoDb = Documento::where("numSerie", $data["numSerie"])->first();
+            $token = openssl_random_pseudo_bytes(64);
+            $token = bin2hex($token);
             if ($documentoDb) {
                 $data["idDocumento"] = $documentoDb->idDocumento;
+                $data["token"] = $token;
                 $documentoDb->fill($data)->update();
             } else {
+                $data["token"] = $token;
                 $documento->fill($data)->save();
             }
             $documentoController = new EmailController();
