@@ -30,7 +30,7 @@ class PHPMailerController extends Controller
             $tipoDocumento = $this->findTipoDoc($documento->tipoDoc);
             $estadoDocumento = $this->findEstado($documento->estadoSunat);
             $numeroSerie = $documento->numSerie;
-            $view = View::make('emails.documento', [
+            $view = View::make('phpmail.documento', [
                 "rucCliente" => $documento->rucClient,
                 "nombreCliente" => $nombreCliente,
                 "numSerie" => $numeroSerie,
@@ -60,7 +60,16 @@ class PHPMailerController extends Controller
             $mail->Subject = $tipoDocumento . " [$numeroSerie] $estadoDocumento";
             $mail->MsgHTML($html);
             $mail->addAddress($documento->cliente->email);
-            $mail->isSendmail();
+            $appLogoPath = public_path() . config('app.logo');
+            $appOkPath = public_path() . '/content/images/okok.gif';
+            $appFacebookPath = public_path() . '/content/images/facebook2x.png';
+            $appTwitterPath = public_path() . '/content/images/twitter2x.png';
+            $appGooglePath = public_path() . '/content/images/googleplus2x.png';
+            $mail->addEmbeddedImage($appLogoPath, "app-logo", "Logo Aplicacion");
+            $mail->addEmbeddedImage($appOkPath, "app-ok", "Fondo Aplicacion");
+            $mail->addEmbeddedImage($appFacebookPath, "facebook", "Facebook");
+            $mail->addEmbeddedImage($appTwitterPath, "twitter", "Twitter");
+            $mail->addEmbeddedImage($appGooglePath, "google", "Google");
             $prefixPath = Storage::disk("custom")->getDriver()->getAdapter()->getPathPrefix();
             $docPdf = join(DIRECTORY_SEPARATOR, array($prefixPath, $documento->docPdf));
             $docXml = join(DIRECTORY_SEPARATOR, array($prefixPath, $documento->docXml));
@@ -69,10 +78,13 @@ class PHPMailerController extends Controller
             $mail->addAttachment($docPdf, $documento->numSerie . '.pdf', PHPMailer::ENCODING_BASE64, 'application/pdf');
             $mail->addAttachment($docXml, $documento->numSerie . '.xml', PHPMailer::ENCODING_BASE64, 'application/vnd.mozilla.xul+xml');
             $mail->addAttachment($docCdr, $documento->numSerie . '.zip', PHPMailer::ENCODING_BASE64, 'application/zip');
+            $mail->isSendmail();
             $mail->send();
-            return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
+            return response()->json(array("message" => "Se ha enviado el correo exitosamente al cliente."));
         } catch (Exception $e) {
-            dd($e);
+            return response()->json(array("error" => $e->errorMessage()), 500);
+        } catch (\Exception $e) {
+            return response()->json(array("error" => $e->getMessage()), 500);
         }
     }
 
@@ -82,7 +94,7 @@ class PHPMailerController extends Controller
         $mail = new PHPMailer(true);
         try {
             $cliente = $usuario->cliente;
-            $view = View::make('emails.reset-password', [
+            $view = View::make('phpmail.reset-password', [
                 "nombreUsuario" => $usuario->nombUsuario,
                 "usuarioToken" => $usuarioToken->token,
                 "direccion" => $cliente->direccionClient
@@ -103,8 +115,10 @@ class PHPMailerController extends Controller
             $mail->MsgHTML($html);
             $mail->addAddress($usuario->email);
             $mail->isSendmail();
+            $mail->send();
+            return response()->json(array("message" => "Se ha enviado el correo exitosamente a: " . $userEmail));
         } catch (Exception $e) {
-            throw $e;
+            return response()->json(array("error" => $e->errorMessage()), 500);
         }
     }
 

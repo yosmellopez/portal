@@ -307,7 +307,11 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             this.route.navigate(['/login']);
         }
         if (this.accountService.isAuthenticated()) {
-            this.showToast(response.message, 'Error', false);
+            if (response.status === 500) {
+                this.showToast('Ha ocurrido un error interno, por favor inténtelo más tarde o comuníquese con su administrador del sistema.', 'Error Interno', false);
+            } else {
+                this.showToast(response.message, 'Error', false);
+            }
         }
     }
 
@@ -319,7 +323,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         ).subscribe(response => {
             this.isLoadingResults = false;
             this.showToast(response.message, 'Información', true);
-        }, (res: HttpErrorResponse) => this.onError(res.error.error));
+        }, (res: HttpErrorResponse) => this.onError(res));
     }
 
     exportarTabla() {

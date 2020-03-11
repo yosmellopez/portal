@@ -57,7 +57,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     fgsColor: '#4fc3f7',
     // fgsPosition: POSITION.topCenter,
     // fgsSize: 60,
-    logoUrl: 'content/images/ventura.jpeg',
     fgsType: SPINNER.fadingCircle,
     pbColor: 'blue'
     // pbDirection: PB_DIRECTION.leftToRight,

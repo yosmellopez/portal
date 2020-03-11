@@ -7,6 +7,7 @@ use App\Entity\Documento;
 use App\Entity\Usuario;
 use http\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
@@ -99,20 +100,21 @@ class SearchController extends Controller
         $monedaTransaccion = $data["monedaTransaccion"];
         $fechaEmisionInicio = $data["fechaEmisionInicio"];
         if (!isset($fechaEmisionInicio)) {
-            $fechaEmisionInicio = "01/01/1900";
+            $fechaEmisionInicio = Carbon::createFromFormat('d/m/Y', "01/01/1900");
         }
-        $fechaEmisionInicio = \DateTime::createFromFormat("d/m/Y", $fechaEmisionInicio);
+        $fechaEmisionInicio = Carbon::createFromFormat("d/m/Y", $fechaEmisionInicio);
         $fechaEmisionFin = $data["fechaEmisionFin"];
         if (!isset($fechaEmisionFin) || empty($fechaEmisionFin) || is_null($fechaEmisionFin)) {
-            $fechaEmisionFin = date('d/m/Y');
+            $fechaEmisionFin = Carbon::now();
         }
-        $fechaEmisionFin = \DateTime::createFromFormat("d/m/Y", $fechaEmisionFin);
+        $fechaEmisionFin = Carbon::createFromFormat("d/m/Y", $fechaEmisionFin);
         $tipoDoc = $this->findTipoDoc($data["tipoDoc"]);
         $rucClient = $data["rucClient"];
         $estadoSunat = $data["estadoSunat"];
         $estadoSunat = $this->findEstado($estadoSunat);
 //        \DB::connection()->enableQueryLog();
         $documentos = DB::table('fe_docelectronico')
+            ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
             ->when($numSerie, function ($query, $numSerie) {
                 return $query->where('numSerie', 'like', '%' . $numSerie . '%');
             })
@@ -132,27 +134,27 @@ class SearchController extends Controller
                 return $query->where('monedaTransaccion', $monedaTransaccion);
             })
             ->get();
-        $interval = $fechaEmisionFin->diff($fechaEmisionInicio);
-        $days = $interval->days;
-        $documents = array();
-        for ($i = 0; $i <= $days; $i++) {
-            $filteredDocuments = collect($documentos)->filter(function ($item) use ($fechaEmisionInicio) {
-                $currentDate = \DateTime::createFromFormat("d/m/Y", $item->fecEmisionDoc);
-                if (!$currentDate) {
-                    $currentDate = \DateTime::createFromFormat("Y-d-m", $item->fecEmisionDoc);
-                }
-                if ($currentDate) {
-                    $diferencia = $fechaEmisionInicio->diff($currentDate);
-                    return $diferencia->days == 0;
-                }
-                return false;
-            });
-            $fechaEmisionInicio = $fechaEmisionInicio->modify("+1 days");
-            $documents = array_merge($filteredDocuments->toArray(), $documents);
-        }
+//        $interval = $fechaEmisionFin->diff($fechaEmisionInicio);
+//        $days = $interval->days;
+//        $documents = array();
+//        for ($i = 0; $i <= $days; $i++) {
+//            $filteredDocuments = collect($documentos)->filter(function ($item) use ($fechaEmisionInicio) {
+//                $currentDate = \DateTime::createFromFormat("d/m/Y", $item->fecEmisionDoc);
+//                if (!$currentDate) {
+//                    $currentDate = \DateTime::createFromFormat("Y-d-m", $item->fecEmisionDoc);
+//                }
+//                if ($currentDate) {
+//                    $diferencia = $fechaEmisionInicio->diff($currentDate);
+//                    return $diferencia->days == 0;
+//                }
+//                return false;
+//            });
+//            $fechaEmisionInicio = $fechaEmisionInicio->modify("+1 days");
+//            $documents = array_merge($filteredDocuments->toArray(), $documents);
+//        }
 //        $queries = \DB::getQueryLog();
 //        var_dump($queries);
-        return response()->json($documents, 200);
+        return response()->json($documentos, 200);
     }
 
     /**

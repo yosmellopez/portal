@@ -22,22 +22,28 @@ class EmailController extends Controller
      */
     public function sendEmail($idDocumento)
     {
-        $documento = Documento::find($idDocumento);
-        $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
-        try {
-            $correo = $documento->cliente->email;
-            Mail::to("ylopez@vsperu.com")->send(new DocumentoMail($documento, $userEmail));
-            if (Mail::failures()) {
-                return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
-            } else {
-                return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
+        $usePHPMailer = config('app.use_phpmailer');
+        if ($usePHPMailer) {
+            $documentoController = new PHPMailerController();
+            return $documentoController->sendEmail($idDocumento);
+        } else {
+            $documento = Documento::find($idDocumento);
+            $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
+            try {
+                $correo = $documento->cliente->email;
+                Mail::to("ylopez@vsperu.com")->send(new DocumentoMail($documento, $userEmail));
+                if (Mail::failures()) {
+                    return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
+                } else {
+                    return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
+                }
+            } catch (\Exception $e) {
+                $code = $e->getCode();
+                if ($code == 552) {
+                    throw new GeneralAPIException("No se pudo enviar el correo porque el contenido es potencialmente dañino. Por favor comuníquese con su administrador de sistemas." . $e->getMessage());
+                }
+                throw new GeneralAPIException("No se pudo enviar el correo. Por favor comuníquese con su administrador de sistemas. " . $e->getMessage());
             }
-        } catch (\Exception $e) {
-            $code = $e->getCode();
-            if ($code == 552) {
-                throw new GeneralAPIException("No se pudo enviar el correo porque el contenido es potencialmente dañino. Por favor comuníquese con su administrador de sistemas." . $e->getMessage());
-            }
-            throw new GeneralAPIException("No se pudo enviar el correo. Por favor comuníquese con su administrador de sistemas. " . $e->getMessage());
         }
     }
 

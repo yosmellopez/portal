@@ -96,9 +96,14 @@ class ResetPasswordController extends Controller
                 $fechaExpiracion = $fechaActual->modify("+1 day");
                 $userToken->token_expiration = $fechaExpiracion;
                 $userToken->save();
-//                $emailController = new EmailController();
-                $emailController = new PHPMailerController();
-                $emailController->sendEmailToUser($usuario, $userToken);
+                $usePHPMailer = config('app.use_phpmailer');
+                if ($usePHPMailer) {
+                    $emailController = new PHPMailerController();
+                    $emailController->sendEmailToUser($usuario, $userToken);
+                } else {
+                    $emailController = new EmailController();
+                    $emailController->sendEmailToUser($usuario, $userToken);
+                }
             } catch (GeneralAPIException $e) {
                 return response()->json(array("error" => $e->getMessage()), 200);
             } catch (Exception $e) {

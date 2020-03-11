@@ -77,8 +77,14 @@ class PublicadorController extends Controller
                 $data["token"] = $token;
                 $documento->fill($data)->save();
             }
-            $documentoController = new EmailController();
-            $documentoController->sendEmail($data["idDocumento"]);
+            $usePHPMailer = config('app.use_phpmailer');
+            if ($usePHPMailer) {
+                $documentoController = new PHPMailerController();
+                $documentoController->sendEmail($data["idDocumento"]);
+            } else {
+                $documentoController = new EmailController();
+                $documentoController->sendEmail($data["idDocumento"]);
+            }
         } catch (\Exception $e) {
             if ($e instanceof GeneralAPIException) {
                 return response()->json(array("mensaje" => "Se registró existosamente el documento pero: " . $e->getMessage()), 201);
