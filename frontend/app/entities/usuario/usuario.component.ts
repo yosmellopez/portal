@@ -237,4 +237,12 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
             this.onError(responseError);
         });
     }
+
+    sendEmailMassive() {
+        this.usuarioService.sendEmailmassive().subscribe((res: HttpResponse<any>) => {
+            if (res.ok) {
+                this.showToast("Se han enviado los correos exitosamente", "Información", true);
+            }
+        });
+    }
 }

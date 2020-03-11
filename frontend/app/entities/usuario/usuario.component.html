@@ -52,6 +52,12 @@
                     </div>
 
                     <mat-action-row class="table-actions-theme">
+                        <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                            <button mat-raised-button color="primary" type="button" (click)="sendEmailMassive()">
+                                <mat-icon>send</mat-icon>
+                                Enviar Correos de Usuarios
+                            </button>
+                        </ng-container>
                         <button mat-raised-button color="primary" type="submit">
                             <mat-icon>search</mat-icon>
                             Buscar

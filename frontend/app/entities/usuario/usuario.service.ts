@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
-import { IUsuario } from 'app/shared/model/usuario.model';
-import { AppResponseBody } from 'app/shared/model/generic-model';
+import {SERVER_API_URL} from 'app/app.constants';
+import {createRequestOption} from 'app/shared/util/request-util';
+import {IUsuario} from 'app/shared/model/usuario.model';
+import {AppResponseBody} from 'app/shared/model/generic-model';
 
 type AppResponseArray = AppResponseBody<IUsuario[]>;
 type EntityResponseType = HttpResponse<IUsuario>;
@@ -43,5 +43,9 @@ export class UsuarioService {
     search(req?: any): Observable<HttpResponse<IUsuario[]>> {
         const options = createRequestOption(req);
         return this.http.get<IUsuario[]>(this.resourceSearchUrl, {params: options, observe: 'response'});
+    }
+
+    sendEmailmassive(): Observable<HttpResponse<any>> {
+        return this.http.post<any>(`${this.resourceUrl}/resetMasive`, {observe: 'response'});
     }
 }
