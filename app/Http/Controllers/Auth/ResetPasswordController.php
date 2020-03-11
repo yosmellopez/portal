@@ -73,7 +73,7 @@ class ResetPasswordController extends Controller
                     $hash = new Md5Hash();
                     $data["claveUsuario"] = $hash->make($newPassword);
                 }
-                $usuarioDb->fill($data)->save();
+                $usuarioDb->fill($data)->update();
                 return response()->json(array("success" => true, "msg" => "Se ha cambiado la contraseña exitosamente."), 200);
             }
             return response()->json(array("success" => false, "msg" => "Su contraseña no se pudo cambiar. Recuerde que el token de cambio de contraseña solo está activo 24 horas."), 200);

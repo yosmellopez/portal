@@ -6,22 +6,31 @@ namespace App\Http\Controllers;
 
 use App\Entity\Documento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
+        $usuario = auth()->user();
+        $idRol = $usuario->idRoles;
+        $rucCliente = $usuario->rucClient;
         $size = $request->size;
         $tipo = $request->tipo;
         $order = $request->sort;
         $direction = $request->direction;
-        $documentos = Documento::where('tipoDoc', $this->findTipoDoc($tipo))->orderBy($order, $direction)->paginate($size);
-        return response()->json($documentos, 200);
+        if ($idRol == 2 || $idRol == 3) {
+            $documentos = Documento::where('tipoDoc', $this->findTipoDoc($tipo))->where("rucClient", $rucCliente)->orderBy($order, $direction)->paginate($size);
+            return response()->json($documentos, 200);
+        } else {
+            $documentos = Documento::where('tipoDoc', $this->findTipoDoc($tipo))->orderBy($order, $direction)->paginate($size);
+            return response()->json($documentos, 200);
+        }
     }
 
     /**
