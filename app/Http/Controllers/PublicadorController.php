@@ -113,7 +113,6 @@ class PublicadorController extends Controller
         $usuario->save(["idUsuario" => $usuarioId + 1, "email" => $cliente->email, "nombUsuario" => $cliente->rucClient,
             "claveUsuario" => $claveUsuario, "estadoUsuario" => "1", "rucClient" => $cliente->rucClient, "idRoles" => 3
         ]);
-        DB::table('fe_usuario')->insert();
         $usePHPMailer = config('app.use_phpmailer');
         if ($usePHPMailer) {
             $documentoController = new PHPMailerController();

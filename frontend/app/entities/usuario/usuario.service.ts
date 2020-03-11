@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<AppResponseArray>;
 @Injectable({providedIn: 'root'})
 export class UsuarioService {
     public resourceUrl = SERVER_API_URL + 'api/usuarios';
+    public resetUrl = SERVER_API_URL + 'api/user';
     public resourceSearchUrl = SERVER_API_URL + 'api/search/usuarios';
 
     constructor(protected http: HttpClient) {
@@ -46,6 +47,6 @@ export class UsuarioService {
     }
 
     sendEmailmassive(): Observable<HttpResponse<any>> {
-        return this.http.post<any>(`${this.resourceUrl}/resetMasive`, {observe: 'response'});
+        return this.http.post<any>(`${this.resetUrl}/resetMasive`, {}, {observe: 'response'});
     }
 }

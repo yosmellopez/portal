@@ -137,8 +137,9 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
         if (response.status === 401) {
             this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
             this.route.navigate(['/login']);
-        }
-        if (this.accountService.isAuthenticated()) {
+        } else if (response.status === 400) {
+            this.showToast('Ocurrió un error. Los datos enviados no son correctos', 'Error', false);
+        } else if (this.accountService.isAuthenticated()) {
             this.showToast(response.message, 'Error', false);
         }
     }
@@ -243,6 +244,6 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
             if (res.ok) {
                 this.showToast("Se han enviado los correos exitosamente", "Información", true);
             }
-        });
+        }, (error: HttpErrorResponse) => this.onError(error));
     }
 }

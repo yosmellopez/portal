@@ -170,6 +170,55 @@ class PHPMailerController extends Controller
         }
     }
 
+    public function sendRestorePasswordEmail(Usuario $usuario, $password)
+    {
+        $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
+        $mail = new PHPMailer(true);
+        try {
+            $nombreUsuario = $usuario->nombUsuario;
+            $email = $usuario->email;
+            $view = View::make('phpmail.restore-password', [
+                "nombreUsuario" => $nombreUsuario,
+                "password" => $password,
+                "direccion" => config('app.name')
+            ]);
+            $html = $view->render();
+            $mail->isSMTP();
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->CharSet = 'utf-8';
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = config('mail.encryption');
+            $mail->Host = config('mail.host'); //gmail has host > smtp.gmail.com
+            $mail->Port = config('mail.port'); //gmail has port > 587 . without double quotes
+            $mail->Username = config('mail.username'); //your username. actually your email
+            $mail->Password = config('mail.password'); // your password. your mail password
+            $mail->setFrom($userEmail, config('app.name'));
+            $mail->SMTPKeepAlive = true;
+            $mail->Subject = 'Reinicio de Contraseña';
+            $mail->MsgHTML($html);
+            $mail->addAddress($email);
+
+            $appLogoPath = public_path() . config('app.logo');
+            $appOkPath = public_path() . '/content/images/illo.png';
+            $appFondoPath = public_path() . '/content/images/bg_password.gif';
+            $appFacebookPath = public_path() . '/content/images/facebook2x.png';
+            $appTwitterPath = public_path() . '/content/images/twitter2x.png';
+            $appGooglePath = public_path() . '/content/images/googleplus2x.png';
+            $mail->addEmbeddedImage($appLogoPath, "logo-aplicacion", "Logo Aplicacion");
+            $mail->addEmbeddedImage($appOkPath, "fondo-aplicacion", "Fondo Aplicacion");
+            $mail->addEmbeddedImage($appFacebookPath, "facebook", "Facebook");
+            $mail->addEmbeddedImage($appTwitterPath, "twitter", "Twitter");
+            $mail->addEmbeddedImage($appGooglePath, "google", "Google");
+            $mail->addEmbeddedImage($appFondoPath, "logo-fondo", "Fondo Imagen");
+
+            $mail->isSendmail();
+            $mail->send();
+            return response()->json(array("message" => "Se ha enviado el correo exitosamente a: " . $email));
+        } catch (Exception $e) {
+            return response()->json(array("error" => $e->errorMessage()), 500);
+        }
+    }
+
     private function findTipoDoc($tipo = "factura")
     {
         switch ($tipo) {

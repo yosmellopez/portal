@@ -65,12 +65,32 @@ class UsuarioController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function resetPasswordMasive()
     {
-        $usuarios = Usuario::where("idRoles", 3)->orWhere("idRoles", 3);
-
+        try {
+            $usuarios = Usuario::where("idRoles", 2)->orWhere("idRoles", 3)->get();
+            $usePHPMailer = config('app.use_phpmailer');
+            $documentoController = null;
+            if ($usePHPMailer) {
+                $documentoController = new PHPMailerController();
+            } else {
+                $documentoController = new EmailController();
+            }
+            foreach ($usuarios as $usuario) {
+                $token = openssl_random_pseudo_bytes(8);
+                $password = bin2hex($token);
+                $hash = new Md5Hash();
+                $claveUsuario = $hash->make($password);
+                $data = array("claveUsuario" => $claveUsuario);
+                $usuario->fill($data)->update();
+                $documentoController->sendRestorePasswordEmail($usuario, $password);
+            }
+        } catch (\Exception $e) {
+            return response()->json("No se enviaron los mensajes por " . $e->getMessage(), 400);
+        }
+        return response()->json("Se han enviado los mensajes correctamente", 200);
     }
 
     /**
