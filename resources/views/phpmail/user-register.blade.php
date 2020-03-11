@@ -209,14 +209,16 @@
                                             <div style="color:#555555;font-family:Cabin, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.5;padding-top:5px;padding-right:10px;padding-bottom:30px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.5; color: #555555; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 18px;">
                                                     <p style="font-size: 14px; line-height: 1.5; word-break: break-word; mso-line-height-alt: 21px; margin: 0;">
-                                                        Has solicitado un cambio de contraseña a través
+                                                        Se ha creado un nuevo usuario a través
                                                         del <a href="{{config('app.url')}}">{{config('app.name')}}.</a>
+                                                        para revisar sus documentos electrónicos
                                                     </p>
                                                 </div>
                                             </div>
                                             <div align="center" class="img-container center fixedwidth"
                                                  style="padding-right: 0px;padding-left: 0px;">
-                                                <img align="center" alt="Fondo Aplicacion" border="0" class="center fixedwidth"
+                                                <img align="center" alt="Fondo Aplicacion" border="0"
+                                                     class="center fixedwidth"
                                                      src="cid:fondo-aplicacion"
                                                      style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 530px; display: block;"
                                                      title="Fondo Aplicacion" width="530"/>
@@ -251,7 +253,7 @@
                                                     <span style="padding-left:20px;padding-right:20px;font-size:15px;display:inline-block;">
                                                         <span style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;">
                                                             <span data-mce-style="font-size: 15px; line-height: 30px;"
-                                                                    style="font-size: 15px; line-height: 30px;"><strong><span
+                                                                  style="font-size: 15px; line-height: 30px;"><strong><span
                                                                             data-mce-style="line-height: 30px; font-size: 15px;"
                                                                             style="line-height: 30px; font-size: 15px;">CAMBIAR CONTRASEÑA</span></strong></span></span></span></a>
                                                 </div>

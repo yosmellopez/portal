@@ -66,4 +66,24 @@ class EmailController extends Controller
             throw new GeneralAPIException("No se pudo enviar el correo. Por favor comuníquese con su administrador de sistemas." . $mensaje);
         }
     }
+
+    public function sendRegisterEmail(Usuario $usuario)
+    {
+        $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
+        try {
+            Mail::to($usuario->email)->send(new ResetPassword($usuario, $usuarioToken, $userEmail));
+            if (Mail::failures()) {
+                return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
+            } else {
+                return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
+            }
+        } catch (\Exception $e) {
+            $mensaje = $e->getMessage();
+            $code = $e->getCode();
+            if ($code == 552) {
+                throw new GeneralAPIException("No se pudo enviar el correo porque el contenido es potencialmente dañino. Póngase en contacto con su administrador.");
+            }
+            throw new GeneralAPIException("No se pudo enviar el correo. Por favor comuníquese con su administrador de sistemas." . $mensaje);
+        }
+    }
 }

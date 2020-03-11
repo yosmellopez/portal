@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Entity\Documento;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Jenssegers\Date\Date;
+use Illuminate\Support\Collection;
 
 class DashboardController extends Controller
 {
@@ -141,30 +143,23 @@ class DashboardController extends Controller
      */
     public function yearDocuments()
     {
-        $documentos = Documento::all();
-        $collection = collect($documentos);
-        $tiposDocumento = array("factura", "boleta", "nota-credito", "nota-debito");
+        $tiposDocumento = array("01", "03", "07", "08");
         $documentos = array();
+        $collection = new Collection([]);
         $days = array();
         foreach ($tiposDocumento as $tipo) {
-            $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
             $today = Carbon::now();
             $today = $today->subYears(4);
             for ($i = 0; $i < 5; $i++) {
                 $formattedDate = $today->format("Y");
-                $total = $collection->filter(function ($value, $key) use ($tipoDoc, $formattedDate) {
-                    $fecha = date_create_from_format("d/m/Y", $value->fecEmisionDoc);
-                    if (!$fecha) {
-                        $fecha = date_create_from_format("Y-d-m", $value->fecEmisionDoc);
-                    }
-                    $mes = $fecha->format("Y");
-                    return $formattedDate == $mes && $tipoDoc == $value->tipoDoc;
-                })->sum("total");
+                $documentos = DB::table('fe_docelectronico')
+                    ->whereIn('tipoDoc', $tiposDocumento)
+                    ->whereYear('fecEmisionDoc', $formattedDate)
+                    ->get();
+                $collection->merge($documentos);
+                $total = $collection->sum("total");
                 $date = $today->format("Y");
-                if (count($days) < 5) {
-                    $days[] = $date;
-                }
                 $today = $today->addYear();
                 $data[] = number_format($total, 2, '.', '');
             }

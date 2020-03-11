@@ -178,8 +178,8 @@
                                             <div align="left" class="img-container left fixedwidth"
                                                  style="padding-right: 25px;padding-left: 25px;">
                                                 <div style="font-size:1px;line-height:25px"> </div>
-                                                <img alt="Logo Aplicacion" border="0" class="left fixedwidth"
-                                                     src="cid:logo-aplicacion"
+                                                <img alt="Image" border="0" class="left fixedwidth"
+                                                     src="{{ $message->embed(public_path() . config('app.logo')) }}"
                                                      style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 208px; display: block;"
                                                      title="Image" width="208"/>
                                                 <div style="font-size:1px;line-height:25px"> </div>
@@ -216,10 +216,10 @@
                                             </div>
                                             <div align="center" class="img-container center fixedwidth"
                                                  style="padding-right: 0px;padding-left: 0px;">
-                                                <img align="center" alt="Fondo Aplicacion" border="0" class="center fixedwidth"
-                                                     src="cid:fondo-aplicacion"
+                                                <img align="center" alt="Image" border="0" class="center fixedwidth"
+                                                     src="{{ $message->embed(public_path() . '/content/images/illo.png') }}"
                                                      style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 530px; display: block;"
-                                                     title="Fondo Aplicacion" width="530"/>
+                                                     title="Image" width="530"/>
                                             </div>
                                             <div style="color:#555555;font-family:Cabin, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:20px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #555555; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
@@ -236,7 +236,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="background-image:url(cid:logo-fondo);background-position:top center;background-repeat:no-repeat">
+                    <div style="background-image:url('{{ $message->embed(public_path() . "/content/images/bg_password.gif")}}');background-position:top center;background-repeat:no-repeat">
                         <div class="block-grid no-stack"
                              style="margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;">
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color: #ffffff;">
@@ -314,7 +314,7 @@
                                                                                     href="https://www.facebook.com/"
                                                                                     target="_blank"><img alt="Facebook"
                                                                                                          height="32"
-                                                                                                         src="cid:facebook"
+                                                                                                         src="{{ $message->embed(public_path() . '/content/images/facebook2x.png') }}"
                                                                                                          style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
                                                                                                          title="Facebook"
                                                                                                          width="32"/></a>
@@ -323,18 +323,18 @@
                                                                             valign="top"><a href="https://twitter.com/"
                                                                                             target="_blank"><img
                                                                                         alt="Twitter" height="32"
-                                                                                        src="cid:twitter"
+                                                                                        src="{{ $message->embed(public_path() . '/content/images/twitter2x.png') }}"
                                                                                         style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
                                                                                         title="Twitter" width="32"/></a>
                                                                         </td>
                                                                         <td style="word-break: break-word; vertical-align: top; padding-bottom: 5px; padding-right: 0px; padding-left: 0;"
                                                                             valign="top"><a
-                                                                                    href="https://www.google.com/"
-                                                                                    target="_blank"><img alt="Google+"
+                                                                                    href="https://instagram.com/"
+                                                                                    target="_blank"><img alt="Instagram"
                                                                                                          height="32"
-                                                                                                         src="cid:google"
+                                                                                                         src="{{ $message->embed(public_path() . '/content/images/instagram2x.png') }}"
                                                                                                          style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: none; display: block;"
-                                                                                                         title="Google+"
+                                                                                                         title="Instagram"
                                                                                                          width="32"/></a>
                                                                         </td>
                                                                     </tr>

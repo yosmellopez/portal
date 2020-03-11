@@ -114,6 +114,54 @@ class PHPMailerController extends Controller
             $mail->Subject = 'Reinicio de Contraseña';
             $mail->MsgHTML($html);
             $mail->addAddress($usuario->email);
+
+            $appLogoPath = public_path() . config('app.logo');
+            $appOkPath = public_path() . '/content/images/illo.png';
+            $appFondoPath = public_path() . '/content/images/bg_password.gif';
+            $appFacebookPath = public_path() . '/content/images/facebook2x.png';
+            $appTwitterPath = public_path() . '/content/images/twitter2x.png';
+            $appGooglePath = public_path() . '/content/images/googleplus2x.png';
+            $mail->addEmbeddedImage($appLogoPath, "logo-aplicacion", "Logo Aplicacion");
+            $mail->addEmbeddedImage($appOkPath, "fondo-aplicacion", "Fondo Aplicacion");
+            $mail->addEmbeddedImage($appFacebookPath, "facebook", "Facebook");
+            $mail->addEmbeddedImage($appTwitterPath, "twitter", "Twitter");
+            $mail->addEmbeddedImage($appGooglePath, "google", "Google");
+            $mail->addEmbeddedImage($appFondoPath, "logo-fondo", "Fondo Imagen");
+
+            $mail->isSendmail();
+            $mail->send();
+            return response()->json(array("message" => "Se ha enviado el correo exitosamente a: " . $userEmail));
+        } catch (Exception $e) {
+            return response()->json(array("error" => $e->errorMessage()), 500);
+        }
+    }
+
+    public function sendRegisterEmail(Usuario $usuario)
+    {
+        $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
+        $mail = new PHPMailer(true);
+        try {
+            $cliente = $usuario->cliente;
+            $view = View::make('phpmail.user-register', [
+                "nombreUsuario" => $usuario->nombUsuario,
+                "password" => $usuario->direccionClient,
+                "direccion" => $cliente->direccionClient,
+            ]);
+            $html = $view->render();
+            $mail->isSMTP();
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->CharSet = 'utf-8';
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = config('mail.encryption');
+            $mail->Host = config('mail.host'); //gmail has host > smtp.gmail.com
+            $mail->Port = config('mail.port'); //gmail has port > 587 . without double quotes
+            $mail->Username = config('mail.username'); //your username. actually your email
+            $mail->Password = config('mail.password'); // your password. your mail password
+            $mail->setFrom($userEmail, config('app.name'));
+            $mail->SMTPKeepAlive = true;
+            $mail->Subject = config('app.name') . ' te ha enviado el registro de un nuevo usuario';
+            $mail->MsgHTML($html);
+            $mail->addAddress($usuario->email);
             $mail->isSendmail();
             $mail->send();
             return response()->json(array("message" => "Se ha enviado el correo exitosamente a: " . $userEmail));

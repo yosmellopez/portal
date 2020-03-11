@@ -45,7 +45,7 @@ class UsuarioController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -67,9 +67,10 @@ class UsuarioController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function resetPasswordMasive()
     {
-        //
+        $usuarios = Usuario::where("idRoles", 3)->orWhere("idRoles", 3);
+
     }
 
     /**

@@ -41,6 +41,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('estados', 'SearchController@listEstadoSunat');
     Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
     Route::post('account/change-password', 'UsuarioController@changePassword');
+    Route::post('resetMasive', 'UsuarioController@resetPasswordMasive');
     Route::resource('documentos', 'DocumentoController');
     Route::resource('clientes', 'ClienteController');
     Route::get('all/clientes', 'ClienteController@allClientes');
