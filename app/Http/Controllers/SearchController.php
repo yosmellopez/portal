@@ -268,7 +268,7 @@ class SearchController extends Controller
     {
         switch ($estado) {
             case 'Aprobado':
-                return 'R';
+                return 'V';
             case 'Rechazado':
                 return 'Z';
             case 'Pendiente Respuesta':

@@ -15,15 +15,13 @@ class CreateUserTokenTable extends Migration
     {
         if (!Schema::hasTable('fe_usuario_token')) {
             Schema::create('fe_usuario_token', function (Blueprint $table) {
-                $table->increments('id');
+                $table->bigIncrements('id');
                 $table->primary("id", "fe_usuario_token_pk");
                 $table->string('token', 512)
-                    ->unique()
-                    ->nullable()
-                    ->default(null);
+                    ->unique('token_unique')
+                    ->nullable();
                 $table->string('email', 254)
-                    ->nullable()
-                    ->default(null);
+                    ->nullable();
                 $table->dateTime("token_expiration");
             });
         }

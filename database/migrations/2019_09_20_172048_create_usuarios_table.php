@@ -17,7 +17,6 @@ class CreateUsuariosTable extends Migration
         if (!Schema::hasTable('fe_usuario')) {
             Schema::create('fe_usuario', function (Blueprint $table) {
                 $table->bigIncrements("idUsuario");
-                $table->primary("idUsuario", "fe_usuario_pk");
                 $table->string("email")->nullable();
                 $table->string("nombUsuario")->nullable();
                 $table->string("estadoUsuario")->nullable();

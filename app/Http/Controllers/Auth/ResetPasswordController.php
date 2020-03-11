@@ -7,6 +7,7 @@ use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\PHPMailerController;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -95,7 +96,8 @@ class ResetPasswordController extends Controller
                 $fechaExpiracion = $fechaActual->modify("+1 day");
                 $userToken->token_expiration = $fechaExpiracion;
                 $userToken->save();
-                $emailController = new EmailController();
+//                $emailController = new EmailController();
+                $emailController = new PHPMailerController();
                 $emailController->sendEmailToUser($usuario, $userToken);
             } catch (GeneralAPIException $e) {
                 return response()->json(array("error" => $e->getMessage()), 200);

@@ -6,12 +6,8 @@ use App\Entity\Documento;
 use App\Entity\Usuario;
 use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
-use App\Mail\DocumentoMail;
-use App\Mail\ResetPassword;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -54,7 +50,7 @@ class PHPMailerController extends Controller
             $mail->SMTPDebug = SMTP::DEBUG_SERVER;
             $mail->CharSet = 'utf-8';
             $mail->SMTPAuth = true;
-            $mail->SMTPSecure = config('mail.encryption');
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Host = config('mail.host'); //gmail has host > smtp.gmail.com
             $mail->Port = config('mail.port'); //gmail has port > 587 . without double quotes
             $mail->Username = config('mail.username'); //your username. actually your email
@@ -63,17 +59,18 @@ class PHPMailerController extends Controller
             $mail->SMTPKeepAlive = true;
             $mail->Subject = $tipoDocumento . " [$numeroSerie] $estadoDocumento";
             $mail->MsgHTML($html);
-            $mail->addAddress($documento->email);
+            $mail->addAddress($documento->cliente->email);
             $mail->isSendmail();
             $prefixPath = Storage::disk("custom")->getDriver()->getAdapter()->getPathPrefix();
-            $docPdf = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docPdf));
-            $docXml = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docXml));
-            $docCdr = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docCdr));
+            $docPdf = join(DIRECTORY_SEPARATOR, array($prefixPath, $documento->docPdf));
+            $docXml = join(DIRECTORY_SEPARATOR, array($prefixPath, $documento->docXml));
+            $docCdr = join(DIRECTORY_SEPARATOR, array($prefixPath, $documento->docCdr));
 
             $mail->addAttachment($docPdf, $documento->numSerie . '.pdf', PHPMailer::ENCODING_BASE64, 'application/pdf');
             $mail->addAttachment($docXml, $documento->numSerie . '.xml', PHPMailer::ENCODING_BASE64, 'application/vnd.mozilla.xul+xml');
             $mail->addAttachment($docCdr, $documento->numSerie . '.zip', PHPMailer::ENCODING_BASE64, 'application/zip');
             $mail->send();
+            return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
         } catch (Exception $e) {
             dd($e);
         }
@@ -82,20 +79,32 @@ class PHPMailerController extends Controller
     public function sendEmailToUser(Usuario $usuario, UsuarioToken $usuarioToken)
     {
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
+        $mail = new PHPMailer(true);
         try {
-            Mail::to($usuario->email)->send(new ResetPassword($usuario, $usuarioToken, $userEmail));
-            if (Mail::failures()) {
-                return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
-            } else {
-                return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
-            }
-        } catch (\Exception $e) {
-            $mensaje = $e->getMessage();
-            $code = $e->getCode();
-            if ($code == 552) {
-                throw new GeneralAPIException("No se pudo enviar el correo porque el contenido es potencialmente dañino. Póngase en contacto con su administrador.");
-            }
-            throw new GeneralAPIException("No se pudo enviar el correo. Por favor comuníquese con su administrador de sistemas." . $mensaje);
+            $cliente = $usuario->cliente;
+            $view = View::make('emails.reset-password', [
+                "nombreUsuario" => $usuario->nombUsuario,
+                "usuarioToken" => $usuarioToken->token,
+                "direccion" => $cliente->direccionClient
+            ]);
+            $html = $view->render();
+            $mail->isSMTP();
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->CharSet = 'utf-8';
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = config('mail.encryption');
+            $mail->Host = config('mail.host'); //gmail has host > smtp.gmail.com
+            $mail->Port = config('mail.port'); //gmail has port > 587 . without double quotes
+            $mail->Username = config('mail.username'); //your username. actually your email
+            $mail->Password = config('mail.password'); // your password. your mail password
+            $mail->setFrom($userEmail, config('app.name'));
+            $mail->SMTPKeepAlive = true;
+            $mail->Subject = 'Reinicio de Contraseña';
+            $mail->MsgHTML($html);
+            $mail->addAddress($usuario->email);
+            $mail->isSendmail();
+        } catch (Exception $e) {
+            throw $e;
         }
     }
 

@@ -16,7 +16,6 @@ class CreateDocumentosTable extends Migration
         if (!Schema::hasTable('fe_docelectronico')) {
             Schema::create('fe_docelectronico', function (Blueprint $table) {
                 $table->bigIncrements("idDocumento");
-                $table->primary("idDocumento", "fe_docelectronico_pk");
                 $table->string("numSerie")->nullable();
                 $table->date("fecEmisionDoc")->nullable();
                 $table->string("estadoSunat")->nullable();
