@@ -48,7 +48,7 @@ class PublicadorController extends Controller
             }
             $documentoId = DB::table('fe_docelectronico')->max('idDocumento');
             $documento = new Documento();
-            $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion"]);
+            $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion"]);
             $data["idDocumento"] = $documentoId + 1;
             $data["estadoWeb"] = "P";
             $fechaEmisionDocumento = $data["fecEmisionDoc"];

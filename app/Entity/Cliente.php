@@ -11,7 +11,7 @@ class Cliente extends Model
 
     protected $table = 'fe_cliente';
     protected $primaryKey = 'rucClient';
-    protected $fillable = ['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient', 'updated_at'];
+    protected $fillable = ['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient', "correoSecundario", 'updated_at'];
     protected $casts = ['rucClient' => 'string'];
 
     protected $dates = ['deleted_at'];

@@ -61,7 +61,7 @@ class PHPMailerController extends Controller
             $mail->MsgHTML($html);
             $mail->addAddress($documento->cliente->email);
             $appLogoPath = public_path() . config('app.logo');
-            $appOkPath = public_path() . '/content/images/okok.gif';
+            $appOkPath = public_path() . '/content/images/okok.png';
             $appFacebookPath = public_path() . '/content/images/facebook2x.png';
             $appTwitterPath = public_path() . '/content/images/twitter2x.png';
             $appGooglePath = public_path() . '/content/images/googleplus2x.png';
@@ -71,16 +71,18 @@ class PHPMailerController extends Controller
             $mail->addEmbeddedImage($appTwitterPath, "twitter", "Twitter");
             $mail->addEmbeddedImage($appGooglePath, "google", "Google");
             $prefixPath = Storage::disk("custom")->getDriver()->getAdapter()->getPathPrefix();
-            $docPdf = join(DIRECTORY_SEPARATOR, array($prefixPath, $documento->docPdf));
-            $docXml = join(DIRECTORY_SEPARATOR, array($prefixPath, $documento->docXml));
-            $docCdr = join(DIRECTORY_SEPARATOR, array($prefixPath, $documento->docCdr));
+            $docPdf = $prefixPath . $documento->docPdf;
+            $docXml = $prefixPath . $documento->docXml;
+            $docCdr = $prefixPath . $documento->docCdr;
+
+            $rutas = array("pdf" => $docPdf, "xml" => $docXml, "cdr" => $docCdr);
 
             $mail->addAttachment($docPdf, $documento->numSerie . '.pdf', PHPMailer::ENCODING_BASE64, 'application/pdf');
             $mail->addAttachment($docXml, $documento->numSerie . '.xml', PHPMailer::ENCODING_BASE64, 'application/vnd.mozilla.xul+xml');
             $mail->addAttachment($docCdr, $documento->numSerie . '.zip', PHPMailer::ENCODING_BASE64, 'application/zip');
             $mail->isSendmail();
             $mail->send();
-            return response()->json(array("message" => "Se ha enviado el correo exitosamente al cliente."));
+            return response()->json(array("message" => "Se ha enviado el correo exitosamente al cliente.", "rutas" => $rutas, "correo" => $documento->cliente->email));
         } catch (Exception $e) {
             return response()->json(array("error" => $e->errorMessage()), 500);
         } catch (\Exception $e) {

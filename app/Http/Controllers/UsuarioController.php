@@ -14,7 +14,7 @@ class UsuarioController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
@@ -79,13 +79,17 @@ class UsuarioController extends Controller
                 $documentoController = new EmailController();
             }
             foreach ($usuarios as $usuario) {
-                $token = openssl_random_pseudo_bytes(8);
-                $password = bin2hex($token);
-                $hash = new Md5Hash();
-                $claveUsuario = $hash->make($password);
-                $data = array("claveUsuario" => $claveUsuario);
-                $usuario->fill($data)->update();
-                $documentoController->sendRestorePasswordEmail($usuario, $password);
+                $email = $usuario->email;
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    if (isset($usuario->email)) {
+                        $password = $usuario->rucClient;
+                        $hash = new Md5Hash();
+                        $claveUsuario = $hash->make($password);
+                        $data = array("claveUsuario" => $claveUsuario);
+                        $usuario->fill($data)->update();
+                        $documentoController->sendRestorePasswordEmail($usuario, $password);
+                    }
+                }
             }
         } catch (\Exception $e) {
             return response()->json("No se enviaron los mensajes por " . $e->getMessage(), 400);

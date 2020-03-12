@@ -26,6 +26,7 @@ class CreateDocumentosTable extends Migration
                 $table->string("docPdf", 500)->nullable();
                 $table->string("docXml", 500)->nullable();
                 $table->string("docCdr", 500)->nullable();
+                $table->string("correoSecundario", 500)->nullable();
                 $table->string("rucClient", 11)->nullable();
                 $table->string("monedaTransaccion")->nullable();
                 $table->string("token")->nullable();
@@ -35,6 +36,11 @@ class CreateDocumentosTable extends Migration
         if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'token')) {
             Schema::table("fe_docelectronico", function (Blueprint $table) {
                 $table->string("token")->nullable();
+            });
+        }
+        if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'correoSecundario')) {
+            Schema::table("fe_docelectronico", function (Blueprint $table) {
+                $table->string("correoSecundario", 500)->nullable();
             });
         }
     }

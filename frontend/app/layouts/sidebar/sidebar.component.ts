@@ -76,8 +76,8 @@ export const ROUTES: RouteInfo[] = [
         class: '',
         authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR', 'ROLE_USER']
     },
-    {path: '/clientes', title: 'Clientes', icon: 'group', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR']},
-    {path: '/usuarios', title: 'Usuarios', icon: 'account_box', class: '', authority: ['ROLE_ADMIN', 'ROLE_RECEPTOR']},
+    {path: '/clientes', title: 'Clientes', icon: 'group', class: '', authority: ['ROLE_ADMIN']},
+    {path: '/usuarios', title: 'Usuarios', icon: 'account_box', class: '', authority: ['ROLE_ADMIN']},
 ];
 
 @Component({

@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Entity\Cliente;
 use App\Entity\Documento;
 use App\Entity\Usuario;
-use http\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class SearchController extends Controller
 {
@@ -29,7 +29,7 @@ class SearchController extends Controller
      */
     public function listTipoMoneda()
     {
-        $documentos = Documento::all();
+        $documentos = Documento::all("monedaTransaccion");
         $collection = collect($documentos);
         $tiposMoneda = $collection->map(function ($item, $key) {
             return array("monedaTransaccion" => $item->monedaTransaccion);
@@ -69,7 +69,7 @@ class SearchController extends Controller
      */
     public function listNumeroSerie()
     {
-        $documentos = Documento::all();
+        $documentos = Documento::all("numSerie");
         $collection = collect($documentos);
         $seriesDocumentos = $collection->map(function ($item, $key) {
             $numSerie = preg_split("/[-]/", $item->numSerie);
@@ -94,6 +94,8 @@ class SearchController extends Controller
      */
     public function searchDocumentos(Request $request)
     {
+        $usuario = auth()->user();
+        $idRol = $usuario->idRoles;
         $data = $request->all();
         $numSerie = $data["numSerie"];
         $numero = $data["numero"];
@@ -103,6 +105,7 @@ class SearchController extends Controller
             $fechaEmisionInicio = Carbon::createFromFormat('d/m/Y', "01/01/1900");
         }
         $fechaEmisionInicio = Carbon::createFromFormat("d/m/Y", $fechaEmisionInicio);
+        $fechaEmisionInicio = $fechaEmisionInicio->subDay();
         $fechaEmisionFin = $data["fechaEmisionFin"];
         if (!isset($fechaEmisionFin) || empty($fechaEmisionFin) || is_null($fechaEmisionFin)) {
             $fechaEmisionFin = Carbon::now();
@@ -113,27 +116,55 @@ class SearchController extends Controller
         $estadoSunat = $data["estadoSunat"];
         $estadoSunat = $this->findEstado($estadoSunat);
 //        \DB::connection()->enableQueryLog();
-        $documentos = DB::table('fe_docelectronico')
-            ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
-            ->when($numSerie, function ($query, $numSerie) {
-                return $query->where('numSerie', 'like', '%' . $numSerie . '%');
-            })
-            ->when($numero, function ($query, $numero) {
-                return $query->where('numSerie', 'like', '%' . $numero . '%');
-            })
-            ->when($tipoDoc, function ($query, $tipoDoc) {
-                return $query->where('tipoDoc', $tipoDoc);
-            })
-            ->when($rucClient, function ($query, $rucClient) {
-                return $query->where('rucClient', $rucClient);
-            })
-            ->when($estadoSunat, function ($query, $estadoWeb) {
-                return $query->where('estadoSunat', $estadoWeb);
-            })
-            ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
-                return $query->where('monedaTransaccion', $monedaTransaccion);
-            })
-            ->get();
+        if ($idRol == 2 || $idRol == 3) {
+            $rucCliente = $usuario->rucClient;
+            $documentos = DB::table('fe_docelectronico')
+                ->where("rucClient", $rucCliente)
+                ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
+                ->when($numSerie, function ($query, $numSerie) {
+                    return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+                })
+                ->when($numero, function ($query, $numero) {
+                    return $query->where('numSerie', 'like', '%' . $numero . '%');
+                })
+                ->when($tipoDoc, function ($query, $tipoDoc) {
+                    return $query->where('tipoDoc', $tipoDoc);
+                })
+                ->when($rucClient, function ($query, $rucClient) {
+                    return $query->where('rucClient', $rucClient);
+                })
+                ->when($estadoSunat, function ($query, $estadoWeb) {
+                    return $query->where('estadoSunat', $estadoWeb);
+                })
+                ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
+                    return $query->where('monedaTransaccion', $monedaTransaccion);
+                })
+                ->get();
+            return response()->json($documentos, 200);
+        } else {
+            $documentos = DB::table('fe_docelectronico')
+                ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
+                ->when($numSerie, function ($query, $numSerie) {
+                    return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+                })
+                ->when($numero, function ($query, $numero) {
+                    return $query->where('numSerie', 'like', '%' . $numero . '%');
+                })
+                ->when($tipoDoc, function ($query, $tipoDoc) {
+                    return $query->where('tipoDoc', $tipoDoc);
+                })
+                ->when($rucClient, function ($query, $rucClient) {
+                    return $query->where('rucClient', $rucClient);
+                })
+                ->when($estadoSunat, function ($query, $estadoWeb) {
+                    return $query->where('estadoSunat', $estadoWeb);
+                })
+                ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
+                    return $query->where('monedaTransaccion', $monedaTransaccion);
+                })
+                ->get();
+            return response()->json($documentos, 200);
+        }
 //        $interval = $fechaEmisionFin->diff($fechaEmisionInicio);
 //        $days = $interval->days;
 //        $documents = array();
