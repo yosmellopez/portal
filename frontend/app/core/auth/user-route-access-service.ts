@@ -28,7 +28,7 @@ export class UserRouteAccessService implements CanActivate, CanActivateChild {
     }
 
     checkLogin(authorities: string[], url: string): Observable<boolean> {
-        const result = this.accountService.identity(true).pipe(
+        const result = this.accountService.identity().pipe(
             map(account => {
                 if (account) {
                     if (!authorities || authorities.length === 0) {

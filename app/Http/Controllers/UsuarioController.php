@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Entity\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Matriphe\Md5Hash\Md5Hash;
 
 class UsuarioController extends Controller
@@ -162,7 +161,10 @@ class UsuarioController extends Controller
         $currentPassword = $request->currentPassword;
         $userPassword = $user->claveUsuario;
         if ($md5Hasher->check($currentPassword, $userPassword)) {
-            $encriptedpassword = $md5Hasher->make($newPassword);
+            $encriptedPassword = $md5Hasher->make($newPassword);
+            $usuarioDb = Usuario::find($user->idUsuario);
+            $usuarioDb->claveUsuario = $encriptedPassword;
+            $usuarioDb->update();
             return response()->json(array(), 200);
         } else {
             return response()->json(array("error" => "La contraseña proporcionada no coincide con la actual"), 406);

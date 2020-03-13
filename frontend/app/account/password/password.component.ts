@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 
 import {AccountService} from 'app/core/auth/account.service';
 import {PasswordService} from './password.service';
@@ -16,8 +16,13 @@ export class PasswordComponent implements OnInit {
     account: any;
     isLoadingResults = false;
     passwordForm: FormGroup;
+    @ViewChild('formulario', {static: true}) private formDirective: NgForm;
 
     constructor(private passwordService: PasswordService, private accountService: AccountService) {
+        this.createForm();
+    }
+
+    createForm() {
         this.passwordForm = new FormGroup({
             currentPassword: new FormControl('', [Validators.required]),
             newPassword: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]),
@@ -46,7 +51,10 @@ export class PasswordComponent implements OnInit {
                     this.isLoadingResults = false;
                     this.error = null;
                     this.success = 'OK';
-                    this.passwordForm.reset({currentPassword: '', newPassword: '', confirmPassword: ''});
+                    this.passwordForm.reset();
+                    Object.keys(this.passwordForm.controls).forEach(key => {
+                        this.passwordForm.get(key).setErrors(null);
+                    });
                 }, (res: HttpErrorResponse) => {
                     this.isLoadingResults = false;
                     this.success = null;

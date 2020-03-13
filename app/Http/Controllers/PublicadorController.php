@@ -9,13 +9,13 @@ use App\Entity\Documento;
 use App\Entity\Usuario;
 use App\Exceptions\GeneralAPIException;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Matriphe\Md5Hash\Md5Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use PHPMailer\PHPMailer\Exception;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PublicadorController extends Controller
 {
@@ -28,11 +28,11 @@ class PublicadorController extends Controller
      */
     public function publicar(Request $request)
     {
-//        $hasher = new Md5Hash();
-//        $credentials = array("password" => $hasher->make($request->claveUsuario), "nombUsuario" => $request->nombUsuario);
-//        if (!$token = JWTAuth::attempt($credentials)) {
-//            return response()->json(['error' => 'credenciales_invalidas'], 401);
-//        }
+        $hasher = new Md5Hash();
+        $credentials = array("password" => $hasher->make($request->claveUsuario), "nombUsuario" => $request->usuarioSesion);
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+        }
         try {
             $dataCliente = $request->only(['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient']);
             $clienteDb = Cliente::find($dataCliente["rucClient"]);
