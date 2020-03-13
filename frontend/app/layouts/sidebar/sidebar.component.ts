@@ -97,8 +97,9 @@ export class SidebarComponent implements OnInit {
             if (valor) {
                 this.usuario = valor;
                 this.rutas.forEach(ruta => {
-                    if (this.hasAuthority(ruta))
+                    if (this.hasAuthority(ruta)) {
                         this.rutasUsuario.push(ruta);
+                    }
                 });
             }
         });

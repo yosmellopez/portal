@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Entity\Documento;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Jenssegers\Date\Date;
 use Illuminate\Support\Collection;
 
 class DashboardController extends Controller
@@ -18,10 +17,19 @@ class DashboardController extends Controller
      */
     public function lastEmmitedDocuments()
     {
-        $documentos = Documento::orderBy("idDocumento", "desc")->get();
-        $collection = collect($documentos);
-        $lastFiveDocuments = $collection->take(5)->toArray();
-        return response()->json($lastFiveDocuments, 200);
+        $usuario = auth()->user();
+        $idRol = $usuario->idRoles;
+        if ($idRol == 2 || $idRol == 3) {
+            $documentos = Documento::where("rucClient", $usuario->rucClient)->orderBy("idDocumento", "desc")->get();
+            $collection = collect($documentos);
+            $lastFiveDocuments = $collection->take(5)->toArray();
+            return response()->json($lastFiveDocuments, 200);
+        } else {
+            $documentos = Documento::orderBy("idDocumento", "desc")->get();
+            $collection = collect($documentos);
+            $lastFiveDocuments = $collection->take(5)->toArray();
+            return response()->json($lastFiveDocuments, 200);
+        }
     }
 
     /**
@@ -31,10 +39,19 @@ class DashboardController extends Controller
      */
     public function lastAprovedDocuments()
     {
-        $documentos = Documento::where("estadoSunat", "V")->orderBy("idDocumento", "desc")->get();
-        $collection = collect($documentos);
-        $lastFiveDocuments = $collection->take(5)->toArray();
-        return response()->json($lastFiveDocuments, 200);
+        $usuario = auth()->user();
+        $idRol = $usuario->idRoles;
+        if ($idRol == 2 || $idRol == 3) {
+            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "estadoSunat" => "V"])->orderBy("idDocumento", "desc")->get();
+            $collection = collect($documentos);
+            $lastFiveDocuments = $collection->take(5)->toArray();
+            return response()->json($lastFiveDocuments, 200);
+        } else {
+            $documentos = Documento::where("estadoSunat", "V")->orderBy("idDocumento", "desc")->get();
+            $collection = collect($documentos);
+            $lastFiveDocuments = $collection->take(5)->toArray();
+            return response()->json($lastFiveDocuments, 200);
+        }
     }
 
     /**
@@ -44,10 +61,19 @@ class DashboardController extends Controller
      */
     public function lastRejectedDocuments()
     {
-        $documentos = Documento::where("estadoSunat", "R")->orderBy("idDocumento", "desc")->get();
-        $collection = collect($documentos);
-        $lastFiveDocuments = $collection->take(5)->toArray();
-        return response()->json($lastFiveDocuments, 200);
+        $usuario = auth()->user();
+        $idRol = $usuario->idRoles;
+        if ($idRol == 2 || $idRol == 3) {
+            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "estadoSunat" => "R"])->orderBy("idDocumento", "desc")->get();
+            $collection = collect($documentos);
+            $lastFiveDocuments = $collection->take(5)->toArray();
+            return response()->json($lastFiveDocuments, 200);
+        } else {
+            $documentos = Documento::where("estadoSunat", "R")->orderBy("idDocumento", "desc")->get();
+            $collection = collect($documentos);
+            $lastFiveDocuments = $collection->take(5)->toArray();
+            return response()->json($lastFiveDocuments, 200);
+        }
     }
 
     /**
@@ -57,10 +83,19 @@ class DashboardController extends Controller
      */
     public function lastLowedDocuments()
     {
-        $documentos = Documento::where("tipoTransaccion", "B")->orderBy("idDocumento", "desc")->get();
-        $collection = collect($documentos);
-        $lastFiveDocuments = $collection->take(5)->toArray();
-        return response()->json($lastFiveDocuments, 200);
+        $usuario = auth()->user();
+        $idRol = $usuario->idRoles;
+        if ($idRol == 2 || $idRol == 3) {
+            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "tipoTransaccion" => "B"])->orderBy("idDocumento", "desc")->get();
+            $collection = collect($documentos);
+            $lastFiveDocuments = $collection->take(5)->toArray();
+            return response()->json($lastFiveDocuments, 200);
+        } else {
+            $documentos = Documento::where("tipoTransaccion", "B")->orderBy("idDocumento", "desc")->get();
+            $collection = collect($documentos);
+            $lastFiveDocuments = $collection->take(5)->toArray();
+            return response()->json($lastFiveDocuments, 200);
+        }
     }
 
     /**

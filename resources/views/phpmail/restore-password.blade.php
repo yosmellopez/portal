@@ -226,7 +226,7 @@
                                             <div style="color:#555555;font-family:Cabin, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:20px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #555555; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
                                                     <p>
-                                                        <span><strong>Nomnbre de Usuario</strong></span>
+                                                        <span><strong>Nombre de Usuario</strong></span>
                                                         <span><strong>{{$nombreUsuario}}</strong></span>
                                                     </p>
                                                     <p>

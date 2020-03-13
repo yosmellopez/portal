@@ -1,18 +1,18 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { IUsuario, Usuario } from 'app/shared/model/usuario.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IRol, Rol } from 'app/shared/model/rol.model';
-import { RolService } from 'app/entities/usuario/rol.service';
-import { filter, map, takeUntil } from 'rxjs/operators';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { UsuarioService } from 'app/entities/usuario/usuario.service';
-import { MensajeToast } from 'app/mensaje/window.mensaje';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Cliente, ICliente } from 'app/shared/model/cliente.model';
-import { ClienteService } from 'app/entities/cliente/cliente.service';
-import { ReplaySubject, Subject } from 'rxjs';
-import { MatSelect } from '@angular/material/select';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {IUsuario, Usuario} from 'app/shared/model/usuario.model';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {IRol, Rol} from 'app/shared/model/rol.model';
+import {RolService} from 'app/entities/usuario/rol.service';
+import {filter, map, takeUntil} from 'rxjs/operators';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {UsuarioService} from 'app/entities/usuario/usuario.service';
+import {MensajeToast} from 'app/mensaje/window.mensaje';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Cliente, ICliente} from 'app/shared/model/cliente.model';
+import {ClienteService} from 'app/entities/cliente/cliente.service';
+import {ReplaySubject, Subject} from 'rxjs';
+import {MatSelect} from '@angular/material/select';
 
 @Component({
     selector: 'jhi-usuario-window',
@@ -26,6 +26,7 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
     clientes: ICliente[] = [];
     usuarioId = 0;
     username: string;
+    isLoadingResults = false;
     public clientesFilterCtrl: FormControl = new FormControl();
     public filteredClientes: ReplaySubject<ICliente[]> = new ReplaySubject<ICliente[]>(1);
     @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
@@ -100,7 +101,7 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
     }
 
     protected onError(errorMessage: string) {
-        // this.jhiAlertService.error(errorMessage, null, null);
+        this.isLoadingResults = false;
     }
 
     cancel() {
@@ -114,11 +115,13 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
         } else {
             usuario.estadoUsuario = '0';
         }
+        this.isLoadingResults = true;
         if (this.nuevo) {
             this.usuarioService.create(usuario).pipe(
                 filter((res: HttpResponse<IUsuario>) => res.ok),
                 map((res: HttpResponse<IUsuario>) => res.body))
                 .subscribe((res: IUsuario) => {
+                    this.isLoadingResults = false;
                     this.showToast(`Usuario ${usuario.nombUsuario} guardado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
                 }, (res: HttpErrorResponse) => this.onError(res.message));
@@ -128,6 +131,7 @@ export class UsuarioWindowComponent implements OnInit, OnDestroy {
                 filter((res: HttpResponse<IUsuario>) => res.ok),
                 map((res: HttpResponse<IUsuario>) => res.body))
                 .subscribe((res: IUsuario) => {
+                    this.isLoadingResults = false;
                     this.showToast(`Usuario ${usuario.nombUsuario} actualizado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
                 }, (res: HttpErrorResponse) => this.onError(res.message));

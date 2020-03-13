@@ -1,3 +1,6 @@
+<div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner strokeWidth="2" diameter="70" *ngIf="isLoadingResults" color="primary"></mat-spinner>
+</div>
 <form class="form" [formGroup]="formulario" (submit)="enviarDatos()">
     <h1 mat-dialog-title style="margin: 0 0" draggable-dialog>{{nuevo ? 'Nuevo Cliente' : 'Modificar Cliente - ' + clienteId}}
         <button type="button" mat-icon-button class="close-button" (click)="cancel()">

@@ -243,8 +243,18 @@ table {
 //  border-bottom-color: lightgrey;
 //}
 .mat-column-nombre {
-  width: 30%;
-  min-width: 30%;
+  width: 15%;
+  min-width: 15%;
+}
+
+.cdk-column-fecEmisionDoc {
+  width: 12%;
+  min-width: 12%;
+}
+
+.cdk-column-total {
+  width: 12%;
+  min-width: 12%;
 }
 
 .mat-column-acciones button {
@@ -252,8 +262,13 @@ table {
 }
 
 .mat-column-numSerie {
-  width: 20%;
-  min-width: 20%;
+  width: 25%;
+  min-width: 25%;
+}
+
+.mat-column-rucClient {
+  width: 15%;
+  min-width: 15%;
 }
 
 .mat-icon {
@@ -313,8 +328,9 @@ mat-error {
   //padding-left: 300px
 }
 
-.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr {
-  width: 50px;
+.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr, .mat-column-correo, .mat-column-estadoSunat {
+  width: 7%;
+  min-width: 7%;
 }
 
 .pull-right {

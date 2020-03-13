@@ -56,14 +56,16 @@
             </li>
         </ul>
     </div>
-    <ul class="nav">
-        <ng-container *ngFor="let menuItem of rutasUsuario">
-            <li routerLinkActive="active" class="{{menuItem.class}} nav-item">
-                <a class="nav-link" [routerLink]="[menuItem.path]">
-                    <i class="material-icons">{{menuItem.icon}}</i>
-                    <p>{{menuItem.title}}</p>
-                </a>
-            </li>
-        </ng-container>
-    </ul>
+    <perfect-scrollbar>
+        <ul class="nav" style="margin-bottom: 20px;">
+            <ng-container *ngFor="let menuItem of rutasUsuario">
+                <li routerLinkActive="active" class="{{menuItem.class}} nav-item">
+                    <a class="nav-link" [routerLink]="[menuItem.path]">
+                        <i class="material-icons">{{menuItem.icon}}</i>
+                        <p>{{menuItem.title}}</p>
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+    </perfect-scrollbar>
 </div>

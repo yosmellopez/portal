@@ -34,15 +34,24 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div class="row pt-2">
-                            <div class="col-sm-4">
-                                <mat-form-field>
-                                    <input matInput placeholder="Estado Sunat" formControlName="estadoSunat" [matAutocomplete]="autoEstado">
-                                    <mat-autocomplete #autoEstado="matAutocomplete">
-                                        <mat-option *ngFor="let estado of estados" [value]="estado.estadoSunat|estado">
-                                            {{estado.estadoSunat|estado}}
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                </mat-form-field>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Serie de Comprobante" formControlName="numSerie" [matAutocomplete]="autoSerie">
+                                            <mat-autocomplete #autoSerie="matAutocomplete">
+                                                <mat-option *ngFor="let serie of series" [value]="serie.serie">
+                                                    {{serie.serie}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Número de Comprobante" formControlName="numero">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <mat-form-field>
@@ -70,7 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <mat-form-field>
                                     <input type="text" placeholder="Tipo Moneda" matInput formControlName="monedaTransaccion" [matAutocomplete]="auto">
                                     <mat-autocomplete #auto="matAutocomplete">
@@ -83,17 +92,14 @@
                                     <input matInput placeholder="Número de RUC" formControlName="rucClient">
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <mat-form-field>
-                                    <input matInput placeholder="Serie de Comprobante" formControlName="numSerie" [matAutocomplete]="autoSerie">
-                                    <mat-autocomplete #autoSerie="matAutocomplete">
-                                        <mat-option *ngFor="let serie of series" [value]="serie.serie">
-                                            {{serie.serie}}
+                                    <input matInput placeholder="Estado Sunat" formControlName="estadoSunat" [matAutocomplete]="autoEstado">
+                                    <mat-autocomplete #autoEstado="matAutocomplete">
+                                        <mat-option *ngFor="let estado of estados" [value]="estado.estadoSunat|estado">
+                                            {{estado.estadoSunat|estado}}
                                         </mat-option>
                                     </mat-autocomplete>
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <input matInput placeholder="Número de Comprobante" formControlName="numero">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -173,7 +179,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="correo">
-                    <mat-header-cell *matHeaderCellDef class="center-block"> Reenvio de Correo</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef class="center-block"> Reenvío de Correo</mat-header-cell>
                     <mat-cell *matCellDef="let element" class="center-block">
                         <button mat-mini-fab color="primary" (click)="sendEmail(element)" class="btn-warning-color"
                                 matTooltip="Reenviar correo del documento [{{element.numSerie}}]" matTooltipClass="apptooltip">

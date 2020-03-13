@@ -138,7 +138,7 @@ class PHPMailerController extends Controller
         }
     }
 
-    public function sendRegisterEmail(Usuario $usuario)
+    public function sendRegisterEmail(Usuario $usuario, $password)
     {
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         $mail = new PHPMailer(true);
@@ -146,7 +146,7 @@ class PHPMailerController extends Controller
             $cliente = $usuario->cliente;
             $view = View::make('phpmail.user-register', [
                 "nombreUsuario" => $usuario->nombUsuario,
-                "password" => $usuario->direccionClient,
+                "password" => $password,
                 "direccion" => $cliente->direccionClient,
             ]);
             $html = $view->render();
@@ -164,6 +164,18 @@ class PHPMailerController extends Controller
             $mail->Subject = config('app.name') . ' te ha enviado el registro de un nuevo usuario';
             $mail->MsgHTML($html);
             $mail->addAddress($usuario->email);
+
+            $appLogoPath = public_path() . config('app.logo');
+            $appOkPath = public_path() . '/content/images/illo.png';
+            $appFacebookPath = public_path() . '/content/images/facebook2x.png';
+            $appTwitterPath = public_path() . '/content/images/twitter2x.png';
+            $appGooglePath = public_path() . '/content/images/googleplus2x.png';
+            $mail->addEmbeddedImage($appLogoPath, "logo-aplicacion", "Logo Aplicacion");
+            $mail->addEmbeddedImage($appOkPath, "fondo-aplicacion", "Fondo Aplicacion");
+            $mail->addEmbeddedImage($appFacebookPath, "facebook", "Facebook");
+            $mail->addEmbeddedImage($appTwitterPath, "twitter", "Twitter");
+            $mail->addEmbeddedImage($appGooglePath, "google", "Google");
+
             $mail->isSendmail();
             $mail->send();
             return response()->json(array("message" => "Se ha enviado el correo exitosamente a: " . $userEmail));

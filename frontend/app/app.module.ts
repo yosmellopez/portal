@@ -20,7 +20,7 @@ import {FooterComponent} from './layouts/footer/footer.component';
 import {JhMaterialModule} from 'app/shared/jh-material.module';
 import {SidebarComponent} from 'app/layouts/sidebar/sidebar.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MAT_DATE_FORMATS, NativeDateModule} from '@angular/material/core';
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateModule} from '@angular/material/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {getSpanishPaginatorIntl} from 'app/es-locale-paginator';
@@ -146,6 +146,7 @@ const MY_NATIVE_DATE_FORMATS = {
         {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
         {provide: MAT_DATE_FORMATS, useValue: MY_NATIVE_DATE_FORMATS},
         {provide: LOCALE_ID, useValue: 'es'},
+        {provide: MAT_DATE_LOCALE, useValue: 'es'},
         {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl()},
         {
             provide: PERFECT_SCROLLBAR_CONFIG,

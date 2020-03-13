@@ -1,13 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Cliente, ICliente } from 'app/shared/model/cliente.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { filter, map } from 'rxjs/operators';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Rol } from 'app/shared/model/rol.model';
-import { MensajeToast } from 'app/mensaje/window.mensaje';
-import { ClienteService } from 'app/entities/cliente/cliente.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Cliente, ICliente} from 'app/shared/model/cliente.model';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {filter, map} from 'rxjs/operators';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {Rol} from 'app/shared/model/rol.model';
+import {MensajeToast} from 'app/mensaje/window.mensaje';
+import {ClienteService} from 'app/entities/cliente/cliente.service';
 
 @Component({
     selector: 'jhi-cliente-window',
@@ -18,6 +18,7 @@ export class ClienteWindowComponent implements OnInit {
     nuevo: boolean = true;
     formulario: FormGroup;
     clienteId = '';
+    isLoadingResults = false;
 
     constructor(
         private dialogRef: MatDialogRef<ClienteWindowComponent>,
@@ -53,11 +54,13 @@ export class ClienteWindowComponent implements OnInit {
         } else {
             cliente.estadoCliente = '0';
         }
+        this.isLoadingResults = true;
         if (this.nuevo) {
             this.clienteService.create(cliente).pipe(
                 filter((res: HttpResponse<ICliente>) => res.ok),
                 map((res: HttpResponse<ICliente>) => res.body))
                 .subscribe((res: ICliente) => {
+                    this.isLoadingResults = false;
                     this.showToast(`Cliente ${cliente.nombreClient} guardado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
                 }, (res: HttpErrorResponse) => this.onError(res.message));
@@ -67,6 +70,7 @@ export class ClienteWindowComponent implements OnInit {
                 filter((res: HttpResponse<ICliente>) => res.ok),
                 map((res: HttpResponse<ICliente>) => res.body))
                 .subscribe((res: ICliente) => {
+                    this.isLoadingResults = false;
                     this.showToast(`Cliente ${cliente.nombreClient} actualizado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
                 }, (res: HttpErrorResponse) => this.onError(res.message));
@@ -89,6 +93,7 @@ export class ClienteWindowComponent implements OnInit {
     }
 
     protected onError(errorMessage: string) {
+        this.isLoadingResults = false;
         this.showToast(errorMessage, 'Error', false);
     }
 }

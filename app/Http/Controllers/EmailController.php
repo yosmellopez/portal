@@ -8,6 +8,7 @@ use App\Entity\Usuario;
 use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
 use App\Mail\DocumentoMail;
+use App\Mail\RegisterUser;
 use App\Mail\ResetPassword;
 use App\Mail\RestorePassword;
 use Illuminate\Http\Request;
@@ -68,11 +69,11 @@ class EmailController extends Controller
         }
     }
 
-    public function sendRegisterEmail(Usuario $usuario)
+    public function sendRegisterEmail(Usuario $usuario, $password)
     {
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         try {
-            Mail::to($usuario->email)->send(new ResetPassword($usuario, $usuarioToken, $userEmail));
+            Mail::to($usuario->email)->send(new RegisterUser($usuario, $userEmail, $password));
             if (Mail::failures()) {
                 return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
             } else {

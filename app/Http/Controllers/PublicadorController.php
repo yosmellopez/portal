@@ -40,11 +40,10 @@ class PublicadorController extends Controller
                 $cliente = new Cliente();
                 $dataCliente["estadoCliente"] = 1;
                 $cliente->fill($dataCliente)->save();
-                $this->registerUser($cliente);
+                $this->registerUser($cliente, $dataCliente["rucClient"]);
             } else {
-                $cliente = new Cliente();
                 $dataCliente["estadoCliente"] = 1;
-                $cliente->fill($dataCliente)->update();
+                $clienteDb->fill($dataCliente)->update();
             }
             $documentoId = DB::table('fe_docelectronico')->max('idDocumento');
             $documento = new Documento();
@@ -102,7 +101,7 @@ class PublicadorController extends Controller
         return response()->json(array("mensaje" => "Documento [" . $data["numSerie"] . "] registrado correctamente"), 201);
     }
 
-    public function registerUser(Cliente $cliente)
+    public function registerUser(Cliente $cliente, $rucClient)
     {
         $token = openssl_random_pseudo_bytes(8);
         $password = bin2hex($token);
@@ -110,16 +109,20 @@ class PublicadorController extends Controller
         $claveUsuario = $hash->make($password);
         $usuarioId = DB::table('fe_usuario')->max('idUsuario');
         $usuario = new Usuario();
-        $usuario->save(["idUsuario" => $usuarioId + 1, "email" => $cliente->email, "nombUsuario" => $cliente->rucClient,
-            "claveUsuario" => $claveUsuario, "estadoUsuario" => "1", "rucClient" => $cliente->rucClient, "idRoles" => 3
-        ]);
-        $usePHPMailer = config('app.use_phpmailer');
-        if ($usePHPMailer) {
-            $documentoController = new PHPMailerController();
-            $documentoController->sendRegisterEmail($usuario);
-        } else {
-            $documentoController = new EmailController();
-            $documentoController->sendRegisterEmail($usuario);
+        $usuario->fill(["idUsuario" => $usuarioId + 1, "email" => $cliente->email, "nombUsuario" => $rucClient,
+            "claveUsuario" => $claveUsuario, "estadoUsuario" => "1", "rucClient" => $rucClient, "idRoles" => 3
+        ])->save();
+        try {
+            $usePHPMailer = config('app.use_phpmailer');
+            if ($usePHPMailer) {
+                $documentoController = new PHPMailerController();
+                $documentoController->sendRegisterEmail($usuario, $password);
+            } else {
+                $documentoController = new EmailController();
+                $documentoController->sendRegisterEmail($usuario, $password);
+            }
+        } catch (GeneralAPIException $e) {
+
         }
     }
 
