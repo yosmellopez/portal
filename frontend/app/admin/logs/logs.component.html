@@ -7,10 +7,10 @@
 
     <table class="table table-sm table-striped table-bordered" aria-describedby="logs-page-heading">
         <thead>
-        <tr title="click to order">
-            <th (click)="orderProp = 'name'; reverse=!reverse"><span>Name</span></th>
-            <th (click)="orderProp = 'level'; reverse=!reverse"><span>Level</span></th>
-        </tr>
+            <tr title="click to order">
+                <th (click)="orderProp = 'name'; reverse=!reverse"><span>Name</span></th>
+                <th (click)="orderProp = 'level'; reverse=!reverse"><span>Level</span></th>
+            </tr>
         </thead>
 
         <tr *ngFor="let logger of (loggers | pureFilter:filter:'name' | orderBy:orderProp:reverse)">

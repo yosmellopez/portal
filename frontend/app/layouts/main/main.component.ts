@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError, RouterOutlet } from '@angular/router';
-import { AccountService } from 'app/core/auth/account.service';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {ActivatedRouteSnapshot, NavigationEnd, NavigationError, Router, RouterOutlet} from '@angular/router';
+import {AccountService} from 'app/core/auth/account.service';
+import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 
 @Component({
     selector: 'jhi-main',

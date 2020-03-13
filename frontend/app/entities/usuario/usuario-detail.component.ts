@@ -1,24 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import { IUsuario } from 'app/shared/model/usuario.model';
+import {IUsuario} from 'app/shared/model/usuario.model';
 
 @Component({
-  selector: 'jhi-usuario-detail',
-  templateUrl: './usuario-detail.component.html'
+    selector: 'jhi-usuario-detail',
+    templateUrl: './usuario-detail.component.html'
 })
 export class UsuarioDetailComponent implements OnInit {
-  usuario: IUsuario;
+    usuario: IUsuario;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+    constructor(protected activatedRoute: ActivatedRoute) {
+    }
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ usuario }) => {
-      this.usuario = usuario;
-    });
-  }
+    ngOnInit() {
+        this.activatedRoute.data.subscribe(({usuario}) => {
+            this.usuario = usuario;
+        });
+    }
 
-  previousState() {
-    window.history.back();
-  }
+    previousState() {
+        window.history.back();
+    }
 }

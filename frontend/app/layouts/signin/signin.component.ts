@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChildren} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
-import { LoginService } from 'app/core/login/login.service';
-import { StateStorageService } from 'app/core/auth/state-storage.service';
-import { AccountService } from 'app/core/auth/account.service';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChildren} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {JhiEventManager} from 'ng-jhipster';
+import {LoginService} from 'app/core/login/login.service';
+import {StateStorageService} from 'app/core/auth/state-storage.service';
+import {AccountService} from 'app/core/auth/account.service';
 
 @Component({
     selector: 'jhi-signin',

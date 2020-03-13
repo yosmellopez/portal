@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {Confirm, Information, MensajeError, MensajeToast} from "./window.mensaje";
-import { JhMaterialModule } from 'app/shared/jh-material.module';
+import {JhMaterialModule} from 'app/shared/jh-material.module';
 
 @NgModule({
     imports: [

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { AccountService } from 'app/core/auth/account.service';
-import { PasswordService } from './password.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import {AccountService} from 'app/core/auth/account.service';
+import {PasswordService} from './password.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'jhi-password',

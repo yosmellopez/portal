@@ -18,7 +18,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {ClienteWindowComponent} from 'app/entities/cliente/cliente-window/cliente-window.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormControl, FormGroup} from '@angular/forms';
-import {IUsuario} from 'app/shared/model/usuario.model';
 
 @Component({
     selector: 'jhi-cliente',

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
-import { Cliente, ICliente } from 'app/shared/model/cliente.model';
-import { AppResponseBody, TipoMoneda } from 'app/shared/model/generic-model';
+import {SERVER_API_URL} from 'app/app.constants';
+import {createRequestOption} from 'app/shared/util/request-util';
+import {Cliente, ICliente} from 'app/shared/model/cliente.model';
+import {AppResponseBody} from 'app/shared/model/generic-model';
 
 type AppResponseArray = AppResponseBody<ICliente[]>;
 type EntityResponseType = HttpResponse<ICliente>;

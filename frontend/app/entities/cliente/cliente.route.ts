@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Cliente } from 'app/shared/model/cliente.model';
-import { ClienteService } from './cliente.service';
-import { ClienteComponent } from './cliente.component';
-import { ClienteDetailComponent } from './cliente-detail.component';
-import { ICliente } from 'app/shared/model/cliente.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {UserRouteAccessService} from 'app/core/auth/user-route-access-service';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {Cliente, ICliente} from 'app/shared/model/cliente.model';
+import {ClienteService} from './cliente.service';
+import {ClienteComponent} from './cliente.component';
+import {ClienteDetailComponent} from './cliente-detail.component';
 
 @Injectable({providedIn: 'root'})
 export class ClienteResolve implements Resolve<ICliente> {

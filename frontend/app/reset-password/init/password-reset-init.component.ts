@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {EMAIL_NOT_FOUND_TYPE} from 'app/shared/constants/error.constants';

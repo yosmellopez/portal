@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Usuario } from 'app/shared/model/usuario.model';
-import { UsuarioService } from './usuario.service';
-import { UsuarioComponent } from './usuario.component';
-import { UsuarioDetailComponent } from './usuario-detail.component';
-import { IUsuario } from 'app/shared/model/usuario.model';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {UserRouteAccessService} from 'app/core/auth/user-route-access-service';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {IUsuario, Usuario} from 'app/shared/model/usuario.model';
+import {UsuarioService} from './usuario.service';
+import {UsuarioComponent} from './usuario.component';
+import {UsuarioDetailComponent} from './usuario-detail.component';
 
 @Injectable({providedIn: 'root'})
 export class UsuarioResolve implements Resolve<IUsuario> {

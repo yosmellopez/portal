@@ -18,18 +18,18 @@
 
                     <div *ngIf="editForm.get('login').invalid && (editForm.get('login').dirty || editForm.get('login').touched)">
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('login').errors.required">
+                               *ngIf="editForm.get('login').errors.required">
                             This field is required.
                         </small>
 
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('login').errors.maxlength"
-                       >
+                               *ngIf="editForm.get('login').errors.maxlength"
+                        >
                             This field cannot be longer than 50 characters.
                         </small>
 
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('login').errors.pattern">
+                               *ngIf="editForm.get('login').errors.pattern">
                             This field can only contain letters, digits and e-mail addresses.
                         </small>
                     </div>
@@ -41,8 +41,8 @@
 
                     <div *ngIf="editForm.get('firstName').invalid && (editForm.get('firstName').dirty || editForm.get('firstName').touched)">
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('firstName').errors.maxlength"
-                       >
+                               *ngIf="editForm.get('firstName').errors.maxlength"
+                        >
                             This field cannot be longer than 50 characters.
                         </small>
                     </div>
@@ -50,12 +50,12 @@
                 <div class="form-group">
                     <label>Last Name</label>
                     <input type="text" class="form-control" name="lastName"
-                        formControlName="lastName">
+                           formControlName="lastName">
 
                     <div *ngIf="editForm.get('lastName').invalid && (editForm.get('lastName').dirty || editForm.get('lastName').touched)">
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('lastName').errors.maxlength"
-                       >
+                               *ngIf="editForm.get('lastName').errors.maxlength"
+                        >
                             This field cannot be longer than 50 characters.
                         </small>
                     </div>
@@ -66,31 +66,31 @@
 
                     <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched)">
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('email').errors.required">
+                               *ngIf="editForm.get('email').errors.required">
                             This field is required.
                         </small>
 
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('email').errors.maxlength"
-                       >
+                               *ngIf="editForm.get('email').errors.maxlength"
+                        >
                             This field cannot be longer than 100 characters.
                         </small>
 
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('email').errors.minlength"
-                       >
+                               *ngIf="editForm.get('email').errors.minlength"
+                        >
                             This field is required to be at least 5 characters.
                         </small>
 
                         <small class="form-text text-danger"
-                        *ngIf="editForm.get('email').errors.email">
+                               *ngIf="editForm.get('email').errors.email">
                             Your email is invalid.
                         </small>
                     </div>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label" for="activated">
-                        <input class="form-check-input" [disabled]="user.id === null" type="checkbox" id="activated" name="activated"  formControlName="activated">
+                        <input class="form-check-input" [disabled]="user.id === null" type="checkbox" id="activated" name="activated" formControlName="activated">
                         <span>Activated</span>
                     </label>
                 </div>
@@ -105,7 +105,7 @@
             <div>
                 <button type="button" class="btn btn-secondary" (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span
-                   >Cancel</span>
+                >Cancel</span>
                 </button>
                 <button type="submit" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>

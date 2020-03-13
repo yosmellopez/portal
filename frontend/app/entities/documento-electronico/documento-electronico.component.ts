@@ -23,7 +23,7 @@ import {
     TipoMoneda
 } from 'app/shared/model/generic-model';
 import * as FileSaver from 'file-saver';
-import {ExportType, MatTableExporterDirective, ExcelOptions} from 'mat-table-exporter';
+import {ExcelOptions, ExportType, MatTableExporterDirective} from 'mat-table-exporter';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {Properties} from 'xlsx';
 import {PDFExportComponent} from '@progress/kendo-angular-pdf-export';

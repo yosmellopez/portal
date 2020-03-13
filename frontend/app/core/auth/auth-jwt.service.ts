@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { map } from 'rxjs/operators';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import {map} from 'rxjs/operators';
+import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 
-import { SERVER_API_URL } from 'app/app.constants';
+import {SERVER_API_URL} from 'app/app.constants';
 
 @Injectable({providedIn: 'root'})
 export class AuthServerProvider {

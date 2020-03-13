@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { IRol } from 'app/shared/model/rol.model';
+import {SERVER_API_URL} from 'app/app.constants';
+import {IRol} from 'app/shared/model/rol.model';
 
 type EntityArrayResponseType = HttpResponse<IRol[]>;
 

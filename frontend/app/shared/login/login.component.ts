@@ -1,11 +1,11 @@
-import {Component, AfterViewInit, Renderer2, ElementRef, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Renderer2, ViewChildren} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {JhiEventManager} from 'ng-jhipster';
 
 import {LoginService} from 'app/core/login/login.service';
 import {StateStorageService} from 'app/core/auth/state-storage.service';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
     selector: 'jhi-login-modal',

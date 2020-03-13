@@ -1,27 +1,24 @@
-import {Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {merge, of, Subscription} from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {catchError, filter, map, startWith, switchMap} from 'rxjs/operators';
-import {JhiEventManager, JhiAlertService} from 'ng-jhipster';
+import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
 
 import {IUsuario, Usuario} from 'app/shared/model/usuario.model';
 import {AccountService} from 'app/core/auth/account.service';
 import {UsuarioService} from './usuario.service';
 import {MatTableDataSource} from '@angular/material/table';
-import {ICliente} from 'app/shared/model/cliente.model';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {AppResponseBody} from 'app/shared/model/generic-model';
 import {MatDialog} from '@angular/material/dialog';
 import {UsuarioWindowComponent} from 'app/entities/usuario/usuario-window/usuario-window.component';
-import {Confirm, Information, MensajeToast} from 'app/mensaje/window.mensaje';
-import {ClienteService} from 'app/entities/cliente/cliente.service';
+import {Confirm, MensajeToast} from 'app/mensaje/window.mensaje';
 import {IRol} from 'app/shared/model/rol.model';
 import {RolService} from 'app/entities/usuario/rol.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {IDocumentoElectronico} from 'app/shared/model/documento-electronico.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({

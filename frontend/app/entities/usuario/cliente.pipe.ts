@@ -1,6 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { Rol } from 'app/shared/model/rol.model';
-import { ICliente } from 'app/shared/model/cliente.model';
+import {Pipe, PipeTransform} from '@angular/core';
+import {ICliente} from 'app/shared/model/cliente.model';
 
 @Pipe({name: 'cliente'})
 export class ClientePipe implements PipeTransform {

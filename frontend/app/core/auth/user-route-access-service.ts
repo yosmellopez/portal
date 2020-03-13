@@ -11,8 +11,7 @@ import {
 import {AccountService} from 'app/core/auth/account.service';
 import {LoginModalService} from 'app/core/login/login-modal.service';
 import {Observable} from "rxjs";
-import {catchError, map} from "rxjs/operators";
-import {exitCodeFromResult} from "@angular/compiler-cli";
+import {map} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({providedIn: 'root'})

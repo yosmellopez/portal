@@ -1,4 +1,4 @@
-import { IRol } from 'app/shared/model/rol.model';
+import {IRol} from 'app/shared/model/rol.model';
 
 export class Account {
     constructor(

@@ -30,9 +30,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {ChartsModule} from 'ng2-charts';
 import localePe from '@angular/common/locales/es-PE';
 import {registerLocaleData} from '@angular/common';
-import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
-import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
+import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {PDFExportModule} from '@progress/kendo-angular-pdf-export';
 import {
     NgxUiLoaderConfig,
@@ -45,7 +43,6 @@ import {AppNgxUiLoaderService} from "app/app-ngx-ui-loader.service";
 import {MissingTranslationHandler, TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {JhiConfigService, missingTranslationHandler, translatePartialLoader} from "ng-jhipster";
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from "@angular/material-moment-adapter";
-import {ConfigPipe} from "app/shared/config-pipe";
 import {ConfigService} from "app/shared/config-service";
 // background-color: rgb(79, 195, 247);
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -68,7 +65,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
-registerLocaleData(localePe, 'es');
+registerLocaleData(localePe, 'es-PE');
 
 const MY_NATIVE_DATE_FORMATS = {
     parse: {
@@ -145,8 +142,8 @@ const MY_NATIVE_DATE_FORMATS = {
         },
         {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
         {provide: MAT_DATE_FORMATS, useValue: MY_NATIVE_DATE_FORMATS},
-        {provide: LOCALE_ID, useValue: 'es'},
-        {provide: MAT_DATE_LOCALE, useValue: 'es'},
+        {provide: LOCALE_ID, useValue: 'es-PE'},
+        {provide: MAT_DATE_LOCALE, useValue: 'es-PE'},
         {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl()},
         {
             provide: PERFECT_SCROLLBAR_CONFIG,

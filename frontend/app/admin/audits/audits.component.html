@@ -24,23 +24,29 @@
     <div class="table-responsive" *ngIf="audits?.length > 0">
         <table class="table table-sm table-striped">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="auditEventDate"><span>Date</span><fa-icon [icon]="'sort'"></fa-icon></th>
-                <th jhiSortBy="principal"><span>User</span><fa-icon [icon]="'sort'"></fa-icon></th>
-                <th jhiSortBy="auditEventType"><span>State</span><fa-icon [icon]="'sort'"></fa-icon></th>
-                <th><span>Extra data</span></th>
-            </tr>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th jhiSortBy="auditEventDate"><span>Date</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th jhiSortBy="principal"><span>User</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th jhiSortBy="auditEventType"><span>State</span>
+                        <fa-icon [icon]="'sort'"></fa-icon>
+                    </th>
+                    <th><span>Extra data</span></th>
+                </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let audit of audits">
-                <td><span>{{audit.timestamp| date:'medium'}}</span></td>
-                <td><small>{{audit.principal}}</small></td>
-                <td>{{audit.type}}</td>
-                <td>
-                    <span *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</span>
-                    <span *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span>Remote Address</span> {{audit.data.remoteAddress}}</span>
-                </td>
-            </tr>
+                <tr *ngFor="let audit of audits">
+                    <td><span>{{audit.timestamp| date:'medium'}}</span></td>
+                    <td><small>{{audit.principal}}</small></td>
+                    <td>{{audit.type}}</td>
+                    <td>
+                        <span *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</span>
+                        <span *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span>Remote Address</span> {{audit.data.remoteAddress}}</span>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {errorRoute} from './layouts/error/error.route';
 import {navbarRoute} from './layouts/navbar/navbar.route';
-import {DEBUG_INFO_ENABLED} from 'app/app.constants';
 import {UserRouteAccessService} from 'app/core/auth/user-route-access-service';
 import {LoginAccessService} from "app/core/auth/login-access-service";
 
@@ -15,7 +14,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
                     path: 'login',
                     loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
                     canActivate: [LoginAccessService]
-                },                {
+                }, {
                     path: 'reset',
                     loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule),
                 },

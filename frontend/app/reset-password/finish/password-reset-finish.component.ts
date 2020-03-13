@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ElementRef, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChildren} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 

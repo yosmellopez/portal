@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { SERVER_API_URL } from 'app/app.constants';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { IDocumentoElectronico } from 'app/shared/model/documento-electronico.model';
-import { Observable } from 'rxjs';
-import { TimeData } from 'app/shared/model/generic-model';
+import {Injectable} from '@angular/core';
+import {SERVER_API_URL} from 'app/app.constants';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {IDocumentoElectronico} from 'app/shared/model/documento-electronico.model';
+import {Observable} from 'rxjs';
+import {TimeData} from 'app/shared/model/generic-model';
 
 type EntityArray = IDocumentoElectronico[];
 type TimeArray = TimeData;

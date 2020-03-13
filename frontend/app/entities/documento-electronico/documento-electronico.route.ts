@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { DocumentoElectronico, IDocumentoElectronico, TipoDocumento } from 'app/shared/model/documento-electronico.model';
-import { DocumentoElectronicoService } from './documento-electronico.service';
-import { DocumentoElectronicoComponent } from './documento-electronico.component';
-import { DocumentoElectronicoDetailComponent } from './documento-electronico-detail.component';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
+import {UserRouteAccessService} from 'app/core/auth/user-route-access-service';
+import {Observable, of} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {DocumentoElectronico, IDocumentoElectronico, TipoDocumento} from 'app/shared/model/documento-electronico.model';
+import {DocumentoElectronicoService} from './documento-electronico.service';
+import {DocumentoElectronicoComponent} from './documento-electronico.component';
+import {DocumentoElectronicoDetailComponent} from './documento-electronico-detail.component';
 
 export const tiposDocumentos: TipoDocumento[] = [
     {tipo: 'factura', title: 'Facturas de venta'},
