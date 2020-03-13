@@ -59,6 +59,7 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     loadAll() {
+        this.isLoadingResults = true;
         if (this.rolService.isRolesEmpty())
             this.rolService
                 .findAll()
