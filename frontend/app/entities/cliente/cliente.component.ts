@@ -117,12 +117,15 @@ export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
 
     protected onError(response: HttpErrorResponse) {
         this.isLoadingResults = false;
-        if (response.status === 401) {
-            this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
-            this.route.navigate(['/login']);
-        }
         if (this.accountService.isAuthenticated()) {
-            this.showToast(response.message, 'Error', false);
+            if (response.status === 401) {
+                this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
+                this.route.navigate(['/login']);
+            } else if (response.status === 400) {
+                this.showToast('Ocurrió un error. Los datos enviados no son correctos', 'Error', false);
+            } else {
+                this.showToast(response.message, 'Error', false);
+            }
         }
     }
 

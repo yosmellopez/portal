@@ -302,12 +302,13 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
 
     protected onError(response: HttpErrorResponse) {
         this.isLoadingResults = false;
-        if (response.status === 401) {
-            this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
-            this.route.navigate(['/login']);
-        }
         if (this.accountService.isAuthenticated()) {
-            if (response.status === 500) {
+            if (response.status === 401) {
+                this.showToast('Su sesión ha caducado, inicie sesión nuevamente para continuar.', 'Sesión caducada', false);
+                this.route.navigate(['/login']);
+            } else if (response.status === 400) {
+                this.showToast('Ocurrió un error. Los datos enviados no son correctos', 'Error', false);
+            } else if (response.status === 500) {
                 this.showToast('Ha ocurrido un error interno, por favor inténtelo más tarde o comuníquese con su administrador del sistema.', 'Error Interno', false);
             } else {
                 this.showToast(response.message, 'Error', false);

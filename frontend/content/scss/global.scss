@@ -253,8 +253,8 @@ table {
 }
 
 .cdk-column-total {
-  width: 12%;
-  min-width: 12%;
+  width: 10%;
+  min-width: 10%;
 }
 
 .mat-column-acciones button {
@@ -262,8 +262,8 @@ table {
 }
 
 .mat-column-numSerie {
-  width: 25%;
-  min-width: 25%;
+  width: 21%;
+  min-width: 21%;
 }
 
 .mat-column-rucClient {
@@ -328,9 +328,14 @@ mat-error {
   //padding-left: 300px
 }
 
-.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr, .mat-column-correo, .mat-column-estadoSunat {
+.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr, .mat-column-estadoSunat {
   width: 7%;
   min-width: 7%;
+}
+
+.mat-column-correo {
+  width: 14%;
+  min-width: 14%;
 }
 
 .pull-right {
