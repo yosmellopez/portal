@@ -170,4 +170,32 @@ class UsuarioController extends Controller
             return response()->json(array("error" => "La contraseña proporcionada no coincide con la actual"), 406);
         }
     }
+
+    public function passwordReset($usuarioId)
+    {
+        try {
+            $usuario = Usuario::find($usuarioId);
+            $usePHPMailer = config('app.use_phpmailer');
+            $documentoController = null;
+            if ($usePHPMailer) {
+                $documentoController = new PHPMailerController();
+            } else {
+                $documentoController = new EmailController();
+            }
+            $email = $usuario->email;
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                if (isset($usuario->email)) {
+                    $password = $usuario->rucClient;
+                    $hash = new Md5Hash();
+                    $claveUsuario = $hash->make($password);
+                    $data = array("claveUsuario" => $claveUsuario);
+                    $usuario->fill($data)->update();
+                    $documentoController->sendRestorePasswordEmail($usuario, $password);
+                }
+            }
+        } catch (\Exception $e) {
+            return response()->json("No se enviaron los mensajes por " . $e->getMessage(), 400);
+        }
+        return response()->json("Se han enviado los mensajes correctamente", 200);
+    }
 }

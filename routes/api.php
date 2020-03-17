@@ -42,6 +42,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
     Route::post('account/change-password', 'UsuarioController@changePassword');
     Route::post('user/resetMasive', 'UsuarioController@resetPasswordMasive');
+    Route::post('user/password-reset/{usuarioId}', 'UsuarioController@passwordReset');
     Route::resource('documentos', 'DocumentoController');
     Route::resource('clientes', 'ClienteController');
     Route::get('all/clientes', 'ClienteController@allClientes');

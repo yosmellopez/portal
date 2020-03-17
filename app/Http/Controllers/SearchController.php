@@ -49,7 +49,7 @@ class SearchController extends Controller
      */
     public function listEstadoSunat()
     {
-        $documentos = Documento::all();
+        $documentos = Documento::all("estadoSunat");
         $collection = collect($documentos);
         $estadosSunat = $collection->map(function ($item, $key) {
             return array("estadoSunat" => $item->estadoSunat);

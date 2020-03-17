@@ -240,10 +240,29 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     sendEmailMassive() {
-        this.usuarioService.sendEmailmassive().subscribe((res: HttpResponse<any>) => {
+        this.usuarioService.sendEmailMassive().subscribe((res: HttpResponse<any>) => {
             if (res.ok) {
                 this.showToast("Se han enviado los correos exitosamente", "Información", true);
             }
         }, (error: HttpErrorResponse) => this.onError(error));
+    }
+
+    resetPassword(usuario: IUsuario) {
+        const dialogRef = this.dialog.open(Confirm, {
+            data: {
+                accion: 'Reiniciar Contraseña',
+                description: `¿Desea reinicar la contraseña del usuario ${usuario.nombUsuario}?`
+            },
+            width: '450px'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.usuarioService.sendEmailToUser(usuario).pipe(
+                    filter((response: HttpResponse<any>) => response.ok)
+                ).subscribe(() => {
+                    this.showToast(`Contraseña del usuario ${usuario.nombUsuario} cambiada exitosamente`, 'Contraseña Cambiada', true);
+                }, (res: HttpErrorResponse) => this.onError(res));
+            }
+        });
     }
 }

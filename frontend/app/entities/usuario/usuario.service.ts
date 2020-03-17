@@ -15,6 +15,7 @@ type EntityArrayResponseType = HttpResponse<AppResponseArray>;
 export class UsuarioService {
     public resourceUrl = SERVER_API_URL + 'api/usuarios';
     public resetUrl = SERVER_API_URL + 'api/user';
+    public resetUserUrl = SERVER_API_URL + 'api/user/password-reset';
     public resourceSearchUrl = SERVER_API_URL + 'api/search/usuarios';
 
     constructor(protected http: HttpClient) {
@@ -46,7 +47,11 @@ export class UsuarioService {
         return this.http.get<IUsuario[]>(this.resourceSearchUrl, {params: options, observe: 'response'});
     }
 
-    sendEmailmassive(): Observable<HttpResponse<any>> {
+    sendEmailMassive(): Observable<HttpResponse<any>> {
         return this.http.post<any>(`${this.resetUrl}/resetMasive`, {}, {observe: 'response'});
+    }
+
+    sendEmailToUser(usuario: IUsuario): Observable<HttpResponse<any>> {
+        return this.http.post<any>(`${this.resetUserUrl}/${usuario.idUsuario}`, {}, {observe: 'response'});
     }
 }

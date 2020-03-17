@@ -111,6 +111,10 @@
                             matTooltip="Editar Usuario [{{element.nombUsuario}}]" matTooltipClass="apptooltip">
                         <mat-icon>edit</mat-icon>
                     </button>
+                    <button mat-mini-fab color="accent" (click)="resetPassword(element)"
+                            matTooltip="Reiniciar contraseña de [{{element.nombUsuario}}]" matTooltipClass="apptooltip">
+                        <mat-icon>vpn_key</mat-icon>
+                    </button>
                     <button mat-mini-fab color="warn" (click)="deleteUsuario(element)"
                             matTooltip="Eliminar Usuario [{{element.nombUsuario}}]" matTooltipClass="apptooltip">
                         <mat-icon>delete</mat-icon>
