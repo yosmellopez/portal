@@ -240,11 +240,24 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     sendEmailMassive() {
-        this.usuarioService.sendEmailMassive().subscribe((res: HttpResponse<any>) => {
-            if (res.ok) {
-                this.showToast("Se han enviado los correos exitosamente", "Información", true);
+        const dialogRef = this.dialog.open(Confirm, {
+            data: {
+                accion: 'Reiniciar Contraseña',
+                description: `¿Desea reinicar la contraseña de todos los usuarios del sistema?`
+            },
+            width: '450px'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.isLoadingResults = true;
+                this.usuarioService.sendEmailMassive().pipe(
+                    filter((response: HttpResponse<any>) => response.ok)
+                ).subscribe(() => {
+                    this.isLoadingResults = false;
+                    this.showToast("Se han enviado los correos exitosamente", "Información", true);
+                }, (error: HttpErrorResponse) => this.onError(error));
             }
-        }, (error: HttpErrorResponse) => this.onError(error));
+        });
     }
 
     resetPassword(usuario: IUsuario) {
@@ -257,9 +270,11 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                this.isLoadingResults = true;
                 this.usuarioService.sendEmailToUser(usuario).pipe(
                     filter((response: HttpResponse<any>) => response.ok)
                 ).subscribe(() => {
+                    this.isLoadingResults = false;
                     this.showToast(`Contraseña del usuario ${usuario.nombUsuario} cambiada exitosamente`, 'Contraseña Cambiada', true);
                 }, (res: HttpErrorResponse) => this.onError(res));
             }
