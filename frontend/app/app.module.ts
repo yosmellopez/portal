@@ -20,7 +20,7 @@ import {FooterComponent} from './layouts/footer/footer.component';
 import {JhMaterialModule} from 'app/shared/jh-material.module';
 import {SidebarComponent} from 'app/layouts/sidebar/sidebar.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateModule} from '@angular/material/core';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateModule} from '@angular/material/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {getSpanishPaginatorIntl} from 'app/es-locale-paginator';
@@ -44,6 +44,7 @@ import {MissingTranslationHandler, TranslateLoader, TranslateModule} from "@ngx-
 import {JhiConfigService, missingTranslationHandler, translatePartialLoader} from "ng-jhipster";
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from "@angular/material-moment-adapter";
 import {ConfigService} from "app/shared/config-service";
+import {Moment} from "moment";
 // background-color: rgb(79, 195, 247);
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     bgsColor: '#4fc3f7',
@@ -157,6 +158,10 @@ const MY_NATIVE_DATE_FORMATS = {
     bootstrap: [JhiMainComponent]
 })
 export class PortalAppModule {
+    constructor(private dateAdapter: DateAdapter<Date>, private momentDateAdapter: DateAdapter<Moment>) {
+        dateAdapter.setLocale('es-PE');
+        momentDateAdapter.setLocale('es-PE');
+    }
 }
 
 
