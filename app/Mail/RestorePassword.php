@@ -35,7 +35,7 @@ class RestorePassword extends Mailable
     public function build()
     {
         $nombreUsuario = $this->usuario->nombUsuario;
-        return $this->from($this->userEmail, config("app.name"))
+        return $this->from($this->userEmail, config("app.mail_sender_name"))
             ->subject('Reinicio de Contraseña')
             ->view('emails.restore-password')
             ->with([

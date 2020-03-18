@@ -36,7 +36,7 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
-        return $this->from($this->userEmail, config("app.name"))
+        return $this->from($this->userEmail, config("app.mail_sender_name"))
             ->subject('Reinicio de Contraseña')
             ->view('emails.reset-password')
             ->with([

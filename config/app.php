@@ -126,6 +126,7 @@ return [
     'log' => env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'mail_sender_name' => env('MAIL_SENDER_NAME', 'Portal Facturación Electrónica.'),
     'logo' => env('APP_LOGO', '/content/images/logo_1.png'),
     'use_phpmailer' => env('USE_PHPMAILER', false),
 

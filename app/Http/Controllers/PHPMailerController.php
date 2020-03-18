@@ -8,8 +8,8 @@ use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 class PHPMailerController extends Controller
@@ -55,11 +55,22 @@ class PHPMailerController extends Controller
             $mail->Port = config('mail.port'); //gmail has port > 587 . without double quotes
             $mail->Username = config('mail.username'); //your username. actually your email
             $mail->Password = config('mail.password'); // your password. your mail password
-            $mail->setFrom($userEmail, config('app.name'));
+            $mail->setFrom($userEmail, config("app.mail_sender_name"));
             $mail->SMTPKeepAlive = true;
             $mail->Subject = $tipoDocumento . " [$numeroSerie] $estadoDocumento";
             $mail->MsgHTML($html);
             $mail->addAddress($documento->cliente->email);
+            $emailEmisor = $documento->emailEmisor;
+            if (!empty($emailEmisor)) {
+                $mail->addCC($emailEmisor);
+            }
+            $emailSecundario = $documento->correoSecundario;
+            if (!empty($emailSecundario)) {
+                $correos = explode(',', $emailSecundario);
+                foreach ($correos as $correo) {
+                    $mail->addCC($correo);
+                }
+            }
             $appLogoPath = public_path() . config('app.logo');
             $appOkPath = public_path() . '/content/images/okok.png';
             $appFacebookPath = public_path() . '/content/images/facebook2x.png';
@@ -111,7 +122,7 @@ class PHPMailerController extends Controller
             $mail->Port = config('mail.port'); //gmail has port > 587 . without double quotes
             $mail->Username = config('mail.username'); //your username. actually your email
             $mail->Password = config('mail.password'); // your password. your mail password
-            $mail->setFrom($userEmail, config('app.name'));
+            $mail->setFrom($userEmail, config("app.mail_sender_name"));
             $mail->SMTPKeepAlive = true;
             $mail->Subject = 'Reinicio de Contraseña';
             $mail->MsgHTML($html);
@@ -159,7 +170,7 @@ class PHPMailerController extends Controller
             $mail->Port = config('mail.port'); //gmail has port > 587 . without double quotes
             $mail->Username = config('mail.username'); //your username. actually your email
             $mail->Password = config('mail.password'); // your password. your mail password
-            $mail->setFrom($userEmail, config('app.name'));
+            $mail->setFrom($userEmail, config('app.mail_sender_name'));
             $mail->SMTPKeepAlive = true;
             $mail->Subject = config('app.name') . ' te ha enviado el registro de un nuevo usuario';
             $mail->MsgHTML($html);
@@ -206,7 +217,7 @@ class PHPMailerController extends Controller
             $mail->Port = config('mail.port'); //gmail has port > 587 . without double quotes
             $mail->Username = config('mail.username'); //your username. actually your email
             $mail->Password = config('mail.password'); // your password. your mail password
-            $mail->setFrom($userEmail, config('app.name'));
+            $mail->setFrom($userEmail, config('app.mail_sender_name'));
             $mail->SMTPKeepAlive = true;
             $mail->Subject = 'Reinicio de Contraseña';
             $mail->MsgHTML($html);

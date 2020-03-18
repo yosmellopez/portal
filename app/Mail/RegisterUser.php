@@ -35,7 +35,7 @@ class RegisterUser extends Mailable
     public function build()
     {
         $nombreUsuario = $this->usuario->nombUsuario;
-        return $this->from($this->userEmail, config("app.name"))
+        return $this->from($this->userEmail, config("app.mail_sender_name"))
             ->subject('Registro de Nuevo Usuario')
             ->view('emails.user-register')
             ->with([

@@ -40,7 +40,7 @@ class DocumentoMail extends Mailable
         $tipoDocumento = $this->findTipoDoc($this->documento->tipoDoc);
         $estadoDocumento = $this->findEstado($this->documento->estadoSunat);
         $numeroSerie = $this->documento->numSerie;
-        return $this->from($this->userEmail, config("app.name"))
+        $mail = $this->from($this->userEmail, config("app.mail_sender_name"))
             ->subject($tipoDocumento . " [$numeroSerie] $estadoDocumento")
             ->view('emails.documento')
             ->with([
@@ -69,6 +69,18 @@ class DocumentoMail extends Mailable
                 'as' => basename($this->documento->docCdr),
                 'mime' => 'application/zip',
             ]);
+        $emailEmisor = $this->documento->emailEmisor;
+        if (!empty($emailEmisor)) {
+            $mail->cc($emailEmisor);
+        }
+        $emailSecundario = $this->documento->correoSecundario;
+        if (!empty($emailSecundario)) {
+            $correos = explode(',', $emailSecundario);
+            foreach ($correos as $correo) {
+                $mail->cc($correo);
+            }
+        }
+        return $mail;
     }
 
     private function findTipoDoc($tipo = "factura")
