@@ -74,8 +74,9 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
             )
             .subscribe(
                 (res: IUsuario[]) => {
-                    this.isLoadingResults = false;
                     this.usuarios = res;
+                    this.dataSource.connect().next(this.usuarios);
+                    this.isLoadingResults = false;
                 }, (res: HttpErrorResponse) => this.onError(res)
             );
     }
@@ -167,9 +168,9 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
                 return of([]);
             }))
             .subscribe((res: IUsuario[]) => {
-                this.isLoadingResults = false;
                 this.usuarios = res;
                 this.dataSource.connect().next(this.usuarios);
+                this.isLoadingResults = false;
             }, (res: HttpErrorResponse) => this.onError(res));
     }
 
