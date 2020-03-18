@@ -163,28 +163,10 @@ class SearchController extends Controller
                     return $query->where('monedaTransaccion', $monedaTransaccion);
                 })
                 ->get();
+//            $queries = \DB::getQueryLog();
+//            var_dump($queries);
             return response()->json($documentos, 200);
         }
-//        $interval = $fechaEmisionFin->diff($fechaEmisionInicio);
-//        $days = $interval->days;
-//        $documents = array();
-//        for ($i = 0; $i <= $days; $i++) {
-//            $filteredDocuments = collect($documentos)->filter(function ($item) use ($fechaEmisionInicio) {
-//                $currentDate = \DateTime::createFromFormat("d/m/Y", $item->fecEmisionDoc);
-//                if (!$currentDate) {
-//                    $currentDate = \DateTime::createFromFormat("Y-d-m", $item->fecEmisionDoc);
-//                }
-//                if ($currentDate) {
-//                    $diferencia = $fechaEmisionInicio->diff($currentDate);
-//                    return $diferencia->days == 0;
-//                }
-//                return false;
-//            });
-//            $fechaEmisionInicio = $fechaEmisionInicio->modify("+1 days");
-//            $documents = array_merge($filteredDocuments->toArray(), $documents);
-//        }
-//        $queries = \DB::getQueryLog();
-//        var_dump($queries);
     }
 
     /**
