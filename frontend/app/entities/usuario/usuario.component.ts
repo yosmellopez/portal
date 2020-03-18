@@ -60,18 +60,6 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
 
     loadAll() {
         this.isLoadingResults = true;
-        if (this.rolService.isRolesEmpty())
-            this.rolService
-                .findAll()
-                .pipe(filter((res: HttpResponse<IRol[]>) => res.ok), map((res: HttpResponse<IRol[]>) => res.body))
-                .subscribe((res: IRol[]) => {
-                        this.roles = res;
-                        this.rolService.setRoles(res);
-                    }, (res: HttpErrorResponse) => this.onError(res)
-                );
-        else {
-            this.roles = this.rolService.getRoles();
-        }
         this.usuarioService
             .query({
                 page: this.paginator.pageIndex + 1,
@@ -116,6 +104,18 @@ export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
             this.currentAccount = account;
         });
         this.registerChangeInUsuarios();
+        if (this.rolService.isRolesEmpty())
+            this.rolService
+                .findAll()
+                .pipe(filter((res: HttpResponse<IRol[]>) => res.ok), map((res: HttpResponse<IRol[]>) => res.body))
+                .subscribe((res: IRol[]) => {
+                        this.roles = res;
+                        this.rolService.setRoles(res);
+                    }, (res: HttpErrorResponse) => this.onError(res)
+                );
+        else {
+            this.roles = this.rolService.getRoles();
+        }
     }
 
     ngOnDestroy() {

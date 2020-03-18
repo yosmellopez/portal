@@ -8,7 +8,6 @@ use App\Entity\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 
 class SearchController extends Controller
 {
@@ -67,9 +66,10 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function listNumeroSerie()
+    public function listNumeroSerie(Request $request)
     {
-        $documentos = Documento::all("numSerie");
+        $tipoDocumento = $request->tipo;
+        $documentos = Documento::where('tipoDoc', $this->findTipoDoc($tipoDocumento))->get();
         $collection = collect($documentos);
         $seriesDocumentos = $collection->map(function ($item, $key) {
             $numSerie = preg_split("/[-]/", $item->numSerie);
@@ -185,7 +185,6 @@ class SearchController extends Controller
 //        }
 //        $queries = \DB::getQueryLog();
 //        var_dump($queries);
-        return response()->json($documentos, 200);
     }
 
     /**

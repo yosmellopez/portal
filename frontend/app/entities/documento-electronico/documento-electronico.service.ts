@@ -62,8 +62,8 @@ export class DocumentoElectronicoService {
         return this.http.get<Estado[]>(this.resourceEstadoUrl, {observe: 'response'});
     }
 
-    findSeriesDocumentos(): Observable<HttpResponse<Serie[]>> {
-        return this.http.get<Serie[]>(`${this.resourceUrl}/series`, {observe: 'response'});
+    findSeriesDocumentos(tipo: string): Observable<HttpResponse<Serie[]>> {
+        return this.http.get<Serie[]>(`${this.resourceUrl}/series?tipo=${tipo}`, {observe: 'response'});
     }
 
     sendEmail(documento: IDocumentoElectronico): Observable<HttpResponse<MessageResponse>> {

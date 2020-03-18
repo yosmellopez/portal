@@ -23,7 +23,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatInputModule} from "@angular/material/input";
 import {MatListModule} from "@angular/material/list";
 import {MatMenuModule} from "@angular/material/menu";
-import {MatNativeDateModule, MatRippleModule} from "@angular/material/core";
+import {DateAdapter, MatNativeDateModule, MatRippleModule} from "@angular/material/core";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -86,4 +86,7 @@ import {MatTreeModule} from "@angular/material/tree";
     ]
 })
 export class JhMaterialModule {
+    constructor(private dateAdapter: DateAdapter<Date>) {
+        dateAdapter.setLocale("es-PE");
+    }
 }

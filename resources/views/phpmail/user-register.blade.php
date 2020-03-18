@@ -226,11 +226,11 @@
                                             <div style="color:#555555;font-family:Cabin, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:20px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #555555; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
                                                     <p>
-                                                        <span><strong>Nombre de Usuario</strong></span>
+                                                        <span><strong>Nombre de Usuario:</strong></span>
                                                         <span><strong>{{$nombreUsuario}}</strong></span>
                                                     </p>
                                                     <p>
-                                                        <span><strong>Contraseña</strong></span>
+                                                        <span><strong>Contraseña:</strong></span>
                                                         <span><strong>{{$password}}</strong></span>
                                                     </p>
                                                     <p style="font-size: 16px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 19px; margin: 0;">
@@ -262,7 +262,7 @@
                                                             <span data-mce-style="font-size: 15px; line-height: 30px;"
                                                                   style="font-size: 15px; line-height: 30px;"><strong><span
                                                                             data-mce-style="line-height: 30px; font-size: 15px;"
-                                                                            style="line-height: 30px; font-size: 15px;">INICIAR SESEIÓN</span></strong></span></span></span></a>
+                                                                            style="line-height: 30px; font-size: 15px;">INICIAR SESIÓN</span></strong></span></span></span></a>
                                                 </div>
 
                                             </div>

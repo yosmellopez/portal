@@ -19,10 +19,14 @@
                     <span>Administración</span>
                     <mat-icon>arrow_drop_down</mat-icon>
                 </button>
-                <mat-menu #menuAdmin="matMenu" xPosition="before">
-                    <button mat-menu-item routerLink="/usuarios">
+                <mat-menu #menuAdmin="matMenu" xPosition="before" style="min-width: 100px">
+                    <button mat-menu-item routerLink="/clientes">
                         <mat-icon>group</mat-icon>
-                        <span>Usuarios</span>
+                        <span>Clientes del Sistema</span>
+                    </button>
+                    <button mat-menu-item routerLink="/usuarios">
+                        <mat-icon>account_box</mat-icon>
+                        <span>Usuarios del Sistema</span>
                     </button>
                 </mat-menu>
             </li>

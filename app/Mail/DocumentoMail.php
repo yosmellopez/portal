@@ -40,7 +40,7 @@ class DocumentoMail extends Mailable
         $tipoDocumento = $this->findTipoDoc($this->documento->tipoDoc);
         $estadoDocumento = $this->findEstado($this->documento->estadoSunat);
         $numeroSerie = $this->documento->numSerie;
-        return $this->from($this->userEmail, 'Portal de Facturación Electrónica')
+        return $this->from($this->userEmail, config("app.name"))
             ->subject($tipoDocumento . " [$numeroSerie] $estadoDocumento")
             ->view('emails.documento')
             ->with([

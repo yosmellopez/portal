@@ -33,7 +33,7 @@ class EmailController extends Controller
             $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
             try {
                 $correo = $documento->cliente->email;
-                Mail::to("ylopez@vsperu.com")->send(new DocumentoMail($documento, $userEmail));
+                Mail::to($correo)->send(new DocumentoMail($documento, $userEmail));
                 if (Mail::failures()) {
                     return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
                 } else {

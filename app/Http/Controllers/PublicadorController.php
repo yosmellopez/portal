@@ -29,10 +29,11 @@ class PublicadorController extends Controller
     public function publicar(Request $request)
     {
         $hasher = new Md5Hash();
-        $credentials = array("password" => $hasher->make($request->claveUsuario), "nombUsuario" => $request->usuarioSesion);
+        $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
         }
+        $mensajeCorreo = "";
         try {
             $dataCliente = $request->only(['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient']);
             $clienteDb = Cliente::find($dataCliente["rucClient"]);
@@ -40,7 +41,7 @@ class PublicadorController extends Controller
                 $cliente = new Cliente();
                 $dataCliente["estadoCliente"] = 1;
                 $cliente->fill($dataCliente)->save();
-                $this->registerUser($cliente, $dataCliente["rucClient"]);
+                $mensajeCorreo = $this->registerUser($cliente, $dataCliente["rucClient"]);
             } else {
                 $dataCliente["estadoCliente"] = 1;
                 $clienteDb->fill($dataCliente)->update();
@@ -98,7 +99,7 @@ class PublicadorController extends Controller
             }
             return response()->json(array("error" => $e->getMessage()), 400);
         }
-        return response()->json(array("mensaje" => "Documento [" . $data["numSerie"] . "] registrado correctamente"), 201);
+        return response()->json(array("mensaje" => "Documento [" . $data["numSerie"] . "] registrado correctamente." . $mensajeCorreo), 201);
     }
 
     public function registerUser(Cliente $cliente, $rucClient)
@@ -110,8 +111,7 @@ class PublicadorController extends Controller
         $usuarioId = DB::table('fe_usuario')->max('idUsuario');
         $usuario = new Usuario();
         $usuario->fill(["idUsuario" => $usuarioId + 1, "email" => $cliente->email, "nombUsuario" => $rucClient,
-            "claveUsuario" => $claveUsuario, "estadoUsuario" => "1", "rucClient" => $rucClient, "idRoles" => 3
-        ])->save();
+            "claveUsuario" => $claveUsuario, "estadoUsuario" => "1", "rucClient" => $rucClient, "idRoles" => 3])->save();
         try {
             $usePHPMailer = config('app.use_phpmailer');
             if ($usePHPMailer) {
@@ -122,8 +122,9 @@ class PublicadorController extends Controller
                 $documentoController->sendRegisterEmail($usuario, $password);
             }
         } catch (GeneralAPIException $e) {
-
+            return $e->getMessage();
         }
+        return "Mensaje enviado correctamente.";
     }
 
     public function username()

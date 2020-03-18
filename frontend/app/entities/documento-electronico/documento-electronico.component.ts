@@ -28,7 +28,7 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 import {Properties} from 'xlsx';
 import {PDFExportComponent} from '@progress/kendo-angular-pdf-export';
 import {MatDialog} from '@angular/material/dialog';
-import {MensajeToast} from 'app/mensaje/window.mensaje';
+import {Confirm, MensajeToast} from 'app/mensaje/window.mensaje';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatSort} from "@angular/material/sort";
 import {MatDatepicker} from "@angular/material/datepicker";
@@ -145,19 +145,14 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         } else {
             this.estados = estadosTemp;
         }
-        const seriesTemp = this.documentoElectronicoService.getSeries();
-        if (seriesTemp.length === 0) {
-            this.documentoElectronicoService.findSeriesDocumentos().pipe(
-                filter((res: HttpResponse<Serie[]>) => res.ok),
-                map((res: HttpResponse<Serie[]>) => res.body)
-            ).subscribe((data: Serie[]) => {
-                    this.series = data;
-                    this.documentoElectronicoService.setSeries(this.series);
-                }, (res: HttpErrorResponse) => this.onError(res)
-            );
-        } else {
-            this.series = seriesTemp;
-        }
+        this.documentoElectronicoService.findSeriesDocumentos(this.tipoDocumento.tipo).pipe(
+            filter((res: HttpResponse<Serie[]>) => res.ok),
+            map((res: HttpResponse<Serie[]>) => res.body)
+        ).subscribe((data: Serie[]) => {
+                this.series = data;
+                this.documentoElectronicoService.setSeries(this.series);
+            }, (res: HttpErrorResponse) => this.onError(res)
+        );
     }
 
     search() {
@@ -222,7 +217,6 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     }
 
     ngAfterViewInit() {
-        // If the user changes the sort order, reset back to the first page.
         this.loadAll();
         merge(this.sort.sortChange, this.paginator.page).pipe(
             startWith({}),
@@ -317,14 +311,26 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     }
 
     sendEmail(documento: DocumentoElectronico) {
-        this.isLoadingResults = true;
-        this.documentoElectronicoService.sendEmail(documento).pipe(
-            filter((res: HttpResponse<MessageResponse>) => res.ok),
-            map((res: HttpResponse<MessageResponse>) => res.body)
-        ).subscribe(response => {
-            this.isLoadingResults = false;
-            this.showToast(response.message, 'Información', true);
-        }, (res: HttpErrorResponse) => this.onError(res));
+        const dialogRef = this.dialog.open(Confirm, {
+            data: {
+                accion: 'Enviar Documento',
+                description: `¿Desea enviar por correo el documento [${documento.numSerie}]?`
+            },
+            width: '400px'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.isLoadingResults = true;
+                this.documentoElectronicoService.sendEmail(documento).pipe(
+                    filter((res: HttpResponse<MessageResponse>) => res.ok),
+                    map((res: HttpResponse<MessageResponse>) => res.body)
+                ).subscribe(response => {
+                    this.isLoadingResults = false;
+                    this.showToast(response.message, 'Información', true);
+                }, (res: HttpErrorResponse) => this.onError(res));
+            }
+        });
+
     }
 
     exportarTabla() {
@@ -382,7 +388,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         if (fechaFinal) {
             return (
                 (fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear()) &&
-                (fecha.year() < fechaFinal.year() ? true : fecha.year() > fechaFinal.year() ? false : fecha.dayOfYear() < fechaFinal.dayOfYear())
+                (fecha.year() < fechaFinal.year() ? true : fecha.year() > fechaFinal.year() ? false : fecha.dayOfYear() <= fechaFinal.dayOfYear())
             );
         } else {
             return fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear();
@@ -395,7 +401,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         if (fechaInicial) {
             return (
                 (fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear()) &&
-                (fecha.year() > fechaInicial.year() ? true : fecha.year() < fechaInicial.year() ? false : fecha.dayOfYear() > fechaInicial.dayOfYear())
+                (fecha.year() > fechaInicial.year() ? true : fecha.year() < fechaInicial.year() ? false : fecha.dayOfYear() >= fechaInicial.dayOfYear())
             );
         } else {
             return fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear();

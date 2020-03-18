@@ -8,6 +8,7 @@ use App\Exceptions\GeneralAPIException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PHPMailerController;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -64,17 +65,21 @@ class ResetPasswordController extends Controller
         $token = $request->token;
         $usuarioToken = UsuarioToken::where("token", $token)->first();
         if ($usuarioToken) {
-            $tokenExpiration = date_create($usuarioToken->token_expiration);
-            $fechaActual = date_create();
+            $tokenExpiration = Carbon::createFromTimeString($usuarioToken->token_expiration);
+            $fechaActual = Carbon::now();
             if ($fechaActual < $tokenExpiration) {
-                $usuarioDb = Usuario::where("email", $usuarioToken->email)->with("rol")->first();
-                $data = array();
-                if (!isset($newPassword)) {
-                    $hash = new Md5Hash();
-                    $data["claveUsuario"] = $hash->make($newPassword);
+                $usuarioDb = Usuario::where("email", $usuarioToken->email)->first();
+                if (isset($usuarioDb)) {
+                    $data = array();
+                    if (isset($newPassword)) {
+                        $hash = new Md5Hash();
+                        $data["claveUsuario"] = $hash->make($newPassword);
+                    }
+                    $usuarioDb->fill($data)->update();
+                    return response()->json(array("success" => true, "msg" => "Se ha cambiado la contraseña exitosamente."), 200);
+                } else {
+                    return response()->json(array("success" => false, "msg" => "No se encuentra el usuario con ese correo."), 200);
                 }
-                $usuarioDb->fill($data)->update();
-                return response()->json(array("success" => true, "msg" => "Se ha cambiado la contraseña exitosamente."), 200);
             }
             return response()->json(array("success" => false, "msg" => "Su contraseña no se pudo cambiar. Recuerde que el token de cambio de contraseña solo está activo 24 horas."), 200);
         }
