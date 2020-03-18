@@ -39,6 +39,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTreeModule} from "@angular/material/tree";
+import {Moment} from "moment";
 
 @NgModule({
     exports: [
@@ -86,7 +87,8 @@ import {MatTreeModule} from "@angular/material/tree";
     ]
 })
 export class JhMaterialModule {
-    constructor(private dateAdapter: DateAdapter<Date>) {
-        dateAdapter.setLocale("es-PE");
+    constructor(private dateAdapter: DateAdapter<Date>, private momentDateAdapter: DateAdapter<Moment>) {
+        dateAdapter.setLocale('es-PE');
+        momentDateAdapter.setLocale('es-PE');
     }
 }
