@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Entity\Documento;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -105,16 +105,17 @@ class DashboardController extends Controller
      */
     public function weekDocuments()
     {
-        $documentos = Documento::all();
-        $collection = collect($documentos);
+        $fechaEmisionFin = Carbon::now();
+        $fechaEmisionInicio = $fechaEmisionFin->copy()->subDays(6);
+        $listaDocumentos = DB::table('fe_docelectronico')->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))->get();
+        $collection = collect($listaDocumentos);
         $tiposDocumento = array("factura", "boleta", "nota-credito", "nota-debito");
         $documentos = array();
         $days = array();
         foreach ($tiposDocumento as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
-            $today = Carbon::now();
-            $today = $today->subDays(6);
+            $today = $fechaEmisionFin->subDays(6);
             for ($i = 0; $i < 7; $i++) {
                 $formattedDate = $today->format("d/m/Y");
                 $total = $collection->filter(function ($value, $key) use ($tipoDoc, $formattedDate) {
@@ -139,8 +140,10 @@ class DashboardController extends Controller
      */
     public function monthDocuments()
     {
-        $documentos = Documento::all();
-        $collection = collect($documentos);
+        $fechaEmisionFin = Carbon::now();
+        $fechaEmisionInicio = $fechaEmisionFin->copy()->subMonths(6);
+        $listaDocumentos = DB::table('fe_docelectronico')->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))->get();
+        $collection = collect($listaDocumentos);
         $tiposDocumento = array("factura", "boleta", "nota-credito", "nota-debito");
         $documentos = array();
         $days = array();
@@ -178,23 +181,26 @@ class DashboardController extends Controller
      */
     public function yearDocuments()
     {
-        $tiposDocumento = array("01", "03", "07", "08");
+        $tiposDocumentos = array("factura", "boleta", "nota-credito", "nota-debito");
         $documentos = array();
         $collection = new Collection([]);
         $days = array();
-        foreach ($tiposDocumento as $tipo) {
+        foreach ($tiposDocumentos as $tipo) {
+            $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
             $today = Carbon::now();
-            $today = $today->subYears(4);
+            $today->subYears(4);
             for ($i = 0; $i < 5; $i++) {
                 $formattedDate = $today->format("Y");
-                $documentos = DB::table('fe_docelectronico')
-                    ->whereIn('tipoDoc', $tiposDocumento)
+                $listaDocumentos = DB::table('fe_docelectronico')
+                    ->whereIn('tipoDoc', [$tipoDoc])
                     ->whereYear('fecEmisionDoc', $formattedDate)
                     ->get();
-                $collection->merge($documentos);
+                $collection->merge($listaDocumentos);
                 $total = $collection->sum("total");
-                $date = $today->format("Y");
+                if (count($days) < 5) {
+                    $days[] = $today->format("Y");
+                }
                 $today = $today->addYear();
                 $data[] = number_format($total, 2, '.', '');
             }
