@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entity\Documento;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
+use DateTimeZone;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -150,7 +150,7 @@ class DashboardController extends Controller
         foreach ($tiposDocumento as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
-            $today = Carbon::now();
+            $today = Carbon::now(new DateTimeZone('America/Lima'));
             $today = $today->subMonths(6);
             for ($i = 0; $i < 6; $i++) {
                 $formattedDate = $today->format("m/Y");
@@ -162,9 +162,9 @@ class DashboardController extends Controller
                     $mes = $fecha->format("m/Y");
                     return $formattedDate == $mes && $tipoDoc == $value->tipoDoc;
                 })->sum("total");
-                $date = $today->format("M");
+                $mes = $today->format("m");
                 if (count($days) < 6) {
-                    $days[] = ucfirst($date);
+                    $days[] = $this->getMonth($mes - 1);
                 }
                 $today = $today->addMonth();
                 $data[] = number_format($total, 2, '.', '');
@@ -172,6 +172,12 @@ class DashboardController extends Controller
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);
         }
         return response()->json(array("documentos" => $documentos, "columns" => $days), 200);
+    }
+
+    public function getMonth($monthNumber)
+    {
+        $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+        return $meses[$monthNumber];
     }
 
     /**
@@ -183,30 +189,30 @@ class DashboardController extends Controller
     {
         $tiposDocumentos = array("factura", "boleta", "nota-credito", "nota-debito");
         $documentos = array();
-        $collection = new Collection([]);
-        $days = array();
+        $years = array();
         foreach ($tiposDocumentos as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
-            $today = Carbon::now();
+            $today = Carbon::now(new DateTimeZone('America/Lima'));
             $today->subYears(4);
             for ($i = 0; $i < 5; $i++) {
                 $formattedDate = $today->format("Y");
                 $listaDocumentos = DB::table('fe_docelectronico')
-                    ->whereIn('tipoDoc', [$tipoDoc])
+                    ->where("tipoDoc", $tipoDoc)
                     ->whereYear('fecEmisionDoc', $formattedDate)
                     ->get();
-                $collection->merge($listaDocumentos);
+//                var_dump($listaDocumentos);
+                $collection = collect($listaDocumentos);
                 $total = $collection->sum("total");
-                if (count($days) < 5) {
-                    $days[] = $today->format("Y");
+                if (count($years) < 5) {
+                    $years[] = $today->format("Y");
                 }
                 $today = $today->addYear();
                 $data[] = number_format($total, 2, '.', '');
             }
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);
         }
-        return response()->json(array("documentos" => $documentos, "columns" => $days), 200);
+        return response()->json(array("documentos" => $documentos, "columns" => $years), 200);
     }
 
     private function findTipoDoc($tipo = "factura")
