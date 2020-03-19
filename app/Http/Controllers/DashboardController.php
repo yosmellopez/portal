@@ -201,7 +201,6 @@ class DashboardController extends Controller
                     ->where("tipoDoc", $tipoDoc)
                     ->whereYear('fecEmisionDoc', $formattedDate)
                     ->get();
-//                var_dump($listaDocumentos);
                 $collection = collect($listaDocumentos);
                 $total = $collection->sum("total");
                 if (count($years) < 5) {
