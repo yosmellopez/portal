@@ -18,8 +18,8 @@
                         <div class="flex-item">
                             <div style="display: block;">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-7">
-                                        <canvas baseChart width="500" height="200"
+                                    <div class="col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+                                        <canvas baseChart width="500" height="140"
                                                 [datasets]="lineChartData"
                                                 [labels]="lineChartLabels"
                                                 [options]="lineChartOptions"
@@ -30,7 +30,7 @@
                                                 (chartHover)="chartHovered($event)"
                                                 (chartClick)="chartClicked($event)"></canvas>
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-5">
+                                    <div class="col-sm-12 col-md-12 col-lg-12" style="padding-left: 40px">
                                         <table class="table table-responsive table-condensed" style="table-layout: fixed">
                                             <thead>
                                                 <tr>
@@ -40,25 +40,25 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let d of lineChartData; let i=index" [class]="'line-'+i">
-                                                    <td>{{d.label}}</td>
+                                                    <td style="min-width: 200px">{{d.label}}</td>
                                                     <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <div style="padding-left: 7px" class="table-actions-theme row">
-                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <div class="col-sm-4 col-md-3 col-lg-2">
                                                 <button mat-button mat-raised-button color="primary" (click)="semanal()" matTooltip="Mostrar por semana" matTooltipClass="apptooltip">
                                                     <mat-icon>today</mat-icon>
                                                     Semanal
                                                 </button>
                                             </div>
-                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <div class="col-sm-4 col-md-3 col-lg-2">
                                                 <button mat-button mat-raised-button color="primary" (click)="mensual()" matTooltip="Mostrar los últimos 6 meses" matTooltipClass="apptooltip">
                                                     <mat-icon>event_note</mat-icon>
                                                     Mensual
                                                 </button>
                                             </div>
-                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <div class="col-sm-4 col-md-3 col-lg-2">
                                                 <button mat-button mat-raised-button color="primary" (click)="anual()" matTooltip="Mostrar los últimos 5 años" matTooltipClass="apptooltip">
                                                     <mat-icon>date_range</mat-icon>
                                                     Anual

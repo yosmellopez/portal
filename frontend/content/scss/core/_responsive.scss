@@ -315,7 +315,7 @@
       .main-panel,
       .wrapper-full-page,
       .navbar-fixed > div {
-        @include transform-translate-x(300px);
+        @include transform-translate-x(270px);
       }
     }
 
@@ -467,7 +467,7 @@
     .navbar .container .navbar-wrapper,
     .navbar .container {
       left: 0;
-      @include transform-translate-x(-300px);
+      @include transform-translate-x(-270px);
     }
 
     .sidebar {

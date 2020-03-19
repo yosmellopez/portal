@@ -23,7 +23,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'jhi-usuario',
-    templateUrl: './usuario.component.html'
+    templateUrl: './usuario.component.html',
+    styleUrls: ['./usuario.component.scss']
 })
 export class UsuarioComponent implements OnInit, OnDestroy, AfterViewInit {
     usuarios: IUsuario[];

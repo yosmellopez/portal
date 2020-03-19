@@ -48,8 +48,8 @@ a:hover {
 }
 
 .mat-column-nombreClient {
-  width: 40%;
-  min-width: 40%;
+  width: 30%;
+  min-width: 30%;
 }
 
 /* ==========================================================================
@@ -266,11 +266,6 @@ table {
   min-width: 21%;
 }
 
-.mat-column-rucClient {
-  width: 15%;
-  min-width: 15%;
-}
-
 .mat-icon {
   position: relative;
   top: -2px;
@@ -328,26 +323,6 @@ mat-error {
   //padding-left: 300px
 }
 
-.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr, .mat-column-estadoSunat {
-  width: 7%;
-  min-width: 7%;
-}
-
-.mat-column-correo, .mat-column-rol {
-  width: 14%;
-  min-width: 14%;
-}
-
-.mat-column-activo {
-  width: 14%;
-  min-width: 14%;
-}
-
-.mat-column-email {
-  width: 30%;
-  min-width: 30%;
-}
-
 .pull-right {
   float: right !important;
   clear: right;
@@ -372,7 +347,7 @@ mat-error {
     display: none;
   }
   .main-panel {
-    padding-left: 300px
+    padding-left: 270px
   }
 }
 

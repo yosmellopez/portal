@@ -1,0 +1,30 @@
+.mat-column-email {
+  width: 20%;
+  min-width: 20%;
+}
+
+.mat-column-activo {
+  width: 5%;
+  min-width: 5%;
+  flex: 0.5 !important;
+}
+
+.mat-column-acciones {
+  width: 15%;
+  min-width: 15% !important;
+}
+
+.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr, .mat-column-estadoSunat {
+  width: 7%;
+  min-width: 7%;
+}
+
+.mat-column-correo, .mat-column-rol {
+  width: 14%;
+  min-width: 14%;
+}
+
+.mat-column-rucClient {
+  width: 10%;
+  min-width: 10%;
+}

@@ -10,7 +10,7 @@
   bottom: 0;
   left: 0;
   z-index: 2;
-  width: 300px;
+  width: 270px;
   background: $white-color;
   @include shadow-big();
 
@@ -43,7 +43,7 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
-      width: 40%;
+      width: 50%;
     }
   }
 
@@ -51,7 +51,7 @@
     position: relative;
     height: calc(100vh - 75px);
     overflow: auto;
-    width: 300px;
+    width: 270px;
     z-index: 4;
 
     padding-bottom: 30px;
@@ -145,7 +145,7 @@
       }
 
       &:first-child > a {
-        margin: 0 15px;
+        margin: 0 10px;
       }
 
       &:hover > a,
@@ -209,7 +209,7 @@
 
   .nav li a,
   .nav li .dropdown-menu a {
-    margin: 10px 15px 0;
+    margin: 10px 10px 0;
     border-radius: $border-radius-base;
     color: $black-color;
     padding-left: 10px;
@@ -273,8 +273,9 @@
       text-transform: uppercase;
       padding: $padding-small-vertical $padding-zero;
       display: inline-block;
-      font-size: 18px;
+      font-size: 15px;
       color: $black-color;
+      text-decoration: #0a0c0d;
       white-space: nowrap;
       font-weight: $font-weight-default;
       line-height: 30px;
@@ -480,7 +481,7 @@
     }
 
     .sidebar:hover {
-      width: 300px;
+      width: 270px;
 
       .logo {
         a.logo-normal {
@@ -490,7 +491,7 @@
       }
 
       .sidebar-wrapper {
-        width: 300px;
+        width: 270px;
 
         > .nav li > a p,
         > .nav [data-toggle="collapse"] ~ div > ul > li > a .sidebar-normal,

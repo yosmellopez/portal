@@ -21,7 +21,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'jhi-cliente',
-    templateUrl: './cliente.component.html'
+    templateUrl: './cliente.component.html',
+    styleUrls: ['./cliente.component.scss']
 })
 export class ClienteComponent implements OnInit, OnDestroy, AfterViewInit {
     clientes: ICliente[];
