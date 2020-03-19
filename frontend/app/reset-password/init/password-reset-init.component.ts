@@ -15,6 +15,7 @@ export class PasswordResetInitComponent implements AfterViewInit {
     errorEmailNotExists: string;
     success: string;
     isLoading: boolean = false;
+    isLoadingResults = false;
     @ViewChild('emailInput', {static: false}) emailInput: ElementRef;
     resetRequestForm: FormGroup;
 
@@ -34,15 +35,17 @@ export class PasswordResetInitComponent implements AfterViewInit {
         this.error = null;
         this.success = null;
         this.errorEmailNotExists = null;
-
+        this.isLoadingResults = true;
         this.passwordResetInitService.save(this.resetRequestForm.get(['email']).value).subscribe(
             () => {
                 this.isLoading = false;
+                this.isLoadingResults = false;
                 this.authenticationError = false;
                 this.success = 'OK';
             },
             response => {
                 this.isLoading = false;
+                this.isLoadingResults = false;
                 this.authenticationError = true;
                 this.success = null;
                 if (response.status === 400 && response.error.type === EMAIL_NOT_FOUND_TYPE) {

@@ -23,6 +23,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     modalRef: NgbModalRef;
     key: string;
     message: string;
+    isLoadingResults = false;
     @ViewChildren('#newPassword') passwordInput;
     passwordForm = this.fb.group({
         newPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
@@ -41,11 +42,13 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
             this.key = params['token'];
+            this.isLoadingResults = true;
             this.passwordResetFinishService.validateToken(this.key)
                 .pipe(
                     filter((res: HttpResponse<ResetResponse>) => res.ok),
                     map((res: HttpResponse<ResetResponse>) => res.body))
                 .subscribe((respuesta: ResetResponse) => {
+                    this.isLoadingResults = false;
                     if (respuesta.success) {
                         this.error = null;
                         this.keyMissing = false;
@@ -73,11 +76,13 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
         if (password !== confirmPassword) {
             this.doNotMatch = 'ERROR';
         } else {
+            this.isLoadingResults = true;
             this.passwordResetFinishService.save({token: this.key, newPassword: password})
                 .pipe(
                     filter((res: HttpResponse<ResetResponse>) => res.ok),
                     map((res: HttpResponse<ResetResponse>) => res.body))
                 .subscribe((respuesta: ResetResponse) => {
+                        this.isLoadingResults = false;
                         if (respuesta.success) {
                             this.success = 'OK';
                         } else {
@@ -87,6 +92,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
                         }
                     },
                     () => {
+                        this.isLoadingResults = false;
                         this.success = null;
                         this.error = 'ERROR';
                     }

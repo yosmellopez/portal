@@ -105,22 +105,22 @@ class DashboardController extends Controller
      */
     public function weekDocuments()
     {
-        $fechaEmisionFin = Carbon::now();
-        $fechaEmisionInicio = $fechaEmisionFin->copy()->subDays(6);
-        $listaDocumentos = DB::table('fe_docelectronico')->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))->get();
-        $collection = collect($listaDocumentos);
+        $fechaEmisionFin = Carbon::now(new DateTimeZone('America/Lima'));
         $tiposDocumento = array("factura", "boleta", "nota-credito", "nota-debito");
         $documentos = array();
         $days = array();
+//        \DB::connection()->enableQueryLog();
         foreach ($tiposDocumento as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
             $today = $fechaEmisionFin->subDays(6);
             for ($i = 0; $i < 7; $i++) {
-                $formattedDate = $today->format("d/m/Y");
-                $total = $collection->filter(function ($value, $key) use ($tipoDoc, $formattedDate) {
-                    return $formattedDate == $value->fecEmisionDoc && $tipoDoc == $value->tipoDoc;
-                })->sum("total");
+                $listaDocumentos = DB::table('fe_docelectronico')
+                    ->where("tipoDoc", $tipoDoc)
+                    ->where('fecEmisionDoc', '=', $today)
+                    ->get();
+                $collection = collect($listaDocumentos);
+                $total = $collection->sum("total");
                 $date = $today->format("d");
                 if (count($days) < 7) {
                     $days[] = $date;
@@ -129,6 +129,8 @@ class DashboardController extends Controller
                 $data[] = number_format($total, 2, '.', '');
             }
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);
+//            $queries = \DB::getQueryLog();
+//            var_dump($queries);
         }
         return response()->json(array("documentos" => $documentos, "columns" => $days), 200);
     }
@@ -140,7 +142,7 @@ class DashboardController extends Controller
      */
     public function monthDocuments()
     {
-        $fechaEmisionFin = Carbon::now();
+        $fechaEmisionFin = Carbon::now(new DateTimeZone('America/Lima'));
         $fechaEmisionInicio = $fechaEmisionFin->copy()->subMonths(6);
         $listaDocumentos = DB::table('fe_docelectronico')->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))->get();
         $collection = collect($listaDocumentos);
