@@ -88,6 +88,7 @@ export class SidebarComponent implements OnInit {
     rutas: RouteInfo[] = ROUTES;
     rutasUsuario: RouteInfo[] = [];
     usuario: Account;
+    appLogo: string;
 
     constructor(private route: ActivatedRoute, protected auth: AccountService) {
     }

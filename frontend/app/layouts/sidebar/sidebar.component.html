@@ -1,7 +1,7 @@
 <div class="logo" style="width: 100%" *ngIf="isAuthenticated()">
     <a href="/" class="simple-text center-block">
-        <div class="logo-img" style="margin-bottom: 10px;">
-            <img src="../../../content/img/logo.png" style="max-height: 100px"/>
+        <div class="logo-img" style="margin-bottom: 20px;">
+            <img src="{{'app.logo'|configure}}" style="max-height: 100px"/>
         </div>
         <span>
             {{'app.sidebarTitle'|configure}}
@@ -57,7 +57,7 @@
         </ul>
     </div>
     <perfect-scrollbar>
-        <ul class="nav" style="margin-bottom: 20px;">
+        <ul class="nav" style="margin-bottom: 80px;">
             <ng-container *ngFor="let menuItem of rutasUsuario">
                 <li routerLinkActive="active" class="{{menuItem.class}} nav-item">
                     <a class="nav-link" [routerLink]="[menuItem.path]">

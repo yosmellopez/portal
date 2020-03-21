@@ -1,37 +1,29 @@
 .mat-column-email {
-  width: 25%;
-  min-width: 25%;
+  flex: 1.1 !important;
 }
 
 .mat-column-activo {
-  width: 5%;
-  min-width: 5%;
   flex: 0.5 !important;
+  justify-content: center;
 }
 
 .mat-column-acciones {
-  width: 15%;
-  min-width: 15% !important;
-}
-
-.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr, .mat-column-estadoSunat {
-  width: 7%;
-  min-width: 7%;
-}
-
-.mat-column-correo, .mat-column-rol {
-  width: 14%;
-  min-width: 14%;
-}
-
-.mat-column-rucClient {
-  width: 5%;
-  min-width: 5%;
   flex: 0.7 !important;
 }
 
-.mat-column-nombUsuario {
-  width: 5%;
-  min-width: 5%;
-  flex: 0.7 !important;
+.mat-column-rol {
+  flex: 0.8 !important;
+}
+
+.mat-column-rucClient, .mat-column-nombUsuario {
+  flex: 0.6 !important;
+}
+
+
+.mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-type {
+  padding-left: 10px !important;
+}
+
+mat-cell:last-of-type, mat-footer-cell:last-of-type, mat-header-cell:last-of-type {
+  padding-right: 10px;
 }

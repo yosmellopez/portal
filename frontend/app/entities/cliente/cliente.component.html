@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2 id="page-heading" style="font-size: 1.5rem;margin-bottom: 20px">
-                <span>Clientes</span>
+                <span>Clientes del sistema.</span>
                 <button mat-raised-button color="primary" id="jh-create-entity" class="float-right jh-create-entity create-cliente" (click)="createCliente()">
                     <mat-icon>add</mat-icon>
                     <span class="hidden-sm-down">Nuevo Cliente</span>
@@ -13,52 +13,53 @@
             </h2>
         </div>
     </div>
-    <div class="col-sm-12">
-        <form name="searchForm" class="form-inline" [formGroup]="formulario" (ngSubmit)="search()">
-            <mat-accordion style="width: 100%">
-                <mat-expansion-panel style="width: 100%" #expansionPanel>
-                    <mat-expansion-panel-header style="background-color: #4fc3f7">
-                        <mat-panel-title>
-                            <mat-icon>search</mat-icon>
-                            Filtros de clientes
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            Seleccione los filtros para aplicar
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <div class="row pt-2">
-                        <div class="col-sm-4">
-                            <mat-form-field>
-                                <input matInput placeholder="Nombre de Cliente" formControlName="nombreClient">
-                            </mat-form-field>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline" [formGroup]="formulario" (ngSubmit)="search()">
+                <mat-accordion style="width: 100%">
+                    <mat-expansion-panel style="width: 100%" #expansionPanel>
+                        <mat-expansion-panel-header style="background-color: #4fc3f7">
+                            <mat-panel-title>
+                                <mat-icon>search</mat-icon>
+                                Filtros de clientes
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Seleccione los filtros para aplicar
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="row pt-2">
+                            <div class="col-sm-4">
+                                <mat-form-field>
+                                    <input matInput placeholder="Nombre de Cliente" formControlName="nombreClient">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-4">
+                                <mat-form-field>
+                                    <input matInput placeholder="Número de RUC" formControlName="rucClient">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-4">
+                                <mat-form-field>
+                                    <input matInput placeholder="Correo" formControlName="email">
+                                </mat-form-field>
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            <mat-form-field>
-                                <input matInput placeholder="Número de RUC" formControlName="rucClient">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-4">
-                            <mat-form-field>
-                                <input matInput placeholder="Correo" formControlName="email">
-                            </mat-form-field>
-                        </div>
-                    </div>
 
-                    <mat-action-row class="table-actions-theme">
-                        <button mat-raised-button color="primary" type="submit">
-                            <mat-icon>search</mat-icon>
-                            Buscar
-                        </button>
-                        <button type="button" mat-raised-button color="warn" (click)="reset()">
-                            <mat-icon>clear_all</mat-icon>
-                            Limpiar campos
-                        </button>
-                    </mat-action-row>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </form>
+                        <mat-action-row class="table-actions-theme">
+                            <button mat-raised-button color="primary" type="submit">
+                                <mat-icon>search</mat-icon>
+                                Buscar
+                            </button>
+                            <button type="button" mat-raised-button color="warn" (click)="reset()">
+                                <mat-icon>clear_all</mat-icon>
+                                Limpiar campos
+                            </button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </form>
+        </div>
     </div>
-    <br/>
     <div class="table-responsive">
         <mat-table [dataSource]="dataSource" matSort matSortActive="rucClient" matSortDirection="asc" matSortDisableClear>
 
@@ -73,7 +74,7 @@
             </ng-container>
 
             <ng-container matColumnDef="email">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Correo</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Correo Electrónico</mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
             </ng-container>
 

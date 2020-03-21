@@ -51,7 +51,7 @@
                 stroke-dasharray: 89, 200;
                 stroke-dashoffset: -124px;
             }
-        } </style> <link href="../../content/main.2f4a7a6ef3f9b596c1cc.css" rel="stylesheet"><link href="../../content/global.5bdce6c8ab18cd5329fd.css" rel="stylesheet"></head> <body> <!--[if lt IE 9]>
+        } </style> </head> <body> <!--[if lt IE 9]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]--> <jhi-main> <div class="app-loading"> <div class="applogo"></div> <svg class="spinner" viewBox="25 25 50 50"> <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="1" stroke-miterlimit="10"/> </svg> </div> </jhi-main> <noscript> <h1>You must enable javascript to view this page.</h1> </noscript> <script language="javascript"> // show an error message if the app loading takes more than 5 sec
         window.onload = function () {
@@ -63,4 +63,4 @@
             if (errorElm && errorElm.style) {
                 errorElm.style.display = "block";
             }
-        } </script> <script type="text/javascript" src="../../app/polyfills.3a1177c5c81bb8298c0d.bundle.js"></script><script type="text/javascript" src="../../app/main.3a1177c5c81bb8298c0d.bundle.js"></script><script type="text/javascript" src="../../app/global.3a1177c5c81bb8298c0d.bundle.js"></script></body> </html> 
+        } </script> <script type="text/javascript" src="../../app/polyfills.bundle.js"></script><script type="text/javascript" src="../../app/main.bundle.js"></script><script type="text/javascript" src="../../app/global.bundle.js"></script></body> </html> 

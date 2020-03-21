@@ -47,11 +47,6 @@ a:hover {
   color: $dropdown-link-hover-color;
 }
 
-.mat-column-nombreClient {
-  width: 30%;
-  min-width: 30%;
-}
-
 /* ==========================================================================
 Browser Upgrade Prompt
 ========================================================================== */
@@ -242,28 +237,9 @@ table {
 //  border-bottom-style: solid;
 //  border-bottom-color: lightgrey;
 //}
-.mat-column-nombre {
-  width: 15%;
-  min-width: 15%;
-}
-
-.cdk-column-fecEmisionDoc {
-  width: 12%;
-  min-width: 12%;
-}
-
-.cdk-column-total {
-  width: 10%;
-  min-width: 10%;
-}
 
 .mat-column-acciones button {
   margin-right: 10px;
-}
-
-.mat-column-numSerie {
-  width: 21%;
-  min-width: 21%;
 }
 
 .mat-icon {

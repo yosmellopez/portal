@@ -51,6 +51,7 @@ export const MY_FORMATS = {
 @Component({
     selector: 'jhi-documento-electronico',
     templateUrl: './documento-electronico.component.html',
+    styleUrls: ['./documento-electronico.component.scss'],
     providers: [
         {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
         {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},

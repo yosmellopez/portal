@@ -1,0 +1,27 @@
+.mat-column-numSerie {
+  flex: 1.6 !important;
+}
+
+.mat-column-estadoSunat {
+  flex: 0.7 !important;
+}
+
+.mat-column-docPdf, .mat-column-docXml, .mat-column-docCdr {
+  flex: 0.4 !important;
+}
+
+.mat-column-rucClient {
+  flex: 0.8 !important;
+}
+
+.mat-column-fecEmisionDoc {
+  flex: 0.8 !important;
+}
+
+.mat-column-correo {
+  flex: 0.8 !important;
+}
+
+.mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-type {
+  padding-left: 10px !important;
+}
