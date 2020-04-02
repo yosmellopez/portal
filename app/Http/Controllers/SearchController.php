@@ -28,7 +28,7 @@ class SearchController extends Controller
      */
     public function listTipoMoneda()
     {
-        $documentos = Documento::all("monedaTransaccion");
+        $documentos = Documento::select("monedaTransaccion")->distinct()->get();
         $collection = collect($documentos);
         $tiposMoneda = $collection->map(function ($item, $key) {
             return array("monedaTransaccion" => $item->monedaTransaccion);
@@ -48,7 +48,7 @@ class SearchController extends Controller
      */
     public function listEstadoSunat()
     {
-        $documentos = Documento::all("estadoSunat");
+        $documentos = Documento::select("estadoSunat")->distinct()->get();
         $collection = collect($documentos);
         $estadosSunat = $collection->map(function ($item, $key) {
             return array("estadoSunat" => $item->estadoSunat);
@@ -69,7 +69,7 @@ class SearchController extends Controller
     public function listNumeroSerie(Request $request)
     {
         $tipoDocumento = $request->tipo;
-        $documentos = Documento::where('tipoDoc', $this->findTipoDoc($tipoDocumento))->get();
+        $documentos = Documento::select("tipoDoc")->where('tipoDoc', $this->findTipoDoc($tipoDocumento))->distinct()->get();
         $collection = collect($documentos);
         $seriesDocumentos = $collection->map(function ($item, $key) {
             $numSerie = preg_split("/[-]/", $item->numSerie);
@@ -177,11 +177,10 @@ class SearchController extends Controller
      */
     public function searchUsuarios(Request $request)
     {
-        $data = $request->all();
-        $rucClient = $data["rucClient"];
-        $nombreUsuario = $data["nombUsuario"];
-        $correo = $data["email"];
-        $rol = $data["rol"];
+        $rucClient = $request->rucClient;
+        $nombreUsuario = $request->nombUsuario;
+        $correo = $request->email;
+        $rol = $request->rol;
         $usuarios = Usuario::with('rol')
             ->when($nombreUsuario, function ($query, $nombreUsuario) {
                 return $query->where('nombUsuario', 'like', '%' . $nombreUsuario . '%');

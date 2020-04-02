@@ -109,7 +109,6 @@ class DashboardController extends Controller
         $tiposDocumento = array("factura", "boleta", "nota-credito", "nota-debito");
         $documentos = array();
         $days = array();
-//        \DB::connection()->enableQueryLog();
         foreach ($tiposDocumento as $tipo) {
             $tipoDoc = $this->findTipoDoc($tipo);
             $data = array();
@@ -129,8 +128,6 @@ class DashboardController extends Controller
                 $data[] = number_format($total, 2, '.', '');
             }
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);
-//            $queries = \DB::getQueryLog();
-//            var_dump($queries);
         }
         return response()->json(array("documentos" => $documentos, "columns" => $days), 200);
     }

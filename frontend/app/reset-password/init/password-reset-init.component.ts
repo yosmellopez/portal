@@ -21,7 +21,7 @@ export class PasswordResetInitComponent implements AfterViewInit {
 
     constructor(private passwordResetInitService: PasswordResetInitService) {
         this.resetRequestForm = new FormGroup({
-            email: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email])
+            email: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(254)])
         });
     }
 

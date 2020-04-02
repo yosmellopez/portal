@@ -89,14 +89,15 @@ class ResetPasswordController extends Controller
     public function passwordReset(Request $request)
     {
         $email = $request->email;
-        $usuario = Usuario::with("cliente")->where("email", $email)->first();
+        $usuario = Usuario::with("cliente")->where("email", $email)->orWhere("nombUsuario", $email)->first();
         if ($usuario) {
             try {
                 $token = openssl_random_pseudo_bytes(64);
                 $token = bin2hex($token);
+                $email = $usuario->email;
                 $userToken = new UsuarioToken();
                 $userToken->token = $token;
-                $userToken->email = $email;
+                $userToken->email = $usuario->email;
                 $fechaActual = date_create();
                 $fechaExpiracion = $fechaActual->modify("+1 day");
                 $userToken->token_expiration = $fechaExpiracion;
@@ -112,7 +113,7 @@ class ResetPasswordController extends Controller
             } catch (GeneralAPIException $e) {
                 return response()->json(array("error" => $e->getMessage()), 200);
             } catch (Exception $e) {
-                Artisan::call('migrate', array('--path' => 'database/migrations'));
+                return response()->json(array("error" => $e->getMessage()), 200);
             }
             return response()->json(array("correo" => $email), 200);
         } else {
