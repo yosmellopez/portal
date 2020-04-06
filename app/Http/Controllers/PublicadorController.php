@@ -28,13 +28,13 @@ class PublicadorController extends Controller
      */
     public function publicar(Request $request)
     {
-        $hasher = new Md5Hash();
-        $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
-        }
-        $mensajeCorreo = "";
         try {
+            $hasher = new Md5Hash();
+            $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+            }
+            $mensajeCorreo = "";
             $dataCliente = $request->only(['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient']);
             $clienteDb = Cliente::find($dataCliente["rucClient"]);
             if (!isset($clienteDb)) {
@@ -46,6 +46,7 @@ class PublicadorController extends Controller
                 $dataCliente["estadoCliente"] = 1;
                 $clienteDb->fill($dataCliente)->update();
             }
+            $mensajeErrorAnexo = false;
             $documentoId = DB::table('fe_docelectronico')->max('idDocumento');
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion", "emailEmisor"]);
@@ -57,9 +58,21 @@ class PublicadorController extends Controller
             $docXML = $data["docXml"];
             $docCdr = $data["docCdr"];
             $fileName = $data["numSerie"];
-            $filePdf = base64_decode($docPdf);
-            $fileXml = base64_decode($docXML);
-            $fileCdr = base64_decode($docCdr);
+            try {
+                $filePdf = base64_decode($docPdf);
+            } catch (\Exception $e) {
+                $mensajeErrorAnexo = "Error en el documento Impreso" . $e->getMessage();
+            }
+            try {
+                $fileXml = base64_decode($docXML);
+            } catch (\Exception $e) {
+                $mensajeErrorAnexo = "Error en el archivo XML" . $e->getMessage();
+            }
+            try {
+                $fileCdr = base64_decode($docCdr);
+            } catch (\Exception $e) {
+                $mensajeErrorAnexo = "Error en la Respuesta CDR." . $e->getMessage();
+            }
             $fechaEmision = explode("/", $fechaEmisionDocumento);
             $dateDirectory = join(DIRECTORY_SEPARATOR, array_reverse($fechaEmision));
             $directory = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"]));
@@ -96,6 +109,9 @@ class PublicadorController extends Controller
             }
             if ($e instanceof Exception) {
                 return response()->json(array("mensaje" => "Se registró existosamente el documento pero: " . $e->getMessage()), 201);
+            }
+            if (!$mensajeErrorAnexo) {
+                return response()->json(array("mensaje" => "Se registró existosamente el documento pero: " . $mensajeErrorAnexo), 201);
             }
             return response()->json(array("error" => $e->getMessage()), 400);
         }
