@@ -97,23 +97,23 @@ class SearchController extends Controller
         $usuario = auth()->user();
         $idRol = $usuario->idRoles;
         $data = $request->all();
-        $numSerie = $data["numSerie"];
-        $numero = $data["numero"];
-        $monedaTransaccion = $data["monedaTransaccion"];
-        $fechaEmisionInicio = $data["fechaEmisionInicio"];
+        $numSerie = isset($data["numSerie"]) ? $data["numSerie"] : null;
+        $numero = isset($data["numero"]) ? $data["numero"] : null;
+        $monedaTransaccion = isset($data["monedaTransaccion"]) ? $data["monedaTransaccion"] : null;
+        $fechaEmisionInicio = isset($data["fechaEmisionInicio"]) ? $data["fechaEmisionInicio"] : null;
         if (!isset($fechaEmisionInicio)) {
             $fechaEmisionInicio = Carbon::createFromFormat('d/m/Y', "01/01/1900");
         }
         $fechaEmisionInicio = Carbon::createFromFormat("d/m/Y", $fechaEmisionInicio);
         $fechaEmisionInicio = $fechaEmisionInicio->subDay();
-        $fechaEmisionFin = $data["fechaEmisionFin"];
+        $fechaEmisionFin = isset($data["fechaEmisionFin"]) ? $data["fechaEmisionFin"] : null;
         if (!isset($fechaEmisionFin) || empty($fechaEmisionFin) || is_null($fechaEmisionFin)) {
             $fechaEmisionFin = Carbon::now();
         }
         $fechaEmisionFin = Carbon::createFromFormat("d/m/Y", $fechaEmisionFin);
         $tipoDoc = $this->findTipoDoc($data["tipoDoc"]);
-        $rucClient = $data["rucClient"];
-        $estadoSunat = $data["estadoSunat"];
+        $rucClient = isset($data["rucClient"]) ? $data["rucClient"] : null;
+        $estadoSunat = isset($data["estadoSunat"]) ? $data["estadoSunat"] : null;
         $estadoSunat = $this->findEstado($estadoSunat);
 //        \DB::connection()->enableQueryLog();
         if ($idRol == 2 || $idRol == 3) {
@@ -207,9 +207,9 @@ class SearchController extends Controller
     public function searchClientes(Request $request)
     {
         $data = $request->all();
-        $rucClient = $data["rucClient"];
-        $nombreClient = $data["nombreClient"];
-        $correo = $data["email"];
+        $rucClient = isset($data["rucClient"]) ? $data["rucClient"] : null;
+        $nombreClient = isset($data["nombreClient"]) ? $data["nombreClient"] : null;
+        $correo = isset($data["email"]) ? $data["email"] : null;
         $usuarios = Cliente::when($nombreClient, function ($query, $nombreClient) {
             return $query->where('nombreClient', 'like', '%' . $nombreClient . '%');
         })->when($correo, function ($query, $correo) {
