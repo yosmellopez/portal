@@ -16,6 +16,7 @@ class CreateDocumentosTable extends Migration
         if (!Schema::hasTable('fe_docelectronico')) {
             Schema::create('fe_docelectronico', function (Blueprint $table) {
                 $table->bigIncrements("idDocumento");
+                $table->string("serie")->nullable();
                 $table->string("numSerie")->nullable();
                 $table->date("fecEmisionDoc")->nullable();
                 $table->string("estadoSunat")->nullable();
@@ -32,6 +33,12 @@ class CreateDocumentosTable extends Migration
                 $table->string("monedaTransaccion")->nullable();
                 $table->string("token")->nullable();
                 $table->foreign("rucClient")->references('rucClient')->on('fe_cliente');
+                $table->timestamps();
+            });
+        }
+        if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'serie')) {
+            Schema::table("fe_docelectronico", function (Blueprint $table) {
+                $table->string("serie")->nullable();
             });
         }
         if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'token')) {
@@ -47,6 +54,11 @@ class CreateDocumentosTable extends Migration
         if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'emailEmisor')) {
             Schema::table("fe_docelectronico", function (Blueprint $table) {
                 $table->string("emailEmisor", 254)->nullable();
+            });
+        }
+        if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'created_at') && !Schema::hasColumn('fe_docelectronico', 'updated_at')) {
+            Schema::table("fe_docelectronico", function (Blueprint $table) {
+                $table->timestamps();
             });
         }
     }

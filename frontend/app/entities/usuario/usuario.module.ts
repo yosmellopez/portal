@@ -8,8 +8,8 @@ import {usuarioRoute} from './usuario.route';
 import {RolPipe} from 'app/entities/usuario/rol.pipe';
 import {UsuarioWindowComponent} from 'app/entities/usuario/usuario-window/usuario-window.component';
 import {PasswordLenghtModule} from 'app/password-lenght/password-lenght.module';
-import {ClientePipe} from 'app/entities/usuario/cliente.pipe';
 import {MatSelectSearchModule} from 'app/mat-select-search/mat-select-search.module';
+import {ClientePipe} from "app/entities/cliente/cliente.pipe";
 
 const ENTITY_STATES = [...usuarioRoute];
 

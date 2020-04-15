@@ -35,6 +35,7 @@ import {MatDatepicker} from "@angular/material/datepicker";
 // @ts-ignore
 import * as moment from 'moment';
 import {Moment} from 'moment';
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 export const MY_FORMATS = {
     parse: {
@@ -56,6 +57,13 @@ export const MY_FORMATS = {
         {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
         {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed', style({height: '0px', minHeight: '0'})),
+            state('expanded', style({height: '*'})),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
 })
 export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterViewInit {
     documentoElectronicos: IDocumentoElectronico[];
@@ -63,6 +71,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     estados: Estado[] = [];
     series: Serie[] = [];
     dataSource: MatTableDataSource<IDocumentoElectronico> = new MatTableDataSource<IDocumentoElectronico>([]);
+    expandedElement: IDocumentoElectronico;
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: { rucClient: '', numSerie: '', numero: '', fechaEmisionInicio: any, fechaEmisionFin: any, estadoSunat: '', monedaTransaccion: '', tipoDoc: any };
@@ -71,7 +80,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     resultsLength = 0;
     isLoadingResults = true;
     matcher: ErrorStateMatcher = new ErrorStateMatcher();
-    displayedColumns: string[] = ['rucClient', 'numSerie', 'fecEmisionDoc', 'estadoSunat', 'total', 'docPdf', 'docXml', 'docCdr', 'correo'];
+    displayedColumns: string[] = ['expandido', 'rucClient', 'numSerie', 'fecEmisionDoc', 'estadoSunat', 'total', 'docPdf', 'docXml', 'docCdr', 'correo'];
     @ViewChild(MatSort, {static: false}) sort: MatSort;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     formulario: FormGroup;
@@ -408,4 +417,10 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             return fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear();
         }
     };
+
+    expandCollapse(event: Event, elemento: IDocumentoElectronico) {
+        event.stopPropagation();
+        this.expandedElement = this.expandedElement === elemento ? null : elemento;
+    }
+
 }

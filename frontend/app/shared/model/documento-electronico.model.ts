@@ -1,3 +1,5 @@
+import {ICliente} from "app/shared/model/cliente.model";
+
 export interface IDocumentoElectronico {
     idDocumento?: number;
     numSerie?: string;
@@ -13,6 +15,7 @@ export interface IDocumentoElectronico {
     estadoSunat?: string;
     estadoWeb?: string;
     monedaTransaccion?: string;
+    cliente?: ICliente
 }
 
 export class DocumentoElectronico implements IDocumentoElectronico {
@@ -30,7 +33,8 @@ export class DocumentoElectronico implements IDocumentoElectronico {
         public rucClient?: string,
         public estadoSunat?: string,
         public estadoWeb?: string,
-        public monedaTransaccion?: string
+        public monedaTransaccion?: string,
+        public cliente?: ICliente
     ) {
     }
 }

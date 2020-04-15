@@ -24,14 +24,16 @@ class DocumentoController extends Controller
         $order = $request->sort;
         $direction = $request->direction;
         if ($idRol == 2 || $idRol == 3) {
-            $documentos = Documento::where('tipoDoc', $this->findTipoDoc($tipo))
+            $documentos = Documento::with("cliente")
+                ->where('tipoDoc', $this->findTipoDoc($tipo))
                 ->where("rucClient", $rucCliente)
                 ->orderBy($order, $direction)
                 ->orderBy("fecEmisionDoc", "desc")
                 ->paginate($size);
             return response()->json($documentos, 200);
         } else {
-            $documentos = Documento::where('tipoDoc', $this->findTipoDoc($tipo))
+            $documentos = Documento::with("cliente")
+                ->where('tipoDoc', $this->findTipoDoc($tipo))
                 ->orderBy($order, $direction)
                 ->orderBy("fecEmisionDoc", "desc")
                 ->paginate($size);

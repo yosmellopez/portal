@@ -10,13 +10,15 @@ class Documento extends Model
     protected $table = 'fe_docelectronico';
     protected $primaryKey = 'idDocumento';
     protected $fillable = ["idDocumento", "numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr",
-        "rucClient", "monedaTransaccion", "token", "correoSecundario", "emailEmisor"];
+        "rucClient", "monedaTransaccion", "token", "correoSecundario", "emailEmisor", "created_at", "updated_at"];
+    protected $hidden = ["created_at", "updated_at"];
     protected $map = [
         'tipoDocumento' => 'tipoDoc'
     ];
     protected $casts = [
         'fecEmisionDoc' => 'datetime:Y-d-m',
     ];
+    protected $dates = ['created_at', 'updated_at'];
 
     public function cliente()
     {

@@ -20,15 +20,11 @@ class DashboardController extends Controller
         $usuario = auth()->user();
         $idRol = $usuario->idRoles;
         if ($idRol == 2 || $idRol == 3) {
-            $documentos = Documento::where("rucClient", $usuario->rucClient)->orderBy("idDocumento", "desc")->get();
-            $collection = collect($documentos);
-            $lastFiveDocuments = $collection->take(5)->toArray();
-            return response()->json($lastFiveDocuments, 200);
+            $documentos = Documento::where("rucClient", $usuario->rucClient)->orderBy("idDocumento", "desc")->limit(5)->get();
+            return response()->json($documentos, 200);
         } else {
-            $documentos = Documento::orderBy("idDocumento", "desc")->get();
-            $collection = collect($documentos);
-            $lastFiveDocuments = $collection->take(5)->toArray();
-            return response()->json($lastFiveDocuments, 200);
+            $documentos = Documento::latest()->limit(5)->get();
+            return response()->json($documentos, 200);
         }
     }
 
@@ -42,15 +38,11 @@ class DashboardController extends Controller
         $usuario = auth()->user();
         $idRol = $usuario->idRoles;
         if ($idRol == 2 || $idRol == 3) {
-            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "estadoSunat" => "V"])->orderBy("idDocumento", "desc")->get();
-            $collection = collect($documentos);
-            $lastFiveDocuments = $collection->take(5)->toArray();
-            return response()->json($lastFiveDocuments, 200);
+            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "estadoSunat" => "V"])->orderBy("idDocumento", "desc")->limit(5)->get();
+            return response()->json($documentos, 200);
         } else {
-            $documentos = Documento::where("estadoSunat", "V")->orderBy("idDocumento", "desc")->get();
-            $collection = collect($documentos);
-            $lastFiveDocuments = $collection->take(5)->toArray();
-            return response()->json($lastFiveDocuments, 200);
+            $documentos = Documento::where("estadoSunat", "V")->orderBy("idDocumento", "desc")->limit(5)->get();
+            return response()->json($documentos, 200);
         }
     }
 
@@ -64,15 +56,11 @@ class DashboardController extends Controller
         $usuario = auth()->user();
         $idRol = $usuario->idRoles;
         if ($idRol == 2 || $idRol == 3) {
-            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "estadoSunat" => "R"])->orderBy("idDocumento", "desc")->get();
-            $collection = collect($documentos);
-            $lastFiveDocuments = $collection->take(5)->toArray();
-            return response()->json($lastFiveDocuments, 200);
+            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "estadoSunat" => "R"])->orderBy("idDocumento", "desc")->limit(5)->get();
+            return response()->json($documentos, 200);
         } else {
-            $documentos = Documento::where("estadoSunat", "R")->orderBy("idDocumento", "desc")->get();
-            $collection = collect($documentos);
-            $lastFiveDocuments = $collection->take(5)->toArray();
-            return response()->json($lastFiveDocuments, 200);
+            $documentos = Documento::where("estadoSunat", "R")->orderBy("idDocumento", "desc")->limit(5)->get();
+            return response()->json($documentos, 200);
         }
     }
 
@@ -86,15 +74,11 @@ class DashboardController extends Controller
         $usuario = auth()->user();
         $idRol = $usuario->idRoles;
         if ($idRol == 2 || $idRol == 3) {
-            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "tipoTransaccion" => "B"])->orderBy("idDocumento", "desc")->get();
-            $collection = collect($documentos);
-            $lastFiveDocuments = $collection->take(5)->toArray();
-            return response()->json($lastFiveDocuments, 200);
+            $documentos = Documento::where(["rucClient" => $usuario->rucClient, "tipoTransaccion" => "B"])->orderBy("idDocumento", "desc")->limit(5)->get();
+            return response()->json($documentos, 200);
         } else {
-            $documentos = Documento::where("tipoTransaccion", "B")->orderBy("idDocumento", "desc")->get();
-            $collection = collect($documentos);
-            $lastFiveDocuments = $collection->take(5)->toArray();
-            return response()->json($lastFiveDocuments, 200);
+            $documentos = Documento::where("tipoTransaccion", "B")->orderBy("idDocumento", "desc")->limit(5)->get();
+            return response()->json($documentos, 200);
         }
     }
 

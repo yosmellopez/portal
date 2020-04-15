@@ -6,6 +6,7 @@ import {ClienteComponent} from './cliente.component';
 import {ClienteDetailComponent} from './cliente-detail.component';
 import {clienteRoute} from './cliente.route';
 import {ClienteWindowComponent} from './cliente-window/cliente-window.component';
+import {ClientePipe} from "app/entities/cliente/cliente.pipe";
 
 const ENTITY_STATES = [...clienteRoute];
 
@@ -14,9 +15,11 @@ const ENTITY_STATES = [...clienteRoute];
     declarations: [
         ClienteComponent,
         ClienteDetailComponent,
-        ClienteWindowComponent
+        ClienteWindowComponent,
+        ClientePipe
     ],
-    entryComponents: [ClienteComponent, ClienteWindowComponent]
+    entryComponents: [ClienteComponent, ClienteWindowComponent],
+    exports: [ClientePipe]
 })
 export class PortalClienteModule {
 }

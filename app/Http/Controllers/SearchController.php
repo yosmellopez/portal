@@ -69,7 +69,7 @@ class SearchController extends Controller
     public function listNumeroSerie(Request $request)
     {
         $tipoDocumento = $request->tipo;
-        $documentos = Documento::select("tipoDoc")->where('tipoDoc', $this->findTipoDoc($tipoDocumento))->distinct()->get();
+        $documentos = Documento::select("tipoDoc")->where('tipoDoc', $this->findTipoDoc($tipoDocumento))->get();
         $collection = collect($documentos);
         $seriesDocumentos = $collection->map(function ($item, $key) {
             $numSerie = preg_split("/[-]/", $item->numSerie);

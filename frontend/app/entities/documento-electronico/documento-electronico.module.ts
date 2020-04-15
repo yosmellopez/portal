@@ -7,11 +7,12 @@ import {DocumentoElectronicoDetailComponent} from './documento-electronico-detai
 import {documentoElectronicoRoute} from './documento-electronico.route';
 import {MatTableExporterModule} from 'mat-table-exporter';
 import {PDFExportModule} from '@progress/kendo-angular-pdf-export';
+import {PortalClienteModule} from "app/entities/cliente/cliente.module";
 
 const ENTITY_STATES = [...documentoElectronicoRoute];
 
 @NgModule({
-    imports: [PortalSharedModule, MatTableExporterModule, RouterModule.forChild(ENTITY_STATES), PDFExportModule],
+    imports: [PortalSharedModule, MatTableExporterModule, RouterModule.forChild(ENTITY_STATES), PDFExportModule, PortalClienteModule],
     declarations: [
         DocumentoElectronicoComponent,
         DocumentoElectronicoDetailComponent
