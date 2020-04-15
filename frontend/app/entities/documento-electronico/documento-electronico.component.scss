@@ -1,3 +1,7 @@
+.mat-column-expandido {
+  flex: 0.1 !important;
+}
+
 .mat-column-numSerie {
   flex: 1.6 !important;
 }
@@ -22,8 +26,48 @@
   flex: 0.8 !important;
 }
 
+.mat-column-total {
+  justify-content: center;
+}
+
 .mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-type {
   padding-left: 10px !important;
+}
+
+.element-row:not(.expanded-row):hover {
+  background: #f5f5f5;
+}
+
+.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.element-description {
+  padding: 5px 8px;
+  position: relative;
+  left: 45px;
+}
+
+.element-description-attribution {
+  opacity: 0.9;
+}
+
+.boton {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+}
+
+.rotate-180 {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+}
+
+.table-responsive {
+  min-height: 600px;
 }
 
 table {
@@ -66,10 +110,10 @@ tr.element-row:not(.expanded-row):active {
   line-height: normal;
 }
 
-.element-description {
-  padding: 16px;
+.block-right {
+  justify-content: flex-end;
 }
 
-.element-description-attribution {
-  opacity: 0.5;
+th.mat-header-cell {
+  text-align: center !important;
 }

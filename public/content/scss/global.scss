@@ -223,20 +223,13 @@ table {
 
 .mat-header-cell.text-center {
   text-align: center;
+  justify-content: center;
 }
 
 .text-center.mat-sort-header-container {
   text-align: center;
   justify-content: center;
 }
-
-//mat-header-cell, mat-cell {
-//  justify-content: center;
-//  flex: 0 0 200px;
-//  border-bottom-width: 1px;
-//  border-bottom-style: solid;
-//  border-bottom-color: lightgrey;
-//}
 
 .mat-column-acciones button {
   margin-right: 10px;

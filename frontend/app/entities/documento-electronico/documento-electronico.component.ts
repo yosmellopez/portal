@@ -53,16 +53,16 @@ export const MY_FORMATS = {
     selector: 'jhi-documento-electronico',
     templateUrl: './documento-electronico.component.html',
     styleUrls: ['./documento-electronico.component.scss'],
-    providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-        {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-    ],
     animations: [
         trigger('detailExpand', [
             state('collapsed', style({height: '0px', minHeight: '0'})),
             state('expanded', style({height: '*'})),
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
+    ],
+    providers: [
+        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+        {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ],
 })
 export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterViewInit {

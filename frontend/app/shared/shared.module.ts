@@ -16,12 +16,15 @@ import {SigninComponent} from "app/layouts/signin/signin.component";
 import {RouterModule} from "@angular/router";
 import {ConfigPipe} from "app/shared/config-pipe";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {ClienteDireccionPipe, ClienteEmailPipe, ClientePipe, ClienteRazonPipe} from "app/shared/util/cliente.pipe";
 
 @NgModule({
     imports: [JhMaterialModule, PortalSharedLibsModule, RouterModule, PerfectScrollbarModule],
-    declarations: [JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective, EstadoPipe, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent, ConfigPipe],
+    declarations: [JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective, EstadoPipe, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent, ConfigPipe,
+        ClientePipe, ClienteRazonPipe, ClienteEmailPipe, ClienteDireccionPipe],
     entryComponents: [JhiLoginModalComponent],
-    exports: [JhMaterialModule, PortalSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective, EstadoPipe, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, SidebarComponent, SigninComponent, ConfigPipe]
+    exports: [JhMaterialModule, PortalSharedLibsModule, JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective, EstadoPipe, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent,
+        SidebarComponent, SigninComponent, ConfigPipe, ClientePipe, ClienteRazonPipe, ClienteEmailPipe, ClienteDireccionPipe]
 })
 export class PortalSharedModule {
 }
