@@ -74,8 +74,8 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     expandedElement: IDocumentoElectronico;
     currentAccount: any;
     eventSubscriber: Subscription;
-    currentSearch: { rucClient: '', numSerie: '', numero: '', fechaEmisionInicio: any, fechaEmisionFin: any, estadoSunat: '', monedaTransaccion: '', tipoDoc: any };
-    initCurrentSearch: { rucClient: '', numSerie: '', numero: '', fechaEmisionInicio: any, fechaEmisionFin: any, estadoSunat: '', monedaTransaccion: '', tipoDoc: any };
+    currentSearch: { rucClient: '', numSerie: '', numero: '', fechaEmisionInicio: any, fechaEmisionFin: any, estadoSunat: '', monedaTransaccion: '', tipoDoc: any, razonSocial: '' };
+    initCurrentSearch: { rucClient: '', numSerie: '', numero: '', fechaEmisionInicio: any, fechaEmisionFin: any, estadoSunat: '', monedaTransaccion: '', tipoDoc: any, razonSocial: '' };
     tipoDocumento: TipoDocumento = {tipo: 'factura', title: 'Facturas'};
     resultsLength = 0;
     isLoadingResults = true;
@@ -218,7 +218,8 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
                 fechaEmisionInicio: '',
                 fechaEmisionFin: '',
                 estadoSunat: '',
-                monedaTransaccion: ''
+                monedaTransaccion: '',
+                razonSocial: ''
             });
             if (route instanceof NavigationEnd && paso) {
                 this.loadAll();
@@ -389,6 +390,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             fechaEmisionFin: new FormControl('', []),
             estadoSunat: new FormControl('', []),
             monedaTransaccion: new FormControl('', []),
+            razonSocial: new FormControl('', []),
         });
     }
 

@@ -99,6 +99,7 @@ class SearchController extends Controller
         $data = $request->all();
         $numSerie = isset($data["numSerie"]) ? $data["numSerie"] : null;
         $numero = isset($data["numero"]) ? $data["numero"] : null;
+        $razonSocial = isset($data["razonSocial"]) ? $data["razonSocial"] : null;
         $monedaTransaccion = isset($data["monedaTransaccion"]) ? $data["monedaTransaccion"] : null;
         $fechaEmisionInicio = isset($data["fechaEmisionInicio"]) ? $data["fechaEmisionInicio"] : null;
         if (!isset($fechaEmisionInicio)) {
@@ -118,7 +119,10 @@ class SearchController extends Controller
 //        \DB::connection()->enableQueryLog();
         if ($idRol == 2 || $idRol == 3) {
             $rucCliente = $usuario->rucClient;
-            $documentos = DB::table('fe_docelectronico')
+            $documentos = Documento::with('cliente')
+                ->when($razonSocial, function ($query, $razonSocial) {
+                    return $query->where('nombreClient', 'like', '%' . $razonSocial . '%');
+                })
                 ->where("rucClient", $rucCliente)
                 ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
                 ->when($numSerie, function ($query, $numSerie) {
@@ -142,7 +146,7 @@ class SearchController extends Controller
                 ->get();
             return response()->json($documentos, 200);
         } else {
-            $documentos = DB::table('fe_docelectronico')
+            $documentos = Documento::with('cliente')
                 ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
                 ->when($numSerie, function ($query, $numSerie) {
                     return $query->where('numSerie', 'like', '%' . $numSerie . '%');
@@ -165,6 +169,15 @@ class SearchController extends Controller
                 ->get();
 //            $queries = \DB::getQueryLog();
 //            var_dump($queries);
+            if (isset($razonSocial)) {
+                $collection = collect($documentos);
+                $filtered = $collection->filter(function ($value, $key) use ($razonSocial) {
+                    $nombreDatabase = strtolower($value->cliente->nombreClient);
+                    $nombreRequest = strtolower($razonSocial);
+                    return strpos($nombreDatabase, $nombreRequest) !== false;
+                });
+                $documentos = $filtered->all();
+            }
             return response()->json($documentos, 200);
         }
     }
