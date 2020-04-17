@@ -176,7 +176,11 @@ class SearchController extends Controller
                     $nombreRequest = strtolower($razonSocial);
                     return strpos($nombreDatabase, $nombreRequest) !== false;
                 });
-                $documentos = $filtered->all();
+                $documentosFiltrados = $filtered->all();
+                $documentos = array();
+                foreach ($documentosFiltrados as $documento) {
+                    $documentos[] = $documento;
+                }
             }
             return response()->json($documentos, 200);
         }
