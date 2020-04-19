@@ -70,19 +70,6 @@ class SearchController extends Controller
     {
         $tipoDocumento = $request->tipo;
         $series = Documento::select("serie")->where('tipoDoc', $this->findTipoDoc($tipoDocumento))->distinct('serie')->get();
-//        $collection = collect($documentos);
-//        $seriesDocumentos = $collection->map(function ($item, $key) {
-//            $numSerie = preg_split("/[-]/", $item->numSerie);
-//            $pos = 0;
-//            if (count($numSerie) > 2 && $numSerie[0] != "RC") {
-//                $pos = 1;
-//            }
-//            return array("serie" => $numSerie[$pos]);
-//        })->unique("serie")->toArray();
-//        $series = array();
-//        foreach ($seriesDocumentos as $serie) {
-//            $series[] = $serie;
-//        }
         return response()->json($series, 200);
     }
 
