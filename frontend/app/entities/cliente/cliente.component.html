@@ -60,50 +60,54 @@
             </form>
         </div>
     </div>
-    <div class="table-responsive">
-        <mat-table [dataSource]="dataSource" matSort matSortActive="rucClient" matSortDirection="asc" matSortDisableClear>
+    <div class="table-responsive mat-elevation-z8" style="margin-top: 3px;">
+        <div style="min-height: 660px;">
+            <mat-table [dataSource]="dataSource" matSort matSortActive="rucClient" matSortDirection="asc" matSortDisableClear>
 
-            <ng-container matColumnDef="rucClient">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> RUC Cliente</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.rucClient}} </mat-cell>
-            </ng-container>
+                <ng-container matColumnDef="rucClient">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> RUC Cliente</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.rucClient}} </mat-cell>
+                </ng-container>
 
-            <ng-container matColumnDef="nombreClient">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Razon Social / Nombre</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.nombreClient}} </mat-cell>
-            </ng-container>
+                <ng-container matColumnDef="nombreClient">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Razón Social / Nombre</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nombreClient}} </mat-cell>
+                </ng-container>
 
-            <ng-container matColumnDef="email">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Correo Electrónico</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
-            </ng-container>
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Correo Electrónico</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
+                </ng-container>
 
-            <ng-container matColumnDef="estadoCliente">
-                <mat-header-cell *matHeaderCellDef mat-sort-header class="center-block"> Estado</mat-header-cell>
-                <mat-cell *matCellDef="let element" class="center-block">
-                    <mat-chip-list class="table-actions-theme" style="padding-top: 10px;">
-                        <mat-chip [color]="element.estadoCliente == '1' ? 'primary' : 'warn'" selected (click)="cambiarEstadoUsuario(element)"> {{element.estadoCliente == '1' ? "Activo" : "Desabilitado"}}</mat-chip>
-                    </mat-chip-list>
-                </mat-cell>
-            </ng-container>
+                <ng-container matColumnDef="estadoCliente">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="center-block"> Estado</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="center-block">
+                        <mat-chip-list class="table-actions-theme" style="padding-top: 10px;">
+                            <mat-chip [color]="element.estadoCliente == '1' ? 'primary' : 'warn'" selected (click)="cambiarEstadoUsuario(element)"> {{element.estadoCliente == '1' ? "Activo" : "Desabilitado"}}</mat-chip>
+                        </mat-chip-list>
+                    </mat-cell>
+                </ng-container>
 
-            <ng-container matColumnDef="acciones">
-                <mat-header-cell *matHeaderCellDef class="center-block"> Acciones</mat-header-cell>
-                <mat-cell *matCellDef="let element" class="center-block table-actions-theme">
-                    <button mat-mini-fab color="primary" (click)="editCliente(element)"
-                            matTooltip="Editar Cliente [{{element.nombreClient}}]" matTooltipClass="apptooltip">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-mini-fab color="warn" (click)="deleteCliente(element)"
-                            matTooltip="Eliminar cliente [{{element.nombreClient}}]" matTooltipClass="apptooltip">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </mat-cell>
-            </ng-container>
+                <ng-container matColumnDef="acciones">
+                    <mat-header-cell *matHeaderCellDef class="center-block"> Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="center-block table-actions-theme">
+                        <button mat-mini-fab color="primary" (click)="editCliente(element)"
+                                matTooltip="Editar Cliente [{{element.nombreClient}}]" matTooltipClass="apptooltip">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="warn" (click)="deleteCliente(element)"
+                                matTooltip="Eliminar cliente [{{element.nombreClient}}]" matTooltipClass="apptooltip">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator [length]="resultsLength" [pageSize]="15" [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+        <div>
+            <mat-paginator [length]="resultsLength" [pageSize]="15" [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+        </div>
     </div>
 </div>

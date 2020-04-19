@@ -82,6 +82,10 @@ tr.element-row:not(.expanded-row):hover {
   background: whitesmoke;
 }
 
+tr.element-row.danger-row:hover {
+  background-color: red;
+}
+
 tr.element-row:not(.expanded-row):active {
   background: #efefef;
 }
