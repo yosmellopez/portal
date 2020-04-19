@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Documento extends Model
 {
-    public $timestamps = false;
     protected $table = 'fe_docelectronico';
     protected $primaryKey = 'idDocumento';
     protected $fillable = ["idDocumento", "numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr",
