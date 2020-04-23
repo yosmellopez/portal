@@ -28,7 +28,7 @@ import {MatTableExporterModule} from 'mat-table-exporter';
 import {MensajeModule} from 'app/mensaje/mensaje.module';
 import {MatSelectModule} from '@angular/material/select';
 import {ChartsModule} from 'ng2-charts';
-import localePe from '@angular/common/locales/es-PE';
+import localeMx from '@angular/common/locales/es-MX';
 import {registerLocaleData} from '@angular/common';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {PDFExportModule} from '@progress/kendo-angular-pdf-export';
@@ -66,7 +66,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
-registerLocaleData(localePe, 'es-PE');
+registerLocaleData(localeMx, 'es-MX');
 
 const MY_NATIVE_DATE_FORMATS = {
     parse: {
@@ -143,8 +143,8 @@ const MY_NATIVE_DATE_FORMATS = {
         },
         {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
         {provide: MAT_DATE_FORMATS, useValue: MY_NATIVE_DATE_FORMATS},
-        {provide: LOCALE_ID, useValue: 'en-GB'},
-        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+        {provide: LOCALE_ID, useValue: 'es-MX'},
+        {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
         {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl()},
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
@@ -159,8 +159,8 @@ const MY_NATIVE_DATE_FORMATS = {
 })
 export class PortalAppModule {
     constructor(private dateAdapter: DateAdapter<Date>, private momentDateAdapter: DateAdapter<Moment>) {
-        dateAdapter.setLocale('en-GB');
-        momentDateAdapter.setLocale('en-GB');
+        dateAdapter.setLocale('es-MX');
+        momentDateAdapter.setLocale('es-MX');
     }
 }
 
