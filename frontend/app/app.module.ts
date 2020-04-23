@@ -159,8 +159,8 @@ const MY_NATIVE_DATE_FORMATS = {
 })
 export class PortalAppModule {
     constructor(private dateAdapter: DateAdapter<Date>, private momentDateAdapter: DateAdapter<Moment>) {
-        dateAdapter.setLocale('es-PE');
-        momentDateAdapter.setLocale('es-PE');
+        dateAdapter.setLocale('en-GB');
+        momentDateAdapter.setLocale('en-GB');
     }
 }
 
