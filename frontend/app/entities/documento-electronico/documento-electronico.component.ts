@@ -105,8 +105,8 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         this.downloadStatus = new EventEmitter<ProgressStatus>();
         this.createForm();
         this.currentSearch = this.initCurrentSearch;
-        dateAdapter.setLocale('it');
-        momentDateAdapter.setLocale('it');
+        dateAdapter.setLocale('es');
+        momentDateAdapter.setLocale('es');
     }
 
     loadAll() {
