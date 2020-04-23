@@ -99,11 +99,14 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         protected route: Router,
         protected accountService: AccountService,
         protected dialog: MatDialog,
-        protected snackBar: MatSnackBar
+        protected snackBar: MatSnackBar,
+        private dateAdapter: DateAdapter<Date>, private momentDateAdapter: DateAdapter<Moment>
     ) {
         this.downloadStatus = new EventEmitter<ProgressStatus>();
         this.createForm();
         this.currentSearch = this.initCurrentSearch;
+        dateAdapter.setLocale('it');
+        momentDateAdapter.setLocale('it');
     }
 
     loadAll() {
