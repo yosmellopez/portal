@@ -143,8 +143,8 @@ const MY_NATIVE_DATE_FORMATS = {
         },
         {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
         {provide: MAT_DATE_FORMATS, useValue: MY_NATIVE_DATE_FORMATS},
-        {provide: LOCALE_ID, useValue: 'es-PE'},
-        {provide: MAT_DATE_LOCALE, useValue: 'es-PE'},
+        {provide: LOCALE_ID, useValue: 'en-GB'},
+        {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
         {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl()},
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
