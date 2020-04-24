@@ -16,11 +16,11 @@ const spanishRangeLabel = (page: number, pageSize: number, length: number) => {
 
 export function getSpanishPaginatorIntl() {
     const paginatorIntl = new MatPaginatorIntl();
-    paginatorIntl.itemsPerPageLabel = '<span class="apptooltip">Registros por página:</span>';
-    paginatorIntl.nextPageLabel = '<span class="apptooltip">Siguiente página</span>';
-    paginatorIntl.previousPageLabel = '<span class="apptooltip">Página anterior</span>';
-    paginatorIntl.firstPageLabel = '<span class="apptooltip">Primera página</span>';
-    paginatorIntl.lastPageLabel = '<span class="apptooltip">Última página</span>';
+    paginatorIntl.itemsPerPageLabel = 'Registros por página:';
+    paginatorIntl.nextPageLabel = 'Siguiente página';
+    paginatorIntl.previousPageLabel = 'Página anterior';
+    paginatorIntl.firstPageLabel = 'Primera página';
+    paginatorIntl.lastPageLabel = 'Última página';
     paginatorIntl.getRangeLabel = spanishRangeLabel;
     return paginatorIntl;
 }
