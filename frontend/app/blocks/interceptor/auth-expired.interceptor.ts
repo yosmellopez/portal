@@ -4,10 +4,14 @@ import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {LoginService} from 'app/core/login/login.service';
 import {Router} from "@angular/router";
+import {AccountService} from "app/core/auth/account.service";
 
 @Injectable({providedIn: 'root'})
 export class AuthExpiredInterceptor implements HttpInterceptor {
-    constructor(private loginService: LoginService, private router: Router) {
+    constructor(
+        private loginService: LoginService,
+        private accountService: AccountService,
+        private router: Router) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -20,8 +24,10 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
                         if (err.status !== 401) {
                             return;
                         }
-                        this.loginService.logout();
-                        this.router.navigate(['login']);
+                        if (this.accountService.isAuthenticated()) {
+                            this.loginService.logout();
+                            this.router.navigate(['login']);
+                        }
                     }
                 }
             )
