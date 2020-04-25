@@ -3,10 +3,11 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {LoginService} from 'app/core/login/login.service';
+import {Router} from "@angular/router";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthExpiredInterceptor implements HttpInterceptor {
-    constructor(private loginService: LoginService) {
+    constructor(private loginService: LoginService, private router: Router) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -16,9 +17,11 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
                 },
                 (err: any) => {
                     if (err instanceof HttpErrorResponse) {
-                        if (err.status === 401) {
-                            this.loginService.logout();
+                        if (err.status !== 401) {
+                            return;
                         }
+                        this.loginService.logout();
+                        this.router.navigate(['login']);
                     }
                 }
             )

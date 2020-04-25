@@ -146,6 +146,7 @@ const MY_NATIVE_DATE_FORMATS = {
         {provide: LOCALE_ID, useValue: 'es-MX'},
         {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
         {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl()},
+        {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl()},
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
