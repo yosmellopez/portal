@@ -8,7 +8,7 @@ import {DocumentoElectronico, IDocumentoElectronico, TipoDocumento} from 'app/sh
 import {AccountService} from 'app/core/auth/account.service';
 import {DocumentoElectronicoService} from './documento-electronico.service';
 import {DateAdapter, ErrorStateMatcher, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormControl, FormGroup} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
@@ -60,10 +60,11 @@ export const MY_FORMATS = {
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
     ],
-    providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-        {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-    ],
+    providers: [{
+        provide: DateAdapter,
+        useClass: MomentDateAdapter,
+        deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    }, {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}]
 })
 export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterViewInit {
     documentoElectronicos: IDocumentoElectronico[];
