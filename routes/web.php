@@ -36,7 +36,13 @@ Route::get('/mailable', function () {
     $documento = Documento::find(1);
     return new DocumentoMail($documento);
 });
-
+Route::get('locale', function () {
+    return \App::getLocale();
+});
+Route::get('locale/{locale}', function ($locale) {
+    \Session::put('locale', $locale);
+    return redirect()->back();
+});
 function runMigrations()
 {
     try {
