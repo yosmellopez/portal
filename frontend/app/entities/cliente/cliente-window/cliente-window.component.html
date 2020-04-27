@@ -32,7 +32,7 @@
         </mat-form-field>
     </div>
     <div mat-dialog-actions class="boton-theme" align="end">
-        <button type="submit" mat-raised-button cdkFocusInitial color="primary">
+        <button type="submit" mat-raised-button cdkFocusInitial color="primary" [disabled]="!formulario.valid">
             <mat-icon>check_circle</mat-icon>
             {{nuevo ? 'Guardar' : 'Modificar'}}
         </button>
