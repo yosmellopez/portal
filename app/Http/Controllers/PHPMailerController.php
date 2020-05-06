@@ -261,8 +261,8 @@ class PHPMailerController extends Controller
                 return "Comprobante Retencion";
             case "09":
                 return "Guía Remisión";
-//            case "03":
-//                return "Resumen Boleta";
+            case "RC":
+                return "Resumen Diario de Boleta";
             default:
                 return "01";
         }
