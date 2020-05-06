@@ -111,6 +111,7 @@ class DocumentoMail extends Mailable
     {
         switch ($estado) {
             case 'R':
+            case 'V':
                 return 'Aprobado';
             case 'Z':
                 return 'Rechazado';
