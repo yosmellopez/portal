@@ -272,6 +272,7 @@ class PHPMailerController extends Controller
     {
         switch ($estado) {
             case 'R':
+            case 'V':
                 return 'Aprobado';
             case 'Z':
                 return 'Rechazado';
