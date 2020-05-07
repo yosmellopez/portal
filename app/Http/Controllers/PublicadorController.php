@@ -98,10 +98,10 @@ class PublicadorController extends Controller
             $usePHPMailer = config('app.use_phpmailer');
             if ($usePHPMailer) {
                 $documentoController = new PHPMailerController();
-                $documentoController->sendEmail($data["idDocumento"]);
+                return $documentoController->sendEmail($data["idDocumento"]);
             } else {
                 $documentoController = new EmailController();
-                $documentoController->sendEmail($data["idDocumento"]);
+                return $documentoController->sendEmail($data["idDocumento"]);
             }
         } catch (\Exception $e) {
             if ($e instanceof GeneralAPIException) {
@@ -115,7 +115,6 @@ class PublicadorController extends Controller
             }
             return response()->json(array("error" => $e->getMessage()), 400);
         }
-        return response()->json(array("mensaje" => "Documento [" . $data["numSerie"] . "] registrado correctamente. " . $mensajeCorreo), 201);
     }
 
     public function registerUser(Cliente $cliente, $rucClient)

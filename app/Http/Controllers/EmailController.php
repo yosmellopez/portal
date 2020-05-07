@@ -32,12 +32,14 @@ class EmailController extends Controller
             $documento = Documento::find($idDocumento);
             $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
             try {
+                $emailEmisor = $documento->emailEmisor;
+                $emailSecundario = $documento->correoSecundario;
                 $correo = $documento->cliente->email;
                 Mail::to($correo)->send(new DocumentoMail($documento, $userEmail));
                 if (Mail::failures()) {
-                    return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
+                    return response()->json(array("message" => "Documento [" . $documento->numSerie . "] registrado correctamente.Pero no se pudo enviar el correo al cliente, por favor intente de nuevo."), 201);
                 } else {
-                    return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
+                    return response()->json(array("message" => "Documento [" . $documento->numSerie . "] registrado correctamente. Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . "," . $emailSecundario . "]"), 201);
                 }
             } catch (\Exception $e) {
                 $code = $e->getCode();

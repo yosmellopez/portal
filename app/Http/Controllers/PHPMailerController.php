@@ -93,11 +93,11 @@ class PHPMailerController extends Controller
             $mail->addAttachment($docCdr, $documento->numSerie . '.zip', PHPMailer::ENCODING_BASE64, 'application/zip');
             $mail->isSendmail();
             $mail->send();
-            return response()->json(array("message" => "Se ha enviado el correo exitosamente al cliente.", "rutas" => $rutas, "correo" => $documento->cliente->email));
+            return response()->json(array("message" => "Documento [" . $documento->numSerie . "] registrado correctamente. Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . "," . $emailSecundario . "]"), 201);
         } catch (Exception $e) {
-            return response()->json(array("error" => $e->errorMessage()), 500);
+            throw $e;
         } catch (\Exception $e) {
-            return response()->json(array("error" => $e->getMessage()), 500);
+            throw $e;
         }
     }
 
