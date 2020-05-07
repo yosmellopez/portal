@@ -34,14 +34,13 @@ class PublicadorController extends Controller
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
             }
-            $mensajeCorreo = "";
             $dataCliente = $request->only(['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient']);
             $clienteDb = Cliente::find($dataCliente["rucClient"]);
             if (!isset($clienteDb)) {
                 $cliente = new Cliente();
                 $dataCliente["estadoCliente"] = 1;
                 $cliente->fill($dataCliente)->save();
-                $mensajeCorreo = $this->registerUser($cliente, $dataCliente["rucClient"]);
+                $this->registerUser($cliente, $dataCliente["rucClient"]);
             } else {
                 $dataCliente["estadoCliente"] = 1;
                 $clienteDb->fill($dataCliente)->update();
