@@ -105,17 +105,17 @@ class PublicadorController extends Controller
             }
         } catch (\Exception $e) {
             if ($e instanceof GeneralAPIException) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento pero: " . $e->getMessage()), 201);
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $e->getMessage()), 201);
             }
-            if ($e instanceof Exception) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento pero: " . $e->getMessage()), 201);
+            if ($e instanceof \Exception) {
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $e->getMessage()), 201);
             }
             if (!$mensajeErrorAnexo) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento pero: " . $mensajeErrorAnexo), 201);
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $mensajeErrorAnexo), 201);
             }
             return response()->json(array("error" => $e->getMessage()), 400);
         }
-        return response()->json(array("mensaje" => "Documento [" . $data["numSerie"] . "] registrado correctamente." . $mensajeCorreo), 201);
+        return response()->json(array("mensaje" => "Documento [" . $data["numSerie"] . "] registrado correctamente. " . $mensajeCorreo), 201);
     }
 
     public function registerUser(Cliente $cliente, $rucClient)
