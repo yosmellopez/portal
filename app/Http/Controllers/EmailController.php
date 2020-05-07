@@ -37,9 +37,9 @@ class EmailController extends Controller
                 $correo = $documento->cliente->email;
                 Mail::to($correo)->send(new DocumentoMail($documento, $userEmail));
                 if (Mail::failures()) {
-                    return response()->json(array("message" => "Documento [" . $documento->numSerie . "] registrado correctamente.Pero no se pudo enviar el correo al cliente, por favor intente de nuevo."), 201);
+                    return response()->json(array("mensaje" => "Documento [" . $documento->numSerie . "] registrado correctamente.Pero no se pudo enviar el correo al cliente, por favor intente de nuevo."), 201);
                 } else {
-                    return response()->json(array("message" => "Documento [" . $documento->numSerie . "] registrado correctamente. Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . "," . $emailSecundario . "]"), 201);
+                    return response()->json(array("mensaje" => "Documento [" . $documento->numSerie . "] registrado correctamente. Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . "," . $emailSecundario . "]"), 201);
                 }
             } catch (\Exception $e) {
                 $code = $e->getCode();
@@ -57,9 +57,9 @@ class EmailController extends Controller
         try {
             Mail::to($usuario->email)->send(new ResetPassword($usuario, $usuarioToken, $userEmail));
             if (Mail::failures()) {
-                return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
+                return response()->json(array("mensaje" => "No se ha enviado el correo, por favor intente de nuevo."));
             } else {
-                return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
+                return response()->json(array("mensaje" => "Se ha enviado el correo exitosamente."));
             }
         } catch (\Exception $e) {
             $mensaje = $e->getMessage();
@@ -77,9 +77,9 @@ class EmailController extends Controller
         try {
             Mail::to($usuario->email)->send(new RegisterUser($usuario, $userEmail, $password));
             if (Mail::failures()) {
-                return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
+                return response()->json(array("mensaje" => "No se ha enviado el correo, por favor intente de nuevo."));
             } else {
-                return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
+                return response()->json(array("mensaje" => "Se ha enviado el correo exitosamente."));
             }
         } catch (\Exception $e) {
             $mensaje = $e->getMessage();
@@ -97,9 +97,9 @@ class EmailController extends Controller
         try {
             Mail::to($usuario->email)->send(new RestorePassword($usuario, $userEmail, $password));
             if (Mail::failures()) {
-                return response()->json(array("message" => "No se ha enviado el correo, por favor intente de nuevo."));
+                return response()->json(array("mensaje" => "No se ha enviado el correo, por favor intente de nuevo."));
             } else {
-                return response()->json(array("message" => "Se ha enviado el correo exitosamente."));
+                return response()->json(array("mensaje" => "Se ha enviado el correo exitosamente."));
             }
         } catch (\Exception $e) {
             $mensaje = $e->getMessage();

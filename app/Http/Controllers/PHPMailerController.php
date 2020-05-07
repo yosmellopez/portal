@@ -93,7 +93,7 @@ class PHPMailerController extends Controller
             $mail->addAttachment($docCdr, $documento->numSerie . '.zip', PHPMailer::ENCODING_BASE64, 'application/zip');
             $mail->isSendmail();
             $mail->send();
-            return response()->json(array("message" => "Documento [" . $documento->numSerie . "] registrado correctamente. Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . "," . $emailSecundario . "]"), 201);
+            return response()->json(array("mensaje" => "Documento [" . $documento->numSerie . "] registrado correctamente. Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . "," . $emailSecundario . "]"), 201);
         } catch (Exception $e) {
             throw $e;
         } catch (\Exception $e) {
@@ -143,7 +143,7 @@ class PHPMailerController extends Controller
 
             $mail->isSendmail();
             $mail->send();
-            return response()->json(array("message" => "Se ha enviado el correo exitosamente a: " . $userEmail));
+            return response()->json(array("mensaje" => "Se ha enviado el correo exitosamente a: " . $userEmail));
         } catch (Exception $e) {
             return response()->json(array("error" => $e->errorMessage()), 500);
         }
@@ -189,7 +189,7 @@ class PHPMailerController extends Controller
 
             $mail->isSendmail();
             $mail->send();
-            return response()->json(array("message" => "Se ha enviado el correo exitosamente a: " . $userEmail));
+            return response()->json(array("mensaje" => "Se ha enviado el correo exitosamente a: " . $userEmail));
         } catch (Exception $e) {
             return response()->json(array("error" => $e->errorMessage()), 500);
         }
@@ -238,7 +238,7 @@ class PHPMailerController extends Controller
 
             $mail->isSendmail();
             $mail->send();
-            return response()->json(array("message" => "Se ha enviado el correo exitosamente a: " . $email));
+            return response()->json(array("mensaje" => "Se ha enviado el correo exitosamente a: " . $email));
         } catch (Exception $e) {
             return response()->json(array("error" => $e->errorMessage()), 500);
         }
