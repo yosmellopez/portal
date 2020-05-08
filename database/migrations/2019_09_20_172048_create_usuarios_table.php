@@ -25,15 +25,6 @@ class CreateUsuariosTable extends Migration
                 $table->integer("idRoles");
                 $table->foreign("idRoles")->references('idRoles')->on('fe_roles');
             });
-            DB::table('fe_usuario')->insert([
-                "idUsuario" => 1,
-                "email" => "vaguilar@vsperu.com",
-                "nombUsuario" => "admin",
-                "claveUsuario" => "43f6892b19a725cbb5c4048f88337c79",
-                "estadoUsuario" => "1",
-                "rucClient" => "20510910517",
-                "idRoles" => 1
-            ]);
         }
     }
 

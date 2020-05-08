@@ -26,15 +26,6 @@ class CreateClientesTable extends Migration
                 $table->timestamp("updated_at")->nullable();
                 $table->softDeletes();
             });
-            DB::table('fe_cliente')->insert([
-                "rucClient" => "20510910517",
-                "email" => "vaguilar@vsperu.com",
-                "direccionClient" => "Av. Jose Pardo Nro. 575 Dpto. 301 (Alt Cdra 7 Av Pardo Alt de Plaza Vea), Miraflores, Lima, Perú",
-                "estadoCliente" => "1",
-                "nombreClient" => "VENTURA SOLUCIONES S.A.C.",
-                "rutaImagenClient" => null,
-                "updated_at" => null
-            ]);
         }
         if (Schema::hasTable('fe_cliente') && !Schema::hasColumn('fe_cliente', 'updated_at')) {
             Schema::table("fe_cliente", function (Blueprint $table) {

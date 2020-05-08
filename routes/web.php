@@ -47,6 +47,7 @@ function runMigrations()
 {
     try {
         Artisan::call('migrate', array('--path' => 'database/migrations'));
+        Artisan::call('db:seed');
     } catch (Exception $e) {
         var_dump($e->getMessage());
     }
