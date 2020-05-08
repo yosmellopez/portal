@@ -15,7 +15,7 @@ export class EstadoPipe implements PipeTransform {
             case 'L':
                 return 'Leido';
             case 'P':
-                return 'Publicado';
+                return 'Baja Aprobada';
         }
     }
 }
