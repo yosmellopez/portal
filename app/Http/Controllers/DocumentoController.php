@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Entity\Documento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DocumentoController extends Controller
 {
@@ -135,5 +136,15 @@ class DocumentoController extends Controller
             default:
                 return "01";
         }
+    }
+
+    public function ejemplo()
+    {
+        $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna)"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
+        foreach ($result as $key => $item) {
+            return response()->json(array("ultimoValor" => $item->last_id_from_table), 200);
+        }
+//        $documentoId= $result[0]["last_id_from_table"];
+//        $documentoId = DB::select(" last_id_from_table('fe_docelectronico','\"idDocumento\"')");
     }
 }

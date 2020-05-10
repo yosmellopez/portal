@@ -46,10 +46,9 @@ class PublicadorController extends Controller
                 $clienteDb->fill($dataCliente)->update();
             }
             $mensajeErrorAnexo = false;
-            $documentoId = DB::table('fe_docelectronico')->max('idDocumento');
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion", "emailEmisor", "serie"]);
-            $data["idDocumento"] = $documentoId + 1;
+            $data["idDocumento"] = $this->getLastIdFromTable();
             $data["estadoWeb"] = "P";
             $fechaEmisionDocumento = $data["fecEmisionDoc"];
             $data["fecEmisionDoc"] = Carbon::createFromFormat("d/m/Y", $data["fecEmisionDoc"]);
@@ -114,6 +113,15 @@ class PublicadorController extends Controller
             }
             return response()->json(array("error" => $e->getMessage()), 400);
         }
+    }
+
+    private function getLastIdFromTable()
+    {
+        $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna)"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
+        foreach ($result as $key => $item) {
+            return $item->last_id_from_table;
+        }
+        return 0;
     }
 
     public function registerUser(Cliente $cliente, $rucClient)
