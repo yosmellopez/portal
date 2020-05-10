@@ -1,6 +1,5 @@
 <?php
 
-use App\Entity\Cliente;
 use App\Entity\Usuario;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -15,15 +14,6 @@ class UsuarioTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        Cliente::create([
-            "rucClient" => "20510910517",
-            "email" => "vaguilar@vsperu.com",
-            "direccionClient" => "Av. Jose Pardo Nro. 575 Dpto. 301 (Alt Cdra 7 Av Pardo Alt de Plaza Vea), Miraflores, Lima, Perú",
-            "estadoCliente" => "1",
-            "nombreClient" => "VENTURA SOLUCIONES S.A.C.",
-            "rutaImagenClient" => null,
-            "updated_at" => null
-        ]);
         Usuario::create([
             "idUsuario" => 1,
             "email" => "vaguilar@vsperu.com",

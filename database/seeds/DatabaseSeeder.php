@@ -1,5 +1,7 @@
 <?php
 
+use App\Entity\Cliente;
+use App\Entity\Usuario;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UsuarioTableSeeder::class);
+        if (!Cliente::where('rucClient', '=', "20510910517")->exists()) {
+            $this->call(ClienteTableSeeder::class);
+        }
+
+        if (!Usuario::where('idUsuario', '=', 1)->exists()) {
+            $this->call(UsuarioTableSeeder::class);
+        }
     }
 }
