@@ -140,11 +140,17 @@ class DocumentoController extends Controller
 
     public function ejemplo()
     {
-        $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna)"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
+        DB::connection()->enableQueryLog();
+        if (env('DB_CONNECTION', 'pgsql') == "pgsql") {
+            $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna) as last_id_from_table"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
+        } else {
+            $result = DB::select(DB::raw("select last_id_from_table() as last_id_from_table"));
+        }
         foreach ($result as $key => $item) {
             return response()->json(array("ultimoValor" => $item->last_id_from_table), 200);
         }
-//        $documentoId= $result[0]["last_id_from_table"];
-//        $documentoId = DB::select(" last_id_from_table('fe_docelectronico','\"idDocumento\"')");
+        $queries = DB::getQueryLog();
+        var_dump($queries);
+        return response()->json(array("ultimoValor" => 0), 200);
     }
 }

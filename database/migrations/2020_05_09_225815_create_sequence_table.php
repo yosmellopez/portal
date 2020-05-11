@@ -46,6 +46,33 @@ class CreateSequenceTable extends Migration
                         LANGUAGE plpgsql VOLATILE COST 100;";
                 DB::unprepared($procedure);
             }
+            if (env('DB_CONNECTION', 'mysql') == "mysql") {
+                DB::unprepared("SET GLOBAL log_bin_trust_function_creators = 1;");
+                DB::unprepared("DROP FUNCTION IF EXISTS last_id_from_table");
+                $procedure = "CREATE FUNCTION last_id_from_table() RETURNS BIGINT
+                    BEGIN
+                        DECLARE ultimo_id BIGINT;
+                        DECLARE last_pkey BIGINT;
+                        SET ultimo_id = 0;
+                        SET last_pkey = 0;
+                        SELECT valor INTO ultimo_id FROM fe_sequence WHERE sequence = 'fe_docelectronico';
+                        IF ultimo_id <> 0 THEN
+                            SET ultimo_id = ultimo_id + 1;
+                            UPDATE fe_sequence SET valor = ultimo_id WHERE sequence = 'fe_docelectronico';
+                        ELSE
+                            SELECT max(idDocumento) INTO last_pkey FROM fe_docelectronico;
+                            IF last_pkey <> 0 THEN
+                                SET ultimo_id = last_pkey + 1;
+                            ELSE
+                                SET ultimo_id = 1;
+                            END IF;
+                            SET ultimo_id = last_pkey + 1;
+                            INSERT INTO fe_sequence(sequence, valor) VALUES ('fe_docelectronico', ultimo_id);
+                        END IF;
+                        RETURN ultimo_id;
+                    END;";
+                DB::unprepared($procedure);
+            }
         }
     }
 

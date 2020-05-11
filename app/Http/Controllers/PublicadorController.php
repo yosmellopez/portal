@@ -117,7 +117,11 @@ class PublicadorController extends Controller
 
     private function getLastIdFromTable()
     {
-        $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna)"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
+        if (env('DB_CONNECTION', 'mysql') == "pgsql") {
+            $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna) as last_id_from_table"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
+        } else {
+            $result = DB::select(DB::raw("select last_id_from_table() as last_id_from_table"));
+        }
         foreach ($result as $key => $item) {
             return $item->last_id_from_table;
         }
