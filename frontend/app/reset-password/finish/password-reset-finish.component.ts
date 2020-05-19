@@ -23,6 +23,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     modalRef: NgbModalRef;
     key: string;
     message: string;
+    usuario: string;
     isLoadingResults = false;
     @ViewChildren('#newPassword') passwordInput;
     passwordForm = this.fb.group({
@@ -49,6 +50,11 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
                     map((res: HttpResponse<ResetResponse>) => res.body))
                 .subscribe((respuesta: ResetResponse) => {
                     this.isLoadingResults = false;
+                    if (this.isNonEmptyString(respuesta.usuario)) {
+                        this.usuario = "[" + respuesta.usuario + "]";
+                    } else {
+                        this.usuario = "";
+                    }
                     if (respuesta.success) {
                         this.error = null;
                         this.keyMissing = false;
@@ -60,6 +66,10 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
                     }
                 });
         });
+    }
+
+    isNonEmptyString(str: string) {
+        return str && str.length > 0;
     }
 
     ngAfterViewInit() {

@@ -52,11 +52,12 @@ class ResetPasswordController extends Controller
             $tokenExpiration = date_create($usuarioToken->token_expiration);
             $fechaActual = date_create();
             if ($fechaActual < $tokenExpiration) {
-                return response()->json(array("success" => true, "msg" => "El token es valido"), 200);
+                return response()->json(array("success" => true, "msg" => "El token es valido", "usuario" => $usuarioToken->usuario), 200);
             }
-            return response()->json(array("success" => false, "msg" => "El token proporcionado ha expirado.", "fechaActual" => $fechaActual, "fechaExpiracion" => $tokenExpiration), 200);
+            return response()->json(array("success" => false, "msg" => "El token proporcionado ha expirado.", "fechaActual" => $fechaActual,
+                "fechaExpiracion" => $tokenExpiration, "usuario" => $usuarioToken->usuario), 200);
         }
-        return response()->json(array("success" => false, "msg" => "El token proporcionado no existe."), 200);
+        return response()->json(array("success" => false, "msg" => "El token proporcionado no existe.", "usuario" => ""), 200);
     }
 
     public function changePassword(Request $request)
@@ -68,7 +69,7 @@ class ResetPasswordController extends Controller
             $tokenExpiration = Carbon::createFromTimeString($usuarioToken->token_expiration);
             $fechaActual = Carbon::now();
             if ($fechaActual < $tokenExpiration) {
-                $usuarioDb = Usuario::where("email", $usuarioToken->email)->first();
+                $usuarioDb = Usuario::where([["email", "=", $usuarioToken->email], ["nombUsuario", "=", $usuarioToken->usuario]])->first();
                 if (isset($usuarioDb)) {
                     $data = array();
                     if (isset($newPassword)) {
@@ -98,6 +99,7 @@ class ResetPasswordController extends Controller
                 $userToken = new UsuarioToken();
                 $userToken->token = $token;
                 $userToken->email = $usuario->email;
+                $userToken->usuario = $usuario->nombUsuario;
                 $fechaActual = date_create();
                 $fechaExpiracion = $fechaActual->modify("+1 day");
                 $userToken->token_expiration = $fechaExpiracion;

@@ -9,6 +9,6 @@ class UsuarioToken extends Model
 {
     protected $table = 'fe_usuario_token';
     protected $primaryKey = 'id';
-    protected $fillable = ['email', 'token', 'token_expiration'];
+    protected $fillable = ['email', 'token', 'usuario', 'token_expiration'];
     public $timestamps = false;
 }

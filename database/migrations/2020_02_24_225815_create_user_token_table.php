@@ -19,6 +19,8 @@ class CreateUserTokenTable extends Migration
                 $table->string('token', 512)
                     ->unique('token_unique')
                     ->nullable();
+                $table->string('usuario', 255)
+                    ->nullable();
                 $table->string('email', 254)
                     ->nullable();
                 $table->dateTime("token_expiration");

@@ -25,4 +25,5 @@ export class Usuario implements IUsuario {
 export interface ResetResponse {
     success: boolean;
     msg: string;
+    usuario: string;
 }
