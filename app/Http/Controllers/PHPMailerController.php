@@ -71,6 +71,7 @@ class PHPMailerController extends Controller
                     $mail->addCC($correo);
                 }
             }
+            var_dump(public_path());
             $appLogoPath = public_path() . config('app.logo');
             $appOkPath = public_path() . '/content/images/okok.png';
             $appFacebookPath = public_path() . '/content/images/facebook2x.png';
