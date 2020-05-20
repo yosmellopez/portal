@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Entity\Documento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDO;
 
 class DocumentoController extends Controller
 {
@@ -144,6 +145,9 @@ class DocumentoController extends Controller
         if (env('DB_CONNECTION', 'pgsql') == "pgsql") {
             $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna) as last_id_from_table"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
         } else {
+            $pdo = DB::connection()->getPdo();
+            var_dump($pdo);
+            $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, TRUE);
             $result = DB::select(DB::raw("select last_id_from_table() as last_id_from_table"));
         }
         foreach ($result as $key => $item) {

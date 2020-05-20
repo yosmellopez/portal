@@ -120,6 +120,8 @@ class PublicadorController extends Controller
         if (env('DB_CONNECTION', 'mysql') == "pgsql") {
             $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna) as last_id_from_table"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
         } else {
+            $pdo = DB::connection()->getPdo();
+            $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, TRUE);
             $result = DB::select(DB::raw("select last_id_from_table() as last_id_from_table"));
         }
         foreach ($result as $key => $item) {
