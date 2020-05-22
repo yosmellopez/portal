@@ -70,7 +70,6 @@ class CreateSequenceTable extends Migration
                             ELSE
                                 SET `ultimo_id` = 1;
                             END IF;
-                            SET `ultimo_id` = `last_pkey` + 1;
                             INSERT INTO fe_sequence(sequence, valor) VALUES ('fe_docelectronico', `ultimo_id`);
                         END IF;
                         RETURN `ultimo_id`;
@@ -95,7 +94,6 @@ class CreateSequenceTable extends Migration
                             ELSE
                                 SET `ultimo_id` = 1;
                             END IF;
-                            SET `ultimo_id` = `last_pkey` + 1;
                             INSERT INTO fe_sequence(sequence, valor) VALUES ('fe_docelectronico', `ultimo_id`);
                         END IF;
                         RETURN `ultimo_id`;

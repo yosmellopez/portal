@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Matriphe\Md5Hash\Md5Hash;
-use PHPMailer\PHPMailer\Exception;
+use PDO;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PublicadorController extends Controller

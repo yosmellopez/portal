@@ -141,20 +141,19 @@ class DocumentoController extends Controller
 
     public function ejemplo()
     {
-        DB::connection()->enableQueryLog();
+//        DB::connection()->enableQueryLog();
         if (env('DB_CONNECTION', 'pgsql') == "pgsql") {
             $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna) as last_id_from_table"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
         } else {
             $pdo = DB::connection()->getPdo();
-            var_dump($pdo);
             $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, TRUE);
             $result = DB::select(DB::raw("select last_id_from_table() as last_id_from_table"));
         }
         foreach ($result as $key => $item) {
             return response()->json(array("ultimoValor" => $item->last_id_from_table), 200);
         }
-        $queries = DB::getQueryLog();
-        var_dump($queries);
+//        $queries = DB::getQueryLog();
+//        var_dump($queries);
         return response()->json(array("ultimoValor" => 0), 200);
     }
 }
