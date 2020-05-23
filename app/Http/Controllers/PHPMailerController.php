@@ -20,7 +20,7 @@ class PHPMailerController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws GeneralAPIException
      */
-    public function sendEmail($idDocumento)
+    public function sendEmail($idDocumento, $isFromView)
     {
         $documento = Documento::find($idDocumento);
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
@@ -86,14 +86,14 @@ class PHPMailerController extends Controller
             $docXml = $prefixPath . $documento->docXml;
             $docCdr = $prefixPath . $documento->docCdr;
 
-            $rutas = array("pdf" => $docPdf, "xml" => $docXml, "cdr" => $docCdr);
-
             $mail->addAttachment($docPdf, $documento->numSerie . '.pdf', PHPMailer::ENCODING_BASE64, 'application/pdf');
             $mail->addAttachment($docXml, $documento->numSerie . '.xml', PHPMailer::ENCODING_BASE64, 'application/vnd.mozilla.xul+xml');
             $mail->addAttachment($docCdr, $documento->numSerie . '.zip', PHPMailer::ENCODING_BASE64, 'application/zip');
             $mail->isSendmail();
             $mail->send();
-            return response()->json(array("mensaje" => "Documento [" . $documento->numSerie . "] registrado correctamente. Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . "," . $emailSecundario . "]"), 201);
+            $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . (empty($emailSecundario) ? "" : "," . $emailSecundario) . "]";
+            $mensaje = $isFromView ? $mensajeSatisfactorio : "Documento [" . $documento->numSerie . "] registrado correctamente. " . $mensajeSatisfactorio;
+            return response()->json(array("mensaje" => $mensaje), 201);
         } catch (Exception $e) {
             throw $e;
         } catch (\Exception $e) {

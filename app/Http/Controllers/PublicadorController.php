@@ -99,7 +99,7 @@ class PublicadorController extends Controller
                 return $documentoController->sendEmail($data["idDocumento"]);
             } else {
                 $documentoController = new EmailController();
-                return $documentoController->sendEmail($data["idDocumento"]);
+                return $documentoController->sendEmail($data["idDocumento"], false);
             }
         } catch (\Exception $e) {
             if ($e instanceof GeneralAPIException) {

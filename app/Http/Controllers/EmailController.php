@@ -22,12 +22,12 @@ class EmailController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws GeneralAPIException
      */
-    public function sendEmail($idDocumento)
+    public function sendEmail($idDocumento, $isFromView)
     {
         $usePHPMailer = config('app.use_phpmailer');
         if ($usePHPMailer) {
             $documentoController = new PHPMailerController();
-            return $documentoController->sendEmail($idDocumento);
+            return $documentoController->sendEmail($idDocumento, $isFromView);
         } else {
             $documento = Documento::find($idDocumento);
             $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
@@ -37,9 +37,12 @@ class EmailController extends Controller
                 $correo = $documento->cliente->email;
                 Mail::to($correo)->send(new DocumentoMail($documento, $userEmail));
                 if (Mail::failures()) {
-                    return response()->json(array("mensaje" => "Documento [" . $documento->numSerie . "] registrado correctamente.Pero no se pudo enviar el correo al cliente, por favor intente de nuevo."), 201);
+                    $mensaje = $isFromView ? "No se pudo enviar el correo al destinatario" : "Documento [" . $documento->numSerie . "] registrado correctamente. Pero no se pudo enviar el correo al cliente, por favor intente de nuevo.";
+                    return response()->json(array("mensaje" => $mensaje), 201);
                 } else {
-                    return response()->json(array("mensaje" => "Documento [" . $documento->numSerie . "] registrado correctamente. Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . "," . $emailSecundario . "]"), 201);
+                    $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . (empty($emailSecundario) ? "" : "," . $emailSecundario) . "]";
+                    $mensaje = $isFromView ? $mensajeSatisfactorio : "Documento [" . $documento->numSerie . "] registrado correctamente. " . $mensajeSatisfactorio;
+                    return response()->json(array("mensaje" => $mensaje), 201);
                 }
             } catch (\Exception $e) {
                 $code = $e->getCode();

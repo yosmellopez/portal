@@ -39,7 +39,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('documentos/week', 'DashboardController@weekDocuments');
     Route::get('documentos/month', 'DashboardController@monthDocuments');
     Route::get('documentos/year', 'DashboardController@yearDocuments');
-    Route::put('sendMail/{idDocumento}', 'EmailController@sendEmail');
+    Route::put('sendMail/{idDocumento}/{isFromView}', 'EmailController@sendEmail');
     Route::get('search/documentos', 'SearchController@searchDocumentos');
     Route::get('search/usuarios', 'SearchController@searchUsuarios');
     Route::get('search/clientes', 'SearchController@searchClientes');

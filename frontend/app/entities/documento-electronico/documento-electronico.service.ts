@@ -67,7 +67,7 @@ export class DocumentoElectronicoService {
     }
 
     sendEmail(documento: IDocumentoElectronico): Observable<HttpResponse<MessageResponse>> {
-        return this.http.put<MessageResponse>(`${this.sendMailUrl}/${documento.idDocumento}`, {}, {observe: 'response'});
+        return this.http.put<MessageResponse>(`${this.sendMailUrl}/${documento.idDocumento}/true`, {}, {observe: 'response'});
     }
 
     downloadDocument(document: IDocumentoElectronico, tipo: string): Observable<HttpEvent<Blob>> {
