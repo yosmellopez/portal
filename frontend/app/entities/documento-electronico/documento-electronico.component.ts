@@ -341,7 +341,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
                     map((res: HttpResponse<MessageResponse>) => res.body)
                 ).subscribe(response => {
                     this.isLoadingResults = false;
-                    this.showToast(response.message, 'Información', true);
+                    this.showToast(response.mensaje, 'Información', true);
                 }, (res: HttpErrorResponse) => this.onError(res));
             }
         });

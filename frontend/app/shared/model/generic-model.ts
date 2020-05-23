@@ -27,7 +27,7 @@ export class Serie {
 }
 
 export class MessageResponse {
-    message: string;
+    mensaje: string;
 }
 
 export class ChartData {
