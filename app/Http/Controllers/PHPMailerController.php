@@ -91,7 +91,10 @@ class PHPMailerController extends Controller
             $mail->addAttachment($docCdr, $documento->numSerie . '.zip', PHPMailer::ENCODING_BASE64, 'application/zip');
             $mail->isSendmail();
             $mail->send();
-            $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . (empty($emailSecundario) ? "" : "," . $emailSecundario) . "]";
+
+            $correosSecundarios = explode(',', $emailSecundario);
+            $correos = join("\n", $correosSecundarios);
+            $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . (empty($emailSecundario) ? "" : ", " . $correos) . "]";
             $mensaje = $isFromView ? $mensajeSatisfactorio : "Documento [" . $documento->numSerie . "] registrado correctamente. " . $mensajeSatisfactorio;
             return response()->json(array("mensaje" => $mensaje), 201);
         } catch (Exception $e) {

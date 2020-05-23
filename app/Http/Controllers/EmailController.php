@@ -40,7 +40,9 @@ class EmailController extends Controller
                     $mensaje = $isFromView ? "No se pudo enviar el correo al destinatario" : "Documento [" . $documento->numSerie . "] registrado correctamente. Pero no se pudo enviar el correo al cliente, por favor intente de nuevo.";
                     return response()->json(array("mensaje" => $mensaje), 201);
                 } else {
-                    $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . (empty($emailSecundario) ? "" : "," . $emailSecundario) . "]";
+                    $correosSecundarios = explode(',', $emailSecundario);
+                    $correos = join("\n", $correosSecundarios);
+                    $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . (empty($emailSecundario) ? "" : ", " . $correos) . "]";
                     $mensaje = $isFromView ? $mensajeSatisfactorio : "Documento [" . $documento->numSerie . "] registrado correctamente. " . $mensajeSatisfactorio;
                     return response()->json(array("mensaje" => $mensaje), 201);
                 }

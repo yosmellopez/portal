@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Matriphe\Md5Hash\Md5Hash;
 use PDO;
@@ -35,12 +36,18 @@ class PublicadorController extends Controller
                 return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
             }
             $dataCliente = $request->only(['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient']);
+            $datosCliente = array();
+            foreach ($dataCliente as $key => $value) {
+                $datosCliente[] = $key . "=>" . $value;
+            }
+            Log::info('Recibiendo los datos del cliente: [' . join(", ", $datosCliente) . "]");
             $clienteDb = Cliente::find($dataCliente["rucClient"]);
             if (!isset($clienteDb)) {
                 $cliente = new Cliente();
                 $dataCliente["estadoCliente"] = 1;
                 $cliente->fill($dataCliente)->save();
                 $this->registerUser($cliente, $dataCliente["rucClient"]);
+                Log::info('Cliente registrado correctamente');
             } else {
                 $dataCliente["estadoCliente"] = 1;
                 $clienteDb->fill($dataCliente)->update();
@@ -60,16 +67,19 @@ class PublicadorController extends Controller
                 $filePdf = base64_decode($docPdf);
             } catch (\Exception $e) {
                 $mensajeErrorAnexo = "Error en el documento Impreso" . $e->getMessage();
+                Log::error($mensajeErrorAnexo);
             }
             try {
                 $fileXml = base64_decode($docXML);
             } catch (\Exception $e) {
                 $mensajeErrorAnexo = "Error en el archivo XML" . $e->getMessage();
+                Log::error($mensajeErrorAnexo);
             }
             try {
                 $fileCdr = base64_decode($docCdr);
             } catch (\Exception $e) {
                 $mensajeErrorAnexo = "Error en la Respuesta CDR." . $e->getMessage();
+                Log::error($mensajeErrorAnexo);
             }
             $fechaEmision = explode("/", $fechaEmisionDocumento);
             $dateDirectory = join(DIRECTORY_SEPARATOR, array_reverse($fechaEmision));
@@ -82,9 +92,17 @@ class PublicadorController extends Controller
             $data["docPdf"] = $localPath . '.pdf';
             $data["docXml"] = $localPath . '.xml';
             $data["docCdr"] = $localPath . '.zip';
+            $datosDocumento = array();
+            foreach ($data as $key => $value) {
+                $datosDocumento[] = $key . "=>" . $value;
+            }
+            Log::info('Recibiendo los datos del documento: [' . join(", ", $datosDocumento) . "]");
             $documentoDb = Documento::where("numSerie", $data["numSerie"])->first();
             $token = openssl_random_pseudo_bytes(64);
             $token = bin2hex($token);
+            Log::info('Guardando el formato impreso en: ' . $data["docPdf"]);
+            Log::info('Guardando el XML del Documento en: ' . $data["docXml"]);
+            Log::info('Guardando la Respuesta CDR en: ' . $data["docCdr"]);
             if ($documentoDb) {
                 $data["idDocumento"] = $documentoDb->idDocumento;
                 $data["token"] = $token;
@@ -93,10 +111,11 @@ class PublicadorController extends Controller
                 $data["token"] = $token;
                 $documento->fill($data)->save();
             }
+            Log::info('');
             $usePHPMailer = config('app.use_phpmailer');
             if ($usePHPMailer) {
                 $documentoController = new PHPMailerController();
-                return $documentoController->sendEmail($data["idDocumento"]);
+                return $documentoController->sendEmail($data["idDocumento"], false);
             } else {
                 $documentoController = new EmailController();
                 return $documentoController->sendEmail($data["idDocumento"], false);
