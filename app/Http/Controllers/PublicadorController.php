@@ -9,6 +9,7 @@ use App\Entity\Documento;
 use App\Entity\Usuario;
 use App\Exceptions\GeneralAPIException;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,7 @@ class PublicadorController extends Controller
             $mensajeErrorAnexo = false;
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "monedaTransaccion", "emailEmisor", "serie"]);
+            $this->obtenerDatos($data);
             $data["idDocumento"] = $this->getLastIdFromTable();
             $data["estadoWeb"] = "P";
             $fechaEmisionDocumento = $data["fecEmisionDoc"];
@@ -177,5 +179,14 @@ class PublicadorController extends Controller
     public function username()
     {
         return 'nombUsuario';
+    }
+
+    private function obtenerDatos(array $data)
+    {
+        $client = new Client(['base_uri' => 'https://ruc-consulta.herokuapp.com/', 'timeout' => 3.0]);
+        $response = $client->post("api/consultar", [
+            'headers' => ['foo' => 'bar'],
+            'body' => $data
+        ]);
     }
 }
