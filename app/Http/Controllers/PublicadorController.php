@@ -183,10 +183,7 @@ class PublicadorController extends Controller
 
     private function obtenerDatos(array $data)
     {
-        $client = new Client(['base_uri' => 'https://ruc-consulta.herokuapp.com/', 'timeout' => 3.0]);
-        $response = $client->post("api/consultar", [
-            'headers' => ['foo' => 'bar'],
-            'body' => $data
-        ]);
+        $client = new Client(['base_uri' => 'https://ruc-consulta.herokuapp.com', 'timeout' => 3.0]);
+        $response = $client->request('POST', '/api/consultar', ['json' => $data]);
     }
 }
