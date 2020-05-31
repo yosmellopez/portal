@@ -111,7 +111,7 @@
                                 <mat-icon>search</mat-icon>
                                 Buscar
                             </button>
-                            <button type="button" mat-raised-button color="warn" type="button" (click)="reset()">
+                            <button type="button" mat-raised-button color="warn" (click)="reset()">
                                 <mat-icon>clear_all</mat-icon>
                                 Limpiar campos
                             </button>
@@ -125,7 +125,7 @@
         <div style="min-height: 660px;">
             <kendo-pdf-export #pdf>
                 <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="fecEmisionDoc" matSortDirection="desc" matSortDisableClear matTableExporter #tableMat #exporter="matTableExporter"
-                       hiddenColumns="[5,6,7,8]">
+                       hiddenColumns="[0,6,7,8,9]">
                     <ng-container matColumnDef="expandido">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let element">

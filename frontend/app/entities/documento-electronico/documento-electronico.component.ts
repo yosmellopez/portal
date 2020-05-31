@@ -385,7 +385,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
     exportarPDF() {
         this.pdfExporter.author = 'Ventura Soluciones';
         this.pdfExporter.title = this.tipoDocumento.title;
-        this.pdfExporter.margin = {right: -590};
+        this.pdfExporter.margin = {right: -490};
         this.pdfExporter.saveAs(this.tipoDocumento.title);
     }
 
