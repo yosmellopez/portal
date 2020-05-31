@@ -81,6 +81,9 @@ class SearchController extends Controller
      */
     public function searchDocumentos(Request $request)
     {
+        $size = $request->size;
+        $order = $request->sort;
+        $direction = $request->direction;
         $usuario = auth()->user();
         $idRol = $usuario->idRoles;
         $data = $request->all();
@@ -130,7 +133,8 @@ class SearchController extends Controller
                 ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
                     return $query->where('monedaTransaccion', $monedaTransaccion);
                 })
-                ->get();
+                ->orderBy($order, $direction)
+                ->paginate($size);
             return response()->json($documentos, 200);
         } else {
             $documentos = Documento::with('cliente')
@@ -153,7 +157,8 @@ class SearchController extends Controller
                 ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
                     return $query->where('monedaTransaccion', $monedaTransaccion);
                 })
-                ->get();
+                ->orderBy($order, $direction)
+                ->paginate($size);
 //            $queries = \DB::getQueryLog();
 //            var_dump($queries);
             if (isset($razonSocial)) {

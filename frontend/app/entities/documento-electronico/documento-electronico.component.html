@@ -152,7 +152,7 @@
                     <ng-container matColumnDef="fecEmisionDoc">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Emisión</th>
                         <td mat-cell *matCellDef="let element" (click)="expandedElement = expandedElement === element ? null : element">
-                            {{element.fecEmisionDoc}}
+                            {{element.fecEmisionDoc | date:'dd/MM/yyyy' }}
                         </td>
                     </ng-container>
 

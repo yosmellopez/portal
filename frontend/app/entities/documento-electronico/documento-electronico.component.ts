@@ -169,31 +169,45 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
         );
     }
 
+    prepareSearch(values: any) {
+        this.currentSearch = {...values};
+        if (values.fechaEmisionInicio) {
+            const fechaInicio = values.fechaEmisionInicio as Moment;
+            this.currentSearch.fechaEmisionInicio = fechaInicio.format('DD/MM/YYYY');
+        } else {
+            this.currentSearch.fechaEmisionInicio = moment("1990-01-01").format('DD/MM/YYYY');
+        }
+        if (values.fechaEmisionFin) {
+            const fechaFin = values.fechaEmisionFin as Moment;
+            this.currentSearch.fechaEmisionFin = fechaFin.format('DD/MM/YYYY');
+        } else {
+            this.currentSearch.fechaEmisionFin = moment().format('DD/MM/YYYY');
+        }
+        this.currentSearch.tipoDoc = this.tipoDocumento.tipo;
+    }
+
     search() {
         if (this.formulario.valid) {
             this.isLoadingResults = true;
             const values = this.formulario.value;
-            this.currentSearch = {...values};
-            if (values.fechaEmisionInicio) {
-                const fechaInicio = values.fechaEmisionInicio as Moment;
-                this.currentSearch.fechaEmisionInicio = fechaInicio.format('DD/MM/YYYY');
-            } else {
-                this.currentSearch.fechaEmisionInicio = moment("1990-01-01").format('DD/MM/YYYY');
-            }
-            if (values.fechaEmisionFin) {
-                const fechaFin = values.fechaEmisionFin as Moment;
-                this.currentSearch.fechaEmisionFin = fechaFin.format('DD/MM/YYYY');
-            } else {
-                this.currentSearch.fechaEmisionFin = moment().format('DD/MM/YYYY');
-            }
-            this.currentSearch.tipoDoc = this.tipoDocumento.tipo;
-            this.documentoElectronicoService.search(this.currentSearch).pipe(
-                filter((res: HttpResponse<IDocumentoElectronico[]>) => res.ok),
-                map((res: HttpResponse<IDocumentoElectronico[]>) => res.body)
-            ).subscribe((data: IDocumentoElectronico[]) => {
+            this.prepareSearch(values);
+            const params = {
+                page: this.paginator.pageIndex + 1,
+                size: this.paginator.pageSize,
+                sort: `${this.sort.active}`,
+                direction: `${this.sort.direction}`
+            };
+            var request = {...this.currentSearch, ...params}
+            this.documentoElectronicoService.search(request).pipe(
+                filter((res: HttpResponse<AppResponseBody<IDocumentoElectronico[]>>) => res.ok),
+                map((res: HttpResponse<AppResponseBody<IDocumentoElectronico[]>>) => res.body),
+                map((res: AppResponseBody<IDocumentoElectronico[]>) => {
+                    this.isLoadingResults = false;
+                    this.resultsLength = res.total;
+                    return res.data;
+                })).subscribe((data: IDocumentoElectronico[]) => {
                     this.documentoElectronicos = data;
                     this.dataSource.connect().next(this.documentoElectronicos);
-                    this.isLoadingResults = false;
                 },
                 (res: HttpErrorResponse) => this.onError(res));
         }
@@ -237,13 +251,22 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             startWith({}),
             switchMap(() => {
                 this.isLoadingResults = true;
-                return this.documentoElectronicoService.query({
+                const valores = this.formulario.value;
+                const isNotEmpty = this.isEmptyValores(valores);
+                const params = {
                     tipo: this.tipoDocumento.tipo,
                     page: this.paginator.pageIndex + 1,
                     size: this.paginator.pageSize,
                     sort: `${this.sort.active}`,
                     direction: `${this.sort.direction}`
-                });
+                };
+                if (isNotEmpty) {
+                    this.prepareSearch(valores);
+                    var request = {...this.currentSearch, ...params}
+                    return this.documentoElectronicoService.search(request);
+                } else {
+                    return this.documentoElectronicoService.query(params);
+                }
             }),
             filter((res: HttpResponse<AppResponseBody<IDocumentoElectronico[]>>) => res.ok),
             map((res: HttpResponse<AppResponseBody<IDocumentoElectronico[]>>) => res.body),
@@ -423,6 +446,18 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
             return fecha.year() < fechaActual.year() ? true : fecha.year() > fechaActual.year() ? false : fecha.dayOfYear() <= fechaActual.dayOfYear();
         }
     };
+
+    isEmptyValores(valores: any): boolean {
+        const keys = Object.keys(valores);
+        return keys.some(value => this.isEmptyValue(valores[value]));
+    }
+
+    isEmptyValue(value: any): boolean {
+        if (typeof (value) === 'string') {
+            return value.length > 0;
+        }
+        return value;
+    }
 
     expandCollapse(event: Event, elemento: IDocumentoElectronico) {
         event.stopPropagation();

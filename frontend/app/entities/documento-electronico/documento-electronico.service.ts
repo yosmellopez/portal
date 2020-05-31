@@ -6,12 +6,13 @@ import {SERVER_API_URL} from 'app/app.constants';
 import {createRequestOption} from 'app/shared/util/request-util';
 import {IDocumentoElectronico} from 'app/shared/model/documento-electronico.model';
 import {AppResponseBody, Estado, MessageResponse, Serie, TipoMoneda} from 'app/shared/model/generic-model';
+import {map} from 'rxjs/operators';
+import * as moment from 'moment';
 
 type AppResponse = AppResponseBody<IDocumentoElectronico>;
 type AppResponseArray = AppResponseBody<IDocumentoElectronico[]>;
 type EntityResponseType = HttpResponse<AppResponse>;
 type EntityArrayResponseType = HttpResponse<AppResponseArray>;
-type EntitySearchResponseType = HttpResponse<IDocumentoElectronico[]>;
 
 @Injectable({providedIn: 'root'})
 export class DocumentoElectronicoService {
@@ -42,16 +43,17 @@ export class DocumentoElectronicoService {
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<AppResponseArray>(this.resourceUrl, {params: options, observe: 'response'});
+        return this.http.get<AppResponseArray>(this.resourceUrl, {params: options, observe: 'response'})
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 
-    search(req?: any): Observable<EntitySearchResponseType> {
+    search(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<IDocumentoElectronico[]>(this.resourceSearchUrl, {params: options, observe: 'response'});
+        return this.http.get<AppResponseArray>(this.resourceSearchUrl, {params: options, observe: 'response'});
     }
 
     findTipoMoneda(): Observable<HttpResponse<TipoMoneda[]>> {
@@ -99,6 +101,15 @@ export class DocumentoElectronicoService {
 
     setSeries(series: Serie[]) {
         this.series = series;
+    }
+
+    protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+        if (res.body && res.body.data) {
+            res.body.data.forEach((documentoElectronico: IDocumentoElectronico) => {
+                documentoElectronico.fecEmisionDoc = documentoElectronico.fecEmisionDoc ? moment(documentoElectronico.fecEmisionDoc) : undefined;
+            });
+        }
+        return res;
     }
 
     getSeries(): Serie[] {

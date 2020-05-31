@@ -1,10 +1,11 @@
 import {ICliente} from "app/shared/model/cliente.model";
+import {Moment} from "moment";
 
 export interface IDocumentoElectronico {
     idDocumento?: number;
     numSerie?: string;
     nombre?: string;
-    fecEmisionDoc?: string;
+    fecEmisionDoc?: Moment;
     tipoDoc?: string;
     tipoTransaccion?: string;
     total?: number;
@@ -23,7 +24,7 @@ export class DocumentoElectronico implements IDocumentoElectronico {
         public idDocumento?: number,
         public numSerie?: string,
         public nombre?: string,
-        public fechaEmision?: string,
+        public fechaEmision?: Moment,
         public tipoDocumento?: string,
         public tipoTransaccion?: string,
         public total?: number,
