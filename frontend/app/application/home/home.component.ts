@@ -46,7 +46,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     lastLowedDataSource: MatTableDataSource<IDocumentoElectronico> = new MatTableDataSource<IDocumentoElectronico>([]);
 
     public lineChartData: ChartDataSets[] = [
-        {data: [65, 59, 80, 81, 56, 55, 40], label: 'Facturas'},
+        {data: [0, 0, 0, 0, 0, 0, 0], label: 'Facturas'},
+        {data: [0, 0, 0, 0, 0, 0, 0], label: 'Boletas'},
+        {data: [0, 0, 0, 0, 0, 0, 0], label: 'Notas de Crédito'},
+        {data: [0, 0, 0, 0, 0, 0, 0], label: 'Notas de Débito'},
     ];
     public lineChartLabels: Label[] = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'];
     public lineChartColors: Color[] = [{ // grey

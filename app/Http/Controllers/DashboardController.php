@@ -100,8 +100,9 @@ class DashboardController extends Controller
             for ($i = 0; $i < 7; $i++) {
                 $listaDocumentos = DB::table('fe_docelectronico')
                     ->where("tipoDoc", $tipoDoc)
-                    ->where('fecEmisionDoc', '=', $today)
+                    ->where('fecEmisionDoc', '=', $today->toDateString())
                     ->get();
+
                 $collection = collect($listaDocumentos);
                 $total = $collection->sum("total");
                 $date = $today->format("d");
@@ -114,6 +115,9 @@ class DashboardController extends Controller
             $documentos[] = array("label" => $this->findNombreTipo($tipo), "data" => $data);
         }
         return response()->json(array("documentos" => $documentos, "columns" => $days), 200);
+//        \DB::connection()->enableQueryLog();
+//        $queries = \DB::getQueryLog();
+//                var_dump($queries);
     }
 
     /**
