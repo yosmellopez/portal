@@ -239,6 +239,7 @@ export class DocumentoElectronicoComponent implements OnInit, OnDestroy, AfterVi
                 monedaTransaccion: '',
                 razonSocial: ''
             });
+            this.paginator.pageIndex = 0;
             if (route instanceof NavigationEnd && paso) {
                 this.loadAll();
             }
