@@ -6,6 +6,7 @@ use App\Entity\Cliente;
 use App\Entity\Documento;
 use App\Entity\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -68,9 +69,20 @@ class SearchController extends Controller
      */
     public function listNumeroSerie(Request $request)
     {
+        $usuario = auth()->user();
+        $idRol = $usuario->idRoles;
+        $rucCliente = $usuario->rucClient;
         $tipoDocumento = $request->tipo;
-        $series = Documento::select("serie")->where('tipoDoc', $this->findTipoDoc($tipoDocumento))->distinct('serie')->get();
-        return response()->json($series, 200);
+        if ($idRol == 2 || $idRol == 3) {
+            $series = Documento::select("serie")
+                ->where('tipoDoc', $this->findTipoDoc($tipoDocumento))
+                ->where("rucClient", $rucCliente)
+                ->distinct('serie')->get();
+            return response()->json($series, 200);
+        } else {
+            $series = Documento::select("serie")->where('tipoDoc', $this->findTipoDoc($tipoDocumento))->distinct('serie')->get();
+            return response()->json($series, 200);
+        }
     }
 
     /**
@@ -86,37 +98,38 @@ class SearchController extends Controller
         $direction = $request->direction;
         $usuario = auth()->user();
         $idRol = $usuario->idRoles;
-        $data = $request->all();
-        $numSerie = isset($data["numSerie"]) ? $data["numSerie"] : null;
-        $numero = isset($data["numero"]) ? $data["numero"] : null;
-        $razonSocial = isset($data["razonSocial"]) ? $data["razonSocial"] : null;
-        $monedaTransaccion = isset($data["monedaTransaccion"]) ? $data["monedaTransaccion"] : null;
-        $fechaEmisionInicio = isset($data["fechaEmisionInicio"]) ? $data["fechaEmisionInicio"] : null;
+        $items = $request->all();
+        $numSerie = isset($items["numSerie"]) ? $items["numSerie"] : null;
+        $numero = isset($items["numero"]) ? $items["numero"] : null;
+        $razonSocial = isset($items["razonSocial"]) ? $items["razonSocial"] : null;
+        $monedaTransaccion = isset($items["monedaTransaccion"]) ? $items["monedaTransaccion"] : null;
+        $fechaEmisionInicio = isset($items["fechaEmisionInicio"]) ? $items["fechaEmisionInicio"] : null;
         if (!isset($fechaEmisionInicio)) {
             $fechaEmisionInicio = Carbon::createFromFormat('d/m/Y', "01/01/1900");
         }
         $fechaEmisionInicio = Carbon::createFromFormat("d/m/Y", $fechaEmisionInicio);
         $fechaEmisionInicio = $fechaEmisionInicio->subDay();
-        $fechaEmisionFin = isset($data["fechaEmisionFin"]) ? $data["fechaEmisionFin"] : null;
+        $fechaEmisionFin = isset($items["fechaEmisionFin"]) ? $items["fechaEmisionFin"] : null;
         if (!isset($fechaEmisionFin) || empty($fechaEmisionFin) || is_null($fechaEmisionFin)) {
             $fechaEmisionFin = Carbon::now();
         }
         $fechaEmisionFin = Carbon::createFromFormat("d/m/Y", $fechaEmisionFin);
-        $tipoDoc = $this->findTipoDoc($data["tipoDoc"]);
-        $rucClient = isset($data["rucClient"]) ? $data["rucClient"] : null;
-        $estadoSunat = isset($data["estadoSunat"]) ? $data["estadoSunat"] : null;
+        $tipoDoc = $this->findTipoDoc($items["tipoDoc"]);
+        $rucClient = isset($items["rucClient"]) ? $items["rucClient"] : null;
+        $estadoSunat = isset($items["estadoSunat"]) ? $items["estadoSunat"] : null;
         $estadoSunat = $this->findEstado($estadoSunat);
 //        \DB::connection()->enableQueryLog();
         if ($idRol == 2 || $idRol == 3) {
             $rucCliente = $usuario->rucClient;
-            $documentos = Documento::with('cliente')
-                ->when($razonSocial, function ($query, $razonSocial) {
-                    return $query->where('nombreClient', 'like', '%' . $razonSocial . '%');
-                })
+            $paginator = Documento::with('cliente')
                 ->where("rucClient", $rucCliente)
                 ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
                 ->when($numSerie, function ($query, $numSerie) {
                     return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+                })
+                ->when($razonSocial, function ($query, $razonSocial) {
+                    return $query->join('fe_cliente', 'fe_docelectronico.rucClient', '=', 'fe_cliente.rucClient')
+                        ->where('fe_cliente.nombreClient', 'like', '%' . $razonSocial . '%');
                 })
                 ->when($numero, function ($query, $numero) {
                     return $query->where('numSerie', 'like', '%' . $numero . '%');
@@ -135,12 +148,16 @@ class SearchController extends Controller
                 })
                 ->orderBy($order, $direction)
                 ->paginate($size);
-            return response()->json($documentos, 200);
+            return response()->json($paginator, 200);
         } else {
-            $documentos = Documento::with('cliente')
+            $paginator = Documento::with('cliente')
                 ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
                 ->when($numSerie, function ($query, $numSerie) {
                     return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+                })
+                ->when($razonSocial, function ($query, $razonSocial) {
+                    return $query->join('fe_cliente', 'fe_docelectronico.rucClient', '=', 'fe_cliente.rucClient')
+                        ->where('fe_cliente.nombreClient', 'like', '%' . $razonSocial . '%');
                 })
                 ->when($numero, function ($query, $numero) {
                     return $query->where('numSerie', 'like', '%' . $numero . '%');
@@ -161,20 +178,7 @@ class SearchController extends Controller
                 ->paginate($size);
 //            $queries = \DB::getQueryLog();
 //            var_dump($queries);
-            if (isset($razonSocial)) {
-                $collection = collect($documentos);
-                $filtered = $collection->filter(function ($value, $key) use ($razonSocial) {
-                    $nombreDatabase = strtolower($value->cliente->nombreClient);
-                    $nombreRequest = strtolower($razonSocial);
-                    return strpos($nombreDatabase, $nombreRequest) !== false;
-                });
-                $documentosFiltrados = $filtered->all();
-                $documentos = array();
-                foreach ($documentosFiltrados as $documento) {
-                    $documentos[] = $documento;
-                }
-            }
-            return response()->json($documentos, 200);
+            return response()->json($paginator, 200);
         }
     }
 

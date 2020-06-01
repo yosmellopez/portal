@@ -262,7 +262,7 @@
                                                             <span data-mce-style="font-size: 15px; line-height: 30px;"
                                                                   style="font-size: 15px; line-height: 30px;"><strong><span
                                                                             data-mce-style="line-height: 30px; font-size: 15px;"
-                                                                            style="line-height: 30px; font-size: 15px;">INICIAR SESEIÓN</span></strong></span></span></span></a>
+                                                                            style="line-height: 30px; font-size: 15px;">INICIAR SESIÓN</span></strong></span></span></span></a>
                                                 </div>
 
                                             </div>

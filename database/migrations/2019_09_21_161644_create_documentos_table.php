@@ -30,6 +30,7 @@ class CreateDocumentosTable extends Migration
                 $table->string("correoSecundario", 1000)->nullable();
                 $table->string("emailEmisor", 254)->nullable();
                 $table->string("rucClient", 11)->nullable();
+                $table->string("rsRuc", 11)->nullable();
                 $table->string("monedaTransaccion")->nullable();
                 $table->string("token")->nullable();
                 $table->foreign("rucClient")->references('rucClient')->on('fe_cliente');
@@ -54,6 +55,11 @@ class CreateDocumentosTable extends Migration
         if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'emailEmisor')) {
             Schema::table("fe_docelectronico", function (Blueprint $table) {
                 $table->string("emailEmisor", 254)->nullable();
+            });
+        }
+        if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'rsRuc') && !Schema::hasColumn('fe_docelectronico', 'rsRuc')) {
+            Schema::table("fe_docelectronico", function (Blueprint $table) {
+                $table->string("rsRuc", 11)->nullable();
             });
         }
         if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'created_at') && !Schema::hasColumn('fe_docelectronico', 'updated_at')) {
