@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const Visualizer = require('webpack-visualizer-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
@@ -14,6 +13,8 @@ const commonConfig = require('./webpack.common.js');
 
 const ENV = 'production';
 const sass = require('sass');
+
+process.traceDeprecation = true
 
 module.exports = webpackMerge(commonConfig({env: ENV}), {
     // Enable source maps. Please note that this will slow down the build.
@@ -99,7 +100,6 @@ module.exports = webpackMerge(commonConfig({env: ENV}), {
                         booleans: true,
                         loops: true,
                         unused: true,
-                        toplevel: true,
                         if_return: true,
                         inline: true,
                         join_vars: true,
@@ -133,10 +133,6 @@ module.exports = webpackMerge(commonConfig({env: ENV}), {
             localesToKeep: [
                 'es', 'es-mx'
             ]
-        }),
-        new Visualizer({
-            // Webpack statistics in target folder
-            filename: '../stats.html'
         }),
         new AngularCompilerPlugin({
             mainPath: utils.root('./frontend/app/app.main.ts'),
