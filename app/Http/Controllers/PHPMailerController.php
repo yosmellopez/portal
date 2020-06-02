@@ -7,6 +7,7 @@ use App\Entity\Usuario;
 use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -59,7 +60,15 @@ class PHPMailerController extends Controller
             $mail->SMTPKeepAlive = true;
             $mail->Subject = $tipoDocumento . " [$numeroSerie] $estadoDocumento";
             $mail->MsgHTML($html);
-            $mail->addAddress($documento->cliente->email);
+            if (isset($documento->email)) {
+                Log::info($documento->email);
+                $correoCliente = $documento->email;
+                $mail->addAddress($documento->email);
+            } else {
+                Log::info($documento->cliente->email);
+                $correoCliente = $documento->cliente->email;
+                $mail->addAddress($documento->cliente->email);
+            }
             $emailEmisor = $documento->emailEmisor;
             if (!empty($emailEmisor)) {
                 $mail->addCC($emailEmisor);
@@ -94,12 +103,14 @@ class PHPMailerController extends Controller
 
             $correosSecundarios = explode(',', $emailSecundario);
             $correos = join("\n", $correosSecundarios);
-            $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . (empty($emailSecundario) ? "" : ", " . $correos) . "]";
+            $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . ", " . $correoCliente . (empty($emailSecundario) ? "" : ", " . $correos) . "]";
             $mensaje = $isFromView ? $mensajeSatisfactorio : "Documento [" . $documento->numSerie . "] registrado correctamente. " . $mensajeSatisfactorio;
             return response()->json(array("mensaje" => $mensaje), 201);
         } catch (Exception $e) {
+            Log::error($e->getMessage());
             throw $e;
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             throw $e;
         }
     }

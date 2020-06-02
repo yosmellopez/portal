@@ -34,7 +34,11 @@ class EmailController extends Controller
             try {
                 $emailEmisor = $documento->emailEmisor;
                 $emailSecundario = $documento->correoSecundario;
-                $correo = $documento->cliente->email;
+                if (isset($documento->email)) {
+                    $correo = $documento->email;
+                } else {
+                    $correo = $documento->cliente->email;
+                }
                 Mail::to($correo)->send(new DocumentoMail($documento, $userEmail));
                 if (Mail::failures()) {
                     $mensaje = $isFromView ? "No se pudo enviar el correo al destinatario" : "Documento [" . $documento->numSerie . "] registrado correctamente. Pero no se pudo enviar el correo al cliente, por favor intente de nuevo.";
@@ -42,7 +46,7 @@ class EmailController extends Controller
                 } else {
                     $correosSecundarios = explode(',', $emailSecundario);
                     $correos = join("\n", $correosSecundarios);
-                    $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . (empty($emailSecundario) ? "" : ", " . $correos) . "]";
+                    $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . ", " . $correo . (empty($emailSecundario) ? "" : ", " . $correos) . "]";
                     $mensaje = $isFromView ? $mensajeSatisfactorio : "Documento [" . $documento->numSerie . "] registrado correctamente. " . $mensajeSatisfactorio;
                     return response()->json(array("mensaje" => $mensaje), 201);
                 }
