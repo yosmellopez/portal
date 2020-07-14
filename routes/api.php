@@ -31,6 +31,7 @@ Route::post('account/reset-password/finish', 'Auth\ResetPasswordController@chang
 Route::post('token/validate', 'Auth\ResetPasswordController@validateToken');
 Route::post('publicar', 'PublicadorController@publicar');
 Route::get('download/{idDocumento}', 'FilesController@downloadDocument');
+Route::get('checkDocument', 'DocumentoController@checkDocument');
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('documentos/lastEmmited', 'DashboardController@lastEmmitedDocuments');
     Route::get('documentos/lastAproved', 'DashboardController@lastAprovedDocuments');
@@ -47,7 +48,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('documentos/series', 'SearchController@listNumeroSerie');
     Route::get('estados', 'SearchController@listEstadoSunat');
     Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
-    Route::get('checkDocument', 'DocumentoController@checkDocument');
     Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
     Route::post('account/change-password', 'UsuarioController@changePassword');
     Route::post('user/resetMasive', 'UsuarioController@resetPasswordMasive');
