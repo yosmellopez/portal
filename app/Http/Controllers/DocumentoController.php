@@ -152,11 +152,7 @@ class DocumentoController extends Controller
         $numero = $request->numero;
         $numSerie = $serie . '-' . $numero;
         $rucClient = $request->rucClient;
-        $existDocument = Documento::when($numSerie, function ($query, $numSerie) {
-            return $query->where('numSerie', 'like', '%' . $numSerie . '%');
-        })->when($rucClient, function ($query, $rucClient) {
-            return $query->where('rucClient', $rucClient);
-        })->exist();
+        $existDocument =  Documento::where('numSerie', 'like', '%' . $numSerie . '%')->where('rucClient', $rucClient)->exists();
         if ($existDocument) {
             return response()->json(['success' => true, 'published' => true, 'message' => 'El documento existe.'], 200);
         } else {
