@@ -8,6 +8,8 @@ use App\Entity\Documento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDO;
+use Matriphe\Md5Hash\Md5Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class DocumentoController extends Controller
 {
@@ -136,6 +138,29 @@ class DocumentoController extends Controller
                 return "RC";
             default:
                 return "01";
+        }
+    }
+
+    public function checkDocument(Request $request)
+    {
+        $hasher = new Md5Hash();
+        $credentials = array("password" => $hasher->make($request->password), "nombUsuario" => $request->usuario);
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['success' => false, 'published' => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+        }
+        $serie = $request->serie;
+        $numero = $request->numero;
+        $numSerie = $serie . '-' . $numero;
+        $rucClient = $request->rucClient;
+        $documento = Documento::when($numSerie, function ($query, $numSerie) {
+            return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+        })->when($rucClient, function ($query, $rucClient) {
+            return $query->where('rucClient', $rucClient);
+        })->get();
+        if (isset($documento)) {
+            return response()->json(['success' => true, 'published' => true, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 200);
+        } else {
+            return response()->json(['success' => true, 'published' => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 200);
         }
     }
 

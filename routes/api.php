@@ -47,6 +47,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('documentos/series', 'SearchController@listNumeroSerie');
     Route::get('estados', 'SearchController@listEstadoSunat');
     Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
+    Route::get('checkDocument', 'DocumentoController@checkDocument');
+    Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
     Route::post('account/change-password', 'UsuarioController@changePassword');
     Route::post('user/resetMasive', 'UsuarioController@resetPasswordMasive');
     Route::post('user/password-reset/{usuarioId}', 'UsuarioController@passwordReset');
@@ -54,7 +56,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::resource('clientes', 'ClienteController');
     Route::get('all/clientes', 'ClienteController@allClientes');
     Route::resource('usuarios', 'UsuarioController');
-    Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
     Route::get('roles', function () {
         return Rol::all();
     });
