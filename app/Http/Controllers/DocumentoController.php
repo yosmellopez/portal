@@ -152,21 +152,20 @@ class DocumentoController extends Controller
         $numero = $request->numero;
         $numSerie = $serie . '-' . $numero;
         $rucClient = $request->rucClient;
-        $documento = Documento::when($numSerie, function ($query, $numSerie) {
+        $existDocument = Documento::when($numSerie, function ($query, $numSerie) {
             return $query->where('numSerie', 'like', '%' . $numSerie . '%');
         })->when($rucClient, function ($query, $rucClient) {
             return $query->where('rucClient', $rucClient);
-        })->get();
-        if (isset($documento)) {
-            return response()->json(['success' => true, 'published' => true, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 200);
+        })->exist();
+        if ($existDocument) {
+            return response()->json(['success' => true, 'published' => true, 'message' => 'El documento existe.'], 200);
         } else {
-            return response()->json(['success' => true, 'published' => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 200);
+            return response()->json(['success' => true, 'published' => false, 'message' => 'El documento no existe en el portal.'], 200);
         }
     }
 
     public function ejemplo()
     {
-//        DB::connection()->enableQueryLog();
         if (env('DB_CONNECTION', 'pgsql') == "pgsql") {
             $result = DB::select(DB::raw("select last_id_from_table(:tabla, :columna) as last_id_from_table"), [':tabla' => "fe_docelectronico", ':columna' => '"idDocumento"']);
         } else {
@@ -177,8 +176,6 @@ class DocumentoController extends Controller
         foreach ($result as $key => $item) {
             return response()->json(array("ultimoValor" => $item->last_id_from_table), 200);
         }
-//        $queries = DB::getQueryLog();
-//        var_dump($queries);
         return response()->json(array("ultimoValor" => 0), 200);
     }
 }
