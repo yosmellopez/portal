@@ -91,11 +91,16 @@ class PHPMailerController extends Controller
             $mail->addEmbeddedImage($appTwitterPath, "twitter", "Twitter");
             $mail->addEmbeddedImage($appGooglePath, "google", "Google");
             $prefixPath = Storage::disk("custom")->getDriver()->getAdapter()->getPathPrefix();
-            $docPdf = $prefixPath . $documento->docPdf;
+
+            $docPdf = "";
+            if ($documento->tipoTransaccion == 'E') {
+                $docPdf = $prefixPath . $documento->docPdf;
+            }
             $docXml = $prefixPath . $documento->docXml;
             $docCdr = $prefixPath . $documento->docCdr;
-
-            $mail->addAttachment($docPdf, $documento->numSerie . '.pdf', PHPMailer::ENCODING_BASE64, 'application/pdf');
+            if ($documento->tipoTransaccion == 'E') {
+                $mail->addAttachment($docPdf, $documento->numSerie . '.pdf', PHPMailer::ENCODING_BASE64, 'application/pdf');
+            }
             $mail->addAttachment($docXml, $documento->numSerie . '.xml', PHPMailer::ENCODING_BASE64, 'application/vnd.mozilla.xul+xml');
             $mail->addAttachment($docCdr, $documento->numSerie . '.zip', PHPMailer::ENCODING_BASE64, 'application/zip');
             $mail->isSendmail();

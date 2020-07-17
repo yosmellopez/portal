@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class DocumentoMail extends Mailable
 {
     use Queueable, SerializesModels;
+
     protected $documento;
     protected $userEmail;
 
@@ -32,8 +33,11 @@ class DocumentoMail extends Mailable
      */
     public function build()
     {
+        $docPdf = "";
         $prefixPath = Storage::disk("custom")->getDriver()->getAdapter()->getPathPrefix();
-        $docPdf = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docPdf));
+        if ($this->documento->tipoTransaccion == 'E') {
+            $docPdf = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docPdf));
+        }
         $docXml = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docXml));
         $docCdr = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docCdr));
         $nombreCliente = $this->documento->cliente->nombreClient;
@@ -57,10 +61,6 @@ class DocumentoMail extends Mailable
                 "fechaEmision" => $this->documento->fecEmisionDoc,
                 "estadoDocumento" => $estadoDocumento,
             ])
-            ->attach($docPdf, [
-                'as' => basename($this->documento->docPdf),
-                'mime' => 'application/pdf',
-            ])
             ->attach($docXml, [
                 'as' => basename($this->documento->docXml),
                 'mime' => 'application/vnd.mozilla.xul+xml',
@@ -69,6 +69,12 @@ class DocumentoMail extends Mailable
                 'as' => basename($this->documento->docCdr),
                 'mime' => 'application/zip',
             ]);
+        if ($this->documento->tipoTransaccion == 'E') {
+            $mail->attach($docPdf, [
+                'as' => basename($this->documento->docPdf),
+                'mime' => 'application/pdf',
+            ]);
+        }
         $emailEmisor = $this->documento->emailEmisor;
         if (!empty($emailEmisor)) {
             $mail->cc($emailEmisor);
