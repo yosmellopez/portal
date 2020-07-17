@@ -71,13 +71,13 @@ class PHPMailerController extends Controller
             }
             $emailEmisor = $documento->emailEmisor;
             if (!empty($emailEmisor)) {
-                $mail->addCC($emailEmisor);
+                $mail->addCC(trim($emailEmisor));
             }
             $emailSecundario = $documento->correoSecundario;
             if (!empty($emailSecundario)) {
                 $correos = explode(',', $emailSecundario);
                 foreach ($correos as $correo) {
-                    $mail->addCC($correo);
+                    $mail->addCC(trim($correo));
                 }
             }
             $appLogoPath = public_path() . config('app.logo');

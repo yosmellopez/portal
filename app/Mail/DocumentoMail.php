@@ -83,7 +83,7 @@ class DocumentoMail extends Mailable
         if (!empty($emailSecundario)) {
             $correos = explode(',', $emailSecundario);
             foreach ($correos as $correo) {
-                $mail->cc($correo);
+                $mail->cc(trim($correo));
             }
         }
         return $mail;
