@@ -136,6 +136,105 @@ class PublicadorController extends Controller
         }
     }
 
+    public function publishOnly(Request $request)
+    {
+        try {
+            $hasher = new Md5Hash();
+            $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+            }
+            $dataCliente = $request->only(['direccionClient', 'email', 'estadoCliente', 'nombreClient', 'rucClient', 'rutaImagenClient']);
+            $datosCliente = array();
+            foreach ($dataCliente as $key => $value) {
+                $datosCliente[] = $key . "=>" . $value;
+            }
+            Log::info('Recibiendo los datos del cliente: [' . join(", ", $datosCliente) . "]");
+            $clienteDb = Cliente::find($dataCliente["rucClient"]);
+            if (!isset($clienteDb)) {
+                $cliente = new Cliente();
+                $dataCliente["estadoCliente"] = 1;
+                $cliente->fill($dataCliente)->save();
+                Log::info('Cliente registrado correctamente');
+            } else {
+                $dataCliente["estadoCliente"] = 1;
+                $clienteDb->fill($dataCliente)->update();
+            }
+            $mensajeErrorAnexo = false;
+            $documento = new Documento();
+            $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "rsRuc", "monedaTransaccion", "emailEmisor", "serie"]);
+            $this->obtenerDatos($data);
+            $data["idDocumento"] = $this->getLastIdFromTable();
+            $data["estadoWeb"] = "P";
+            $fechaEmisionDocumento = $data["fecEmisionDoc"];
+            $data["fecEmisionDoc"] = Carbon::createFromFormat("d/m/Y", $data["fecEmisionDoc"]);
+            $docPdf = $data["docPdf"];
+            $docXML = $data["docXml"];
+            $docCdr = $data["docCdr"];
+            $fileName = $data["numSerie"];
+            try {
+                $filePdf = base64_decode($docPdf);
+            } catch (\Exception $e) {
+                $mensajeErrorAnexo = "Error en el documento Impreso" . $e->getMessage();
+                Log::error($mensajeErrorAnexo);
+            }
+            try {
+                $fileXml = base64_decode($docXML);
+            } catch (\Exception $e) {
+                $mensajeErrorAnexo = "Error en el archivo XML" . $e->getMessage();
+                Log::error($mensajeErrorAnexo);
+            }
+            try {
+                $fileCdr = base64_decode($docCdr);
+            } catch (\Exception $e) {
+                $mensajeErrorAnexo = "Error en la Respuesta CDR." . $e->getMessage();
+                Log::error($mensajeErrorAnexo);
+            }
+            $fechaEmision = explode("/", $fechaEmisionDocumento);
+            $dateDirectory = join(DIRECTORY_SEPARATOR, array_reverse($fechaEmision));
+            $directory = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"]));
+            Storage::makeDirectory($directory);
+            $localPath = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"], $fileName));
+            Storage::disk('custom')->put($localPath . '.pdf', $filePdf);
+            Storage::disk('custom')->put($localPath . '.xml', $fileXml);
+            Storage::disk('custom')->put($localPath . '.zip', $fileCdr);
+            $data["docPdf"] = $localPath . '.pdf';
+            $data["docXml"] = $localPath . '.xml';
+            $data["docCdr"] = $localPath . '.zip';
+            $datosDocumento = array();
+            foreach ($data as $key => $value) {
+                $datosDocumento[] = $key . "=>" . $value;
+            }
+            Log::info('Recibiendo los datos del documento: [' . join(", ", $datosDocumento) . "]");
+            $documentoDb = Documento::where("numSerie", $data["numSerie"])->first();
+            $token = openssl_random_pseudo_bytes(64);
+            $token = bin2hex($token);
+            Log::info('Guardando el formato impreso en: ' . $data["docPdf"]);
+            Log::info('Guardando el XML del Documento en: ' . $data["docXml"]);
+            Log::info('Guardando la Respuesta CDR en: ' . $data["docCdr"]);
+            if ($documentoDb) {
+                $data["idDocumento"] = $documentoDb->idDocumento;
+                $data["token"] = $token;
+                $documentoDb->fill($data)->update();
+                $responseCode = 204;
+            } else {
+                $data["token"] = $token;
+                $documento->fill($data)->save();
+                $responseCode = 201;
+            }
+            Log::info('');
+            return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "]"), $responseCode);
+        } catch (\Exception $e) {
+            if ($e instanceof \Exception) {
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $e->getMessage()), 201);
+            }
+            if (!$mensajeErrorAnexo) {
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $mensajeErrorAnexo), 201);
+            }
+            return response()->json(array("error" => $e->getMessage()), 400);
+        }
+    }
+
     private function getLastIdFromTable()
     {
         if (env('DB_CONNECTION', 'mysql') == "pgsql") {

@@ -30,6 +30,7 @@ Route::post('account/reset-password/init', 'Auth\ResetPasswordController@passwor
 Route::post('account/reset-password/finish', 'Auth\ResetPasswordController@changePassword');
 Route::post('token/validate', 'Auth\ResetPasswordController@validateToken');
 Route::post('publicar', 'PublicadorController@publicar');
+Route::post('publicarWithoutEmail', 'PublicadorController@publicarOnly');
 Route::get('download/{idDocumento}', 'FilesController@downloadDocument');
 Route::get('checkDocument', 'DocumentoController@checkDocument');
 Route::group(['middleware' => ['jwt.verify']], function () {
