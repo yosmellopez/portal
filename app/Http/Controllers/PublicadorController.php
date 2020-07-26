@@ -216,14 +216,12 @@ class PublicadorController extends Controller
                 $data["idDocumento"] = $documentoDb->idDocumento;
                 $data["token"] = $token;
                 $documentoDb->fill($data)->update();
-                $responseCode = 204;
             } else {
                 $data["token"] = $token;
                 $documento->fill($data)->save();
-                $responseCode = 201;
             }
             Log::info('');
-            return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "]"), $responseCode);
+            return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "]"), 201);
         } catch (\Exception $e) {
             if ($e instanceof \Exception) {
                 return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $e->getMessage()), 201);
