@@ -49,7 +49,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('documentos/series', 'SearchController@listNumeroSerie');
     Route::get('estados', 'SearchController@listEstadoSunat');
     Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
-    Route::get('account', 'Auth\LoginController@getAuthenticatedUser');
+    Route::get('config/configuracion', 'ConfigController@listGeneralConfig');
+    Route::get('config/configuracion', 'ConfigController@listReglaConfig');
+    Route::get('config/configuracion', 'ConfigController@listResumenConfig');
+    Route::get('config/configuracion', 'ConfigController@listSociedad');
+    Route::post('config/configuracion', 'ConfigController@saveGeneralConfig');
+    Route::post('config/configuracion', 'ConfigController@saveReglaConfig');
+    Route::post('config/configuracion', 'ConfigController@saveResumenConfig');
+    Route::post('config/configuracion', 'ConfigController@saveSociedad');
     Route::post('account/change-password', 'UsuarioController@changePassword');
     Route::post('user/resetMasive', 'UsuarioController@resetPasswordMasive');
     Route::post('user/password-reset/{usuarioId}', 'UsuarioController@passwordReset');
