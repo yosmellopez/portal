@@ -9,4 +9,5 @@ class ResumenConfig extends Model
     protected $table = "fe_resumen_config";
     protected $primaryKey = "id";
     protected $fillable = ["id", "fecha", "hora"];
+    public $timestamps = false;
 }
