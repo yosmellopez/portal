@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entity\Documento;
 use App\Entity\GeneralConfig;
 use App\Entity\ReglaConfig;
 use App\Entity\ResumenConfig;
@@ -61,6 +62,11 @@ class ConfigController extends Controller
             }
             $reglaIdioma = new ReglaConfig();
             $data = $request->only($reglaIdioma->getFillable());
+            $idRegla = $data["fEKey"];
+            $existResumen = ReglaConfig::where('fEKey', $idRegla)->exists();
+            if ($existResumen) {
+                return response()->json(['success' => false, 'message' => 'La regla de idioma ya existe en la base de datos.'], 200);
+            }
             $reglaIdioma->fill($data)->save();
             return response()->json(array("success" => true, "message" => "Se ha guardado la regla de idioma correctamente."), 201);
         } catch (\Exception $exception) {
@@ -89,6 +95,11 @@ class ConfigController extends Controller
             }
             $resumenConfig = new ResumenConfig();
             $data = $request->only($resumenConfig->getFillable());
+            $idResumen = $data["id"];
+            $existResumen = ResumenConfig::where('id', $idResumen)->exists();
+            if ($existResumen) {
+                return response()->json(['success' => false, 'message' => 'La configuración del resumen ya existe en la base de datos.'], 200);
+            }
             $resumenConfig->fill($data)->save();
             return response()->json(array("success" => true, "message" => "Se ha guardado la configuración del resumen diario correctamente."), 201);
         } catch (\Exception $exception) {
@@ -117,6 +128,11 @@ class ConfigController extends Controller
             }
             $sociedad = new Sociedad();
             $data = $request->only($sociedad->getFillable());
+            $idBd = $data["bdId"];
+            $existDatabase = Sociedad::where('bdId', $idBd)->exists();
+            if ($existDatabase) {
+                return response()->json(['success' => false, 'message' => 'La sociedad ya existe en la base de datos.'], 200);
+            }
             $sociedad->fill($data)->save();
             return response()->json(array("success" => true, "message" => "Se ha guardado la sociedad correctamente."), 201);
         } catch (\Exception $exception) {
