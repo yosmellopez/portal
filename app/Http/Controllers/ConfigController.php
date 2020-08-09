@@ -29,7 +29,7 @@ class ConfigController extends Controller
             $hasher = new Md5Hash();
             $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+                return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
             }
             $configuracion = new GeneralConfig();
             $data = $request->only($configuracion->getFillable());
@@ -45,7 +45,7 @@ class ConfigController extends Controller
         $hasher = new Md5Hash();
         $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
         if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+            return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
         }
         $reglasIdioma = ReglaConfig::all();
         return response()->json($reglasIdioma, 200);
@@ -57,7 +57,7 @@ class ConfigController extends Controller
             $hasher = new Md5Hash();
             $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+                return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
             }
             $reglaIdioma = new ReglaConfig();
             $data = $request->only($reglaIdioma->getFillable());
@@ -73,7 +73,7 @@ class ConfigController extends Controller
         $hasher = new Md5Hash();
         $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
         if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+            return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
         }
         $resumenes = ResumenConfig::all();
         return response()->json($resumenes, 200);
@@ -85,7 +85,7 @@ class ConfigController extends Controller
             $hasher = new Md5Hash();
             $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+                return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
             }
             $resumenConfig = new ResumenConfig();
             $data = $request->only($resumenConfig->getFillable());
@@ -101,7 +101,7 @@ class ConfigController extends Controller
         $hasher = new Md5Hash();
         $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
         if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+            return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
         }
         $sociedades = Sociedad::all();
         return response()->json($sociedades, 200);
@@ -113,7 +113,7 @@ class ConfigController extends Controller
             $hasher = new Md5Hash();
             $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
+                return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401);
             }
             $sociedad = new Sociedad();
             $data = $request->only($sociedad->getFillable());
