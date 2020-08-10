@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Entity\Documento;
 use App\Entity\GeneralConfig;
 use App\Entity\ReglaConfig;
 use App\Entity\ResumenConfig;
