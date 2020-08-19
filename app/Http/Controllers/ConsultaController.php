@@ -38,7 +38,7 @@ class ConsultaController extends Controller
             $fechaEmisionFin = Carbon::now();
         }
         $fechaEmisionFin = Carbon::createFromFormat("d/m/Y", $fechaEmisionFin);
-        $tipoDoc = $this->findTipoDoc($items["tipoDoc"]);
+        $tipoDoc = isset($items["tipoDoc"]) ? $items["tipoDoc"] : null;
         $rucClient = isset($items["rucClient"]) ? $items["rucClient"] : null;
         $paginator = Documento::with('cliente')
             ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
@@ -128,32 +128,6 @@ class ConsultaController extends Controller
             }
         } catch (\Exception $exception) {
             return response()->json(array("success" => false, "message" => "No se ha podido guardar la configuración general por: " . $exception->getMessage()), 500);
-        }
-    }
-
-    private function findTipoDoc($tipo = "factura")
-    {
-        switch ($tipo) {
-            case "factura":
-                return "01";
-            case "boleta":
-                return "03";
-            case "nota-credito":
-                return "07";
-            case "nota-debito":
-                return "08";
-            case "comprobante-percepcion":
-                return "40";
-            case "comprobante-retencion":
-                return "20";
-            case "comunicacion-baja":
-                return "01";
-            case "guia-remision":
-                return "09";
-            case "resumen-boleta":
-                return "03";
-            default:
-                return "01";
         }
     }
 }
