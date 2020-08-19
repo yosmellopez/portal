@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Entity\Documento;
-use App\Entity\GeneralConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
