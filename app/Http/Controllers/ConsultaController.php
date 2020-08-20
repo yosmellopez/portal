@@ -61,7 +61,7 @@ class ConsultaController extends Controller
         return response()->json($paginator, 200);
     }
 
-    public function downloadFormatoImpreso(Request $request)
+    public function downloadFormatoImpreso(Request $request, $idDocumento)
     {
         try {
             $hasher = new Md5Hash();
@@ -70,7 +70,6 @@ class ConsultaController extends Controller
                 return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401,
                     ["success" => "false", "error" => 'Las credenciales proporcionadas para el servicio no son correctas']);
             }
-            $idDocumento = $request->idDocumento;
             $documento = Documento::find($idDocumento);
             $docPath = $documento->docPdf;
             $exists = Storage::disk('custom')->exists($docPath);
@@ -84,7 +83,7 @@ class ConsultaController extends Controller
         }
     }
 
-    public function downloadXmlFirmado(Request $request)
+    public function downloadXmlFirmado(Request $request, $idDocumento)
     {
         try {
             $hasher = new Md5Hash();
@@ -93,7 +92,6 @@ class ConsultaController extends Controller
                 return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401,
                     ["success" => "false", "error" => 'Las credenciales proporcionadas para el servicio no son correctas']);
             }
-            $idDocumento = $request->idDocumento;
             $documento = Documento::find($idDocumento);
             $docPath = $documento->docXml;
             $exists = Storage::disk('custom')->exists($docPath);
@@ -107,7 +105,7 @@ class ConsultaController extends Controller
         }
     }
 
-    public function downloadRespuestaCdr(Request $request)
+    public function downloadRespuestaCdr(Request $request, $idDocumento)
     {
         try {
             $hasher = new Md5Hash();
@@ -116,7 +114,6 @@ class ConsultaController extends Controller
                 return response()->json(["success" => false, 'message' => 'Las credenciales proporcionadas para el servicio no son correctas'], 401,
                     ["success" => "false", "error" => 'Las credenciales proporcionadas para el servicio no son correctas']);
             }
-            $idDocumento = $request->idDocumento;
             $documento = Documento::find($idDocumento);
             $docPath = $documento->docCdr;
             $exists = Storage::disk('custom')->exists($docPath);
