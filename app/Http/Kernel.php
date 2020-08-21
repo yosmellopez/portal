@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\HttpsProtocolMiddleware;
 use App\Http\Middleware\JwtMiddleware;
 use App\Http\Middleware\Localization;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -53,6 +54,7 @@ class Kernel extends HttpKernel
 //            \App\Http\Middleware\VerifyCsrfToken::class,
             SubstituteBindings::class,
             Localization::class,
+            HttpsProtocolMiddleware::class
         ],
 
         'api' => [

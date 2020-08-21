@@ -67,6 +67,12 @@ class CreateDocumentosTable extends Migration
                 $table->timestamps();
             });
         }
+        if (Schema::hasTable('fe_docelectronico') && !Schema::hasColumn('fe_docelectronico', 'start_at') && !Schema::hasColumn('fe_docelectronico', 'end_at')) {
+            Schema::table("fe_docelectronico", function (Blueprint $table) {
+                $table->time("start_at")->nullable();
+                $table->time("end_at")->nullable();
+            });
+        }
     }
 
     /**

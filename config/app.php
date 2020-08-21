@@ -129,6 +129,7 @@ return [
     'mail_sender_name' => env('MAIL_SENDER_NAME', 'Portal Facturación Electrónica.'),
     'logo' => env('APP_LOGO', '/content/images/logo_1.png'),
     'use_phpmailer' => env('USE_PHPMAILER', false),
+    'use_https' => env('USE_HTTPS', false),
 
     /*
     |--------------------------------------------------------------------------
