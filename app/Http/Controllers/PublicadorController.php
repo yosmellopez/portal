@@ -56,14 +56,23 @@ class PublicadorController extends Controller
             $mensajeErrorAnexo = false;
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf",
-                "docXml", "docCdr", "rucClient", "rsRuc", "monedaTransaccion", "emailEmisor", "serie", "start_at", "end_at"]);
+                "docXml", "docCdr", "rucClient", "rsRuc", "monedaTransaccion", "emailEmisor", "serie"]);
+            try {
+                $timeData = $request->only(["start_at", "end_at"]);
+                $data["start_at"] = Carbon::createFromFormat("H:i:s", $timeData["start_at"]);
+                $data["end_at"] = Carbon::createFromFormat("H:i:s", $timeData["end_at"]);
+            } catch (\Exception $e) {
+                Log::error("No se encuentra el tiempo en el documento se creara con el tiempo actual.");
+                Log::error($e->getMessage());
+                $ahora = Carbon::now();
+                $data["start_at"] = $ahora;
+                $data["end_at"] = $ahora->addMinute();
+            }
             $this->obtenerDatos($data);
             $data["idDocumento"] = $this->getLastIdFromTable();
             $data["estadoWeb"] = "P";
             $fechaEmisionDocumento = $data["fecEmisionDoc"];
             $data["fecEmisionDoc"] = Carbon::createFromFormat("d/m/Y", $data["fecEmisionDoc"]);
-            $data["start_at"] = Carbon::createFromFormat("H:i:s", $data["start_at"]);
-            $data["end_at"] = Carbon::createFromFormat("H:i:s", $data["end_at"]);
             $docPdf = $data["docPdf"];
             $docXML = $data["docXml"];
             $docCdr = $data["docCdr"];
