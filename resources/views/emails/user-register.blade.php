@@ -209,8 +209,9 @@
                                             <div style="color:#555555;font-family:Cabin, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.5;padding-top:5px;padding-right:10px;padding-bottom:30px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.5; color: #555555; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 18px;">
                                                     <p style="font-size: 14px; line-height: 1.5; word-break: break-word; mso-line-height-alt: 21px; margin: 0;">
-                                                        Has solicitado un cambio de contraseña a través
+                                                        Se ha creado un nuevo usuario a través
                                                         del <a href="{{config('app.url')}}">{{config('app.name')}}.</a>
+                                                        para revisar sus documentos electrónicos
                                                     </p>
                                                 </div>
                                             </div>
