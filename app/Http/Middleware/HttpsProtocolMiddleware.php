@@ -16,7 +16,7 @@ class HttpsProtocolMiddleware
     public function handle($request, Closure $next)
     {
         if (config('app.use_https') == 'true') {
-            if (!$request->secure() && app()->environment('production')) {
+            if (!$request->secure() && app()->environment('prod')) {
                 return redirect()->secure($request->getRequestUri());
             }
         }
