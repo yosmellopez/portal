@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -65,8 +66,24 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => $exception->getMessage()], 500);
         } else if ($exception instanceof \HttpRequestException) {
             return response()->json(['error' => 'External API call failed.'], 500);
+        } else if ($exception instanceof QueryException) {
+            $message = $this->translateDatabaseError($exception);
+            return response()->json(['error' => $exception->getMessage(), 'message' => $message], 500);
         }
         return parent::render($request, $exception);
     }
 
+    private function translateDatabaseError(QueryException $exception)
+    {
+        $message = $exception->getMessage();
+        if (strpos($message, "fe_cliente") !== false && strpos($message, "PRIMARY") !== false) {
+            $indexStart = strrpos($message, 'Duplicate entry', -5);
+            $indexEnd = strrpos($message, 'for key', -5);
+            $ruc = substr($message, $indexStart + 17, $indexEnd - 73);
+            return "Ya existe un cliente con el RUC: " . $ruc;
+        } else if (strpos($message, "fe_usuario") !== false && strpos($message, "PRIMARY") !== false) {
+            return "Ya existe un usuario con el nombre de usuario";
+        }
+        return $exception->getMessage();
+    }
 }

@@ -63,7 +63,7 @@ export class ClienteWindowComponent implements OnInit {
                     this.isLoadingResults = false;
                     this.showToast(`Cliente ${cliente.nombreClient} guardado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
-                }, (res: HttpErrorResponse) => this.onError(res.message));
+                }, (res: HttpErrorResponse) => this.onError(res));
         } else {
             cliente.rucClient = this.clienteId;
             this.clienteService.update(cliente).pipe(
@@ -73,7 +73,7 @@ export class ClienteWindowComponent implements OnInit {
                     this.isLoadingResults = false;
                     this.showToast(`Cliente ${cliente.nombreClient} actualizado correctamente`, 'Información', true);
                     this.dialogRef.close(res);
-                }, (res: HttpErrorResponse) => this.onError(res.message));
+                }, (res: HttpErrorResponse) => this.onError(res));
         }
     }
 
@@ -92,8 +92,8 @@ export class ClienteWindowComponent implements OnInit {
         });
     }
 
-    protected onError(errorMessage: string) {
+    protected onError(response: HttpErrorResponse) {
         this.isLoadingResults = false;
-        this.showToast(errorMessage, 'Error', false);
+        this.showToast(response.error.message, 'Error', false);
     }
 }

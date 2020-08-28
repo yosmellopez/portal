@@ -23,7 +23,8 @@
     "matriphe/laravel-md5-hash": "^1.0.1",
     "mxl/laravel-queue-rate-limit": "1.0.2",
     "phpmailer/phpmailer": "^6.1.6",
-    "tymon/jwt-auth": "~1.0.0-rc.5.1"
+    "tymon/jwt-auth": "~1.0.0-rc.5.1",
+    "ext-http": "*"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

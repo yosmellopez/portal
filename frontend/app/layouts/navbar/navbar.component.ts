@@ -72,7 +72,7 @@ export class NavbarComponent implements OnInit {
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         this.router.events.subscribe((event) => {
             this.sidebarClose();
-            var $layer: any = document.getElementsByClassName('close-layer')[0];
+            const $layer: any = document.getElementsByClassName('close-layer')[0];
             if ($layer) {
                 $layer.remove();
                 this.mobile_menu_visible = 0;
@@ -92,7 +92,9 @@ export class NavbarComponent implements OnInit {
 
     sidebarClose() {
         const body = document.getElementsByTagName('body')[0];
-        this.toggleButton.classList.remove('toggled');
+        if (this.toggleButton) {
+            this.toggleButton.classList.remove('toggled');
+        }
         this.sidebarVisible = false;
         body.classList.remove('nav-open');
     };
@@ -107,6 +109,7 @@ export class NavbarComponent implements OnInit {
             this.sidebarClose();
         }
         const body = document.getElementsByTagName('body')[0];
+        const $layer = document.createElement('div');
         if (this.mobile_menu_visible == 1) {
             // $('html').removeClass('nav-open');
             body.classList.remove('nav-open');
@@ -123,9 +126,7 @@ export class NavbarComponent implements OnInit {
                 $toggle.classList.add('toggled');
             }, 430);
 
-            var $layer = document.createElement('div');
             $layer.setAttribute('class', 'close-layer');
-
 
             if (body.querySelectorAll('.main-panel')) {
                 document.getElementsByClassName('main-panel')[0].appendChild($layer);
@@ -146,10 +147,8 @@ export class NavbarComponent implements OnInit {
                     $toggle.classList.remove('toggled');
                 }, 400);
             }.bind(this);
-
             body.classList.add('nav-open');
             this.mobile_menu_visible = 1;
-
         }
     };
 

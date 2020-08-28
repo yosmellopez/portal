@@ -19,7 +19,7 @@
             <mat-error *ngIf="formulario.controls['email'].errors?.email">Debe introducir un correo válido</mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="RUC Cliente" formControlName="rucClient" type="number">
+            <input matInput placeholder="RUC Cliente" formControlName="rucClient">
             <mat-error *ngIf="formulario.controls['rucClient'].errors?.required">Debe introducir un número de RUC</mat-error>
         </mat-form-field>
         <div class="row" style="padding: 0 0 15px 15px">
