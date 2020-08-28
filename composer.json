@@ -22,7 +22,7 @@
     "laravel/tinker": "~1.0",
     "matriphe/laravel-md5-hash": "^1.0.1",
     "mxl/laravel-queue-rate-limit": "1.0.2",
-    "phpmailer/phpmailer": "^6.1",
+    "phpmailer/phpmailer": "^6.1.6",
     "tymon/jwt-auth": "~1.0.0-rc.5.1"
   },
   "require-dev": {
