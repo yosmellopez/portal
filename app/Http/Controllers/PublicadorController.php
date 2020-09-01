@@ -144,7 +144,7 @@ class PublicadorController extends Controller
             if (!$mensajeErrorAnexo) {
                 return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $mensajeErrorAnexo), 201);
             }
-            return response()->json(array("error" => $e->getMessage()), 400);
+            return response()->json(array("mensaje" => $e->getMessage(), "error" => $e->getMessage()), 500);
         }
     }
 

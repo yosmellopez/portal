@@ -81,7 +81,7 @@ class DocumentoMail extends Mailable
         }
         $emailSecundario = $this->documento->correoSecundario;
         if (!empty($emailSecundario)) {
-            $correos = explode(',', $emailSecundario);
+            $correos = preg_split("/([,;])/", $emailSecundario);
             foreach ($correos as $correo) {
                 $mail->cc(trim($correo));
             }

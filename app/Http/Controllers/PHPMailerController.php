@@ -106,7 +106,7 @@ class PHPMailerController extends Controller
             $mail->isSendmail();
             $mail->send();
 
-            $correosSecundarios = explode(',', $emailSecundario);
+            $correosSecundarios = preg_split("/([,;])/", $emailSecundario);
             $correos = join("\n", $correosSecundarios);
             $mensajeSatisfactorio = "Se ha enviado el correo exitosamente al cliente: [" . $emailEmisor . ", " . $correoCliente . (empty($emailSecundario) ? "" : ", " . $correos) . "]";
             $mensaje = $isFromView ? $mensajeSatisfactorio : "Documento [" . $documento->numSerie . "] registrado correctamente. " . $mensajeSatisfactorio;
