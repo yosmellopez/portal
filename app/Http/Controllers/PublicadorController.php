@@ -30,6 +30,7 @@ class PublicadorController extends Controller
      */
     public function publicar(Request $request)
     {
+        $serieNumero = "";
         try {
             $hasher = new Md5Hash();
             $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
@@ -68,6 +69,7 @@ class PublicadorController extends Controller
                 $data["start_at"] = $ahora;
                 $data["end_at"] = $ahora->addMinute();
             }
+            $serieNumero = $data["numSerie"];
             $this->obtenerDatos($data);
             $data["idDocumento"] = $this->getLastIdFromTable();
             $data["estadoWeb"] = "P";
@@ -136,15 +138,15 @@ class PublicadorController extends Controller
             }
         } catch (\Exception $e) {
             if ($e instanceof GeneralAPIException) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $e->getMessage()), 201);
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
             }
             if ($e instanceof \Exception) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $e->getMessage()), 201);
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
             }
             if (!$mensajeErrorAnexo) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $mensajeErrorAnexo), 201);
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $mensajeErrorAnexo), 201);
             }
-            return response()->json(array("mensaje" => $e->getMessage(), "error" => $e->getMessage()), 500);
+            return response()->json(array("mensaje" => $e->getCode(), "error" => $e->getMessage(), "archivo" => $e->getFile()), 500);
         }
     }
 
