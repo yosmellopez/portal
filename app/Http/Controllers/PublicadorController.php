@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Entity\Cliente;
 use App\Entity\Documento;
 use App\Entity\Usuario;
@@ -137,14 +136,15 @@ class PublicadorController extends Controller
                 return $documentoController->sendEmail($data["idDocumento"], false);
             }
         } catch (\Exception $e) {
+            Log::error($e->getTraceAsString());
             if ($e instanceof GeneralAPIException) {
                 return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
             }
             if ($e instanceof \Exception) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
+                return response()->json(array("mensaje" => "No se pudo registar el documento [" . $serieNumero . "] por: " . $e->getMessage()), 201);
             }
             if (!$mensajeErrorAnexo) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $mensajeErrorAnexo), 201);
+                return response()->json(array("mensaje" => "No se pudo registar el documento [" . $serieNumero . "] por: " . $mensajeErrorAnexo), 201);
             }
             return response()->json(array("mensaje" => $e->getCode(), "error" => $e->getMessage(), "archivo" => $e->getFile()), 500);
         }
@@ -152,6 +152,7 @@ class PublicadorController extends Controller
 
     public function publishOnly(Request $request)
     {
+        $serieNumero = "";
         try {
             $hasher = new Md5Hash();
             $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
@@ -177,6 +178,7 @@ class PublicadorController extends Controller
             $mensajeErrorAnexo = false;
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "rsRuc", "monedaTransaccion", "emailEmisor", "serie"]);
+            $serieNumero = $data["numSerie"];
             $this->obtenerDatos($data);
             $data["idDocumento"] = $this->getLastIdFromTable();
             $data["estadoWeb"] = "P";
@@ -235,13 +237,13 @@ class PublicadorController extends Controller
                 $documento->fill($data)->save();
             }
             Log::info('');
-            return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "]"), 201);
+            return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "]"), 201);
         } catch (\Exception $e) {
             if ($e instanceof \Exception) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $e->getMessage()), 201);
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
             }
             if (!$mensajeErrorAnexo) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $data["numSerie"] . "] pero: " . $mensajeErrorAnexo), 201);
+                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $mensajeErrorAnexo), 201);
             }
             return response()->json(array("error" => $e->getMessage()), 400);
         }
