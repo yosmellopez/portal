@@ -90,7 +90,8 @@ class PHPMailerController extends Controller
             $mail->addEmbeddedImage($appFacebookPath, "facebook", "Facebook");
             $mail->addEmbeddedImage($appTwitterPath, "twitter", "Twitter");
             $mail->addEmbeddedImage($appGooglePath, "google", "Google");
-            $prefixPath = Storage::disk("custom")->getDriver()->getAdapter()->getPathPrefix();
+            $typeFilesystem = config("filesystems.default");
+            $prefixPath = Storage::disk($typeFilesystem)->getDriver()->getAdapter()->getPathPrefix();
 
             $docPdf = "";
             if ($documento->tipoTransaccion == 'E') {

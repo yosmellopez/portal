@@ -34,7 +34,8 @@ class DocumentoMail extends Mailable
     public function build()
     {
         $docPdf = "";
-        $prefixPath = Storage::disk("custom")->getDriver()->getAdapter()->getPathPrefix();
+        $typeFilesystem = config("filesystems.default");
+        $prefixPath = Storage::disk($typeFilesystem)->getDriver()->getAdapter()->getPathPrefix();
         if ($this->documento->tipoTransaccion == 'E') {
             $docPdf = join(DIRECTORY_SEPARATOR, array($prefixPath, $this->documento->docPdf));
         }

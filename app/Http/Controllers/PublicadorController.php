@@ -101,9 +101,10 @@ class PublicadorController extends Controller
             $directory = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"]));
             Storage::makeDirectory($directory);
             $localPath = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"], $fileName));
-            Storage::disk('custom')->put($localPath . '.pdf', $filePdf);
-            Storage::disk('custom')->put($localPath . '.xml', $fileXml);
-            Storage::disk('custom')->put($localPath . '.zip', $fileCdr);
+            $typeFilesystem = config("filesystems.default");
+            Storage::disk($typeFilesystem)->put($localPath . '.pdf', $filePdf);
+            Storage::disk($typeFilesystem)->put($localPath . '.xml', $fileXml);
+            Storage::disk($typeFilesystem)->put($localPath . '.zip', $fileCdr);
             $data["docPdf"] = $localPath . '.pdf';
             $data["docXml"] = $localPath . '.xml';
             $data["docCdr"] = $localPath . '.zip';
@@ -211,9 +212,10 @@ class PublicadorController extends Controller
             $directory = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"]));
             Storage::makeDirectory($directory);
             $localPath = join(DIRECTORY_SEPARATOR, array($dateDirectory, $data["rucClient"], $fileName));
-            Storage::disk('custom')->put($localPath . '.pdf', $filePdf);
-            Storage::disk('custom')->put($localPath . '.xml', $fileXml);
-            Storage::disk('custom')->put($localPath . '.zip', $fileCdr);
+            $typeFilesystem = config("filesystems.default");
+            Storage::disk($typeFilesystem)->put($localPath . '.pdf', $filePdf);
+            Storage::disk($typeFilesystem)->put($localPath . '.xml', $fileXml);
+            Storage::disk($typeFilesystem)->put($localPath . '.zip', $fileCdr);
             $data["docPdf"] = $localPath . '.pdf';
             $data["docXml"] = $localPath . '.xml';
             $data["docCdr"] = $localPath . '.zip';
