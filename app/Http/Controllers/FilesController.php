@@ -20,8 +20,8 @@ class FilesController extends Controller
 
             $uploadedFile = $request->file('primero');
             $filename = time() . $uploadedFile->getClientOriginalName();
-
-            Storage::disk('custom')->putFileAs(
+            $typeFilesystem = config("filesystems.default");
+            Storage::disk($typeFilesystem)->putFileAs(
                 $filename,
                 $uploadedFile,
                 $filename
@@ -50,7 +50,8 @@ class FilesController extends Controller
                 $docPath = $documento->docPdf;
                 break;
         }
-        $exists = Storage::disk('custom')->exists($docPath);
+        $typeFilesystem = config("filesystems.default");
+        $exists = Storage::disk($typeFilesystem)->exists($docPath);
         if ($exists) {
             return Storage::download($docPath, basename($docPath));
         } else {
