@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use League\Flysystem\Sftp\ConnectionErrorException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
@@ -69,6 +70,8 @@ class Handler extends ExceptionHandler
         } else if ($exception instanceof QueryException) {
             $message = $this->translateDatabaseError($exception);
             return response()->json(['error' => $exception->getMessage(), 'message' => $message], 500);
+        } else if ($exception instanceof ConnectionErrorException) {
+            return response()->json(['error' => $exception->getMessage()], 404);
         }
         return parent::render($request, $exception);
     }
