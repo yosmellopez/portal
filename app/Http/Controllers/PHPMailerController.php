@@ -144,7 +144,7 @@ class PHPMailerController extends Controller
             $mail->Password = config('mail.password'); // your password. your mail password
             $mail->setFrom($userEmail, config("app.mail_sender_name"));
             $mail->SMTPKeepAlive = true;
-            $mail->Subject = 'Reinicio de Contraseña';
+            $mail->Subject = 'Reinicio de Contraseña de Usuario - ' . $usuario->nombUsuario;
             $mail->MsgHTML($html);
             $mail->addAddress($usuario->email);
 
@@ -192,7 +192,7 @@ class PHPMailerController extends Controller
             $mail->Password = config('mail.password'); // your password. your mail password
             $mail->setFrom($userEmail, config('app.mail_sender_name'));
             $mail->SMTPKeepAlive = true;
-            $mail->Subject = config('app.name') . ' te ha enviado el registro de un nuevo usuario';
+            $mail->Subject = config('app.name') . ' te ha enviado el registro de un nuevo usuario - ' . $usuario->nombUsuario;
             $mail->MsgHTML($html);
             $mail->addAddress($usuario->email);
 
@@ -239,7 +239,7 @@ class PHPMailerController extends Controller
             $mail->Password = config('mail.password'); // your password. your mail password
             $mail->setFrom($userEmail, config('app.mail_sender_name'));
             $mail->SMTPKeepAlive = true;
-            $mail->Subject = 'Reinicio de Contraseña';
+            $mail->Subject = 'Reinicio de Contraseña de Usuario - ' . $usuario->nombUsuario;
             $mail->MsgHTML($html);
             $mail->addAddress($email);
 

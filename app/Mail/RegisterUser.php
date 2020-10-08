@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 class RegisterUser extends Mailable
 {
     use Queueable, SerializesModels;
+
     protected $usuario;
     protected $userEmail;
     protected $password;
@@ -36,7 +37,7 @@ class RegisterUser extends Mailable
     {
         $nombreUsuario = $this->usuario->nombUsuario;
         return $this->from($this->userEmail, config("app.mail_sender_name"))
-            ->subject('Registro de Nuevo Usuario')
+            ->subject('Registro de Nuevo Usuario - ' . $nombreUsuario)
             ->view('emails.user-register')
             ->with([
                 "nombreUsuario" => $nombreUsuario,

@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
+
     protected $usuario;
     protected $userEmail;
     protected $usuarioToken;
@@ -37,7 +38,7 @@ class ResetPassword extends Mailable
     public function build()
     {
         return $this->from($this->userEmail, config("app.mail_sender_name"))
-            ->subject('Reinicio de Contraseña')
+            ->subject('Reinicio de Contraseña de Usuario - ' . $nombreUsuario)
             ->view('emails.reset-password')
             ->with([
                 "nombreUsuario" => $this->usuario->nombUsuario,
