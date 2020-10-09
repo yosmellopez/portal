@@ -30,6 +30,12 @@ export class MessageResponse {
     mensaje: string;
 }
 
+export interface AppResponse {
+    success: boolean;
+    msg: string;
+    error: string;
+}
+
 export class ChartData {
     label: string;
     data: number[] = [];

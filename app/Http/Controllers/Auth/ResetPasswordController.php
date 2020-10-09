@@ -113,13 +113,15 @@ class ResetPasswordController extends Controller
                     $emailController->sendEmailToUser($usuario, $userToken);
                 }
             } catch (GeneralAPIException $e) {
-                return response()->json(array("error" => $e->getMessage()), 200);
+                return response()->json(array("success" => false, "error" => $e->getMessage()), 200);
             } catch (Exception $e) {
-                return response()->json(array("error" => $e->getMessage()), 200);
+                return response()->json(array("success" => false, "error" => $e->getMessage()), 200);
             }
-            return response()->json(array("correo" => $email), 200);
+            return response()->json(array("success" => true, "msg" => "Se ha enviado el correo con las instrucciones al correo " . $email), 200);
         } else {
-            return response()->json(array("msg" => "Correo no encontrado en la base de datos.", "correo" => $email, "usuario" => $usuario), 404);
+            $isCorreo = filter_var($email, FILTER_VALIDATE_EMAIL);
+            $mensaje = ($isCorreo ? "Correo" : "Usuario") . " no encontrado en el sistema.";
+            return response()->json(array("success" => false, "error" => $mensaje), 404);
         }
     }
 }

@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {EMAIL_NOT_FOUND_TYPE} from 'app/shared/constants/error.constants';
 import {PasswordResetInitService} from './password-reset-init.service';
+import {HttpResponse} from "@angular/common/http";
+import {AppResponse} from "app/shared/model/generic-model";
 
 @Component({
     selector: 'jhi-password-reset-init',
@@ -18,6 +20,7 @@ export class PasswordResetInitComponent implements AfterViewInit {
     isLoadingResults = false;
     @ViewChild('emailInput', {static: false}) emailInput: ElementRef;
     resetRequestForm: FormGroup;
+    message = '';
 
     constructor(private passwordResetInitService: PasswordResetInitService) {
         this.resetRequestForm = new FormGroup({
@@ -36,23 +39,25 @@ export class PasswordResetInitComponent implements AfterViewInit {
         this.success = null;
         this.errorEmailNotExists = null;
         this.isLoadingResults = true;
-        this.passwordResetInitService.save(this.resetRequestForm.get(['email']).value).subscribe(
-            () => {
+        const values = this.resetRequestForm.get(['email']).value;
+        this.passwordResetInitService.save(values).subscribe((res: HttpResponse<AppResponse>) => {
+                const response = res.body;
                 this.isLoading = false;
                 this.isLoadingResults = false;
-                this.authenticationError = false;
-                this.success = 'OK';
-            },
-            response => {
+                this.authenticationError = !response.success;
+                this.success = response.success ? 'OK' : 'ERROR';
+                this.message = response.success ? response.msg : response.error;
+            }, response => {
                 this.isLoading = false;
                 this.isLoadingResults = false;
                 this.authenticationError = true;
                 this.success = null;
-                if (response.status === 400 && response.error.type === EMAIL_NOT_FOUND_TYPE) {
+                if (response.status === 404) {
                     this.errorEmailNotExists = 'ERROR';
                 } else {
                     this.error = 'ERROR';
                 }
+                this.message = response.error.error;
             }
         );
     }
