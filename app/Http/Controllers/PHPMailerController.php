@@ -75,7 +75,7 @@ class PHPMailerController extends Controller
             }
             $emailSecundario = $documento->correoSecundario;
             if (!empty($emailSecundario)) {
-                $correos = explode(',', $emailSecundario);
+                $correos = preg_split("/([,;])/", $emailSecundario);
                 foreach ($correos as $correo) {
                     $mail->addCC(trim($correo));
                 }
