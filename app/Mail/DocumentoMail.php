@@ -4,11 +4,12 @@ namespace App\Mail;
 
 use App\Entity\Documento;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 
-class DocumentoMail extends Mailable
+class DocumentoMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
