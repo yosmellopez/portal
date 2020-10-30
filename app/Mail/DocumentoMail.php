@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Entity\Documento;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -34,6 +35,9 @@ class DocumentoMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
+        setlocale(LC_TIME, 'Spanish');
+        $fechaActual = Carbon::now();
+        $fechaActual = ucfirst($fechaActual->formatLocalized('%B, %Y'));
         $docPdf = "";
         $typeFilesystem = config("filesystems.default");
         $prefixPath = Storage::disk($typeFilesystem)->getDriver()->getAdapter()->getPathPrefix();
@@ -62,6 +66,7 @@ class DocumentoMail extends Mailable implements ShouldQueue
                 "serieNumero" => $numeroSerie,
                 "fechaEmision" => $this->documento->fecEmisionDoc,
                 "estadoDocumento" => $estadoDocumento,
+                "fecha" => $fechaActual,
             ])
             ->attach($docXml, [
                 'as' => basename($this->documento->docXml),

@@ -174,6 +174,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         ServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
+        Laraveles\Spanish\SpanishServiceProvider::class,
         /*
          * Package Service Providers...
          */

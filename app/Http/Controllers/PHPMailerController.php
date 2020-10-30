@@ -6,6 +6,7 @@ use App\Entity\Documento;
 use App\Entity\Usuario;
 use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +25,9 @@ class PHPMailerController extends Controller
      */
     public function sendEmail($idDocumento, $isFromView)
     {
-        App::setLocale("es");
+        setlocale(LC_TIME, 'Spanish');
+        $fechaActual = Carbon::now();
+        $fechaActual = ucfirst($fechaActual->formatLocalized('%B, %Y'));
         $documento = Documento::find($idDocumento);
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         $mail = new PHPMailer(true);
@@ -46,6 +49,7 @@ class PHPMailerController extends Controller
                 "serieNumero" => $numeroSerie,
                 "fechaEmision" => $documento->fecEmisionDoc,
                 "estadoDocumento" => $estadoDocumento,
+                "fecha" => $fechaActual,
             ]);
             $html = $view->render();
 
