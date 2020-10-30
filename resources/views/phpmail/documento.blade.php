@@ -138,7 +138,7 @@
                                             <div style="color:#555555;font-family:TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif;line-height:1.2;padding-top:15px;padding-right:0px;padding-bottom:15px;padding-left:0px;">
                                                 <div style="font-size: 12px; line-height: 1.2; font-family: TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif; color: #555555; mso-line-height-alt: 14px;">
                                                     <p style="font-size: 14px; line-height: 1.2; text-align: right; font-family: TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif; word-break: break-word; mso-line-height-alt: 17px; margin: 0;">
-                                                        <em>{{ date('F Y') }} </em></p>
+                                                        <em>{{ date('F Y') }} {{ localeDate(date_create(), 'F') }}</em></p>
                                                 </div>
                                             </div>
                                         </div>

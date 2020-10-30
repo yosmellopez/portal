@@ -6,6 +6,7 @@ use App\Entity\Documento;
 use App\Entity\Usuario;
 use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -23,6 +24,7 @@ class PHPMailerController extends Controller
      */
     public function sendEmail($idDocumento, $isFromView)
     {
+        App::setLocale("es");
         $documento = Documento::find($idDocumento);
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         $mail = new PHPMailer(true);
