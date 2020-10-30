@@ -60,6 +60,7 @@ class PublicadorController extends Controller
                     $dataUsuario = array();
                     $dataUsuario["email"] = $dataCliente["email"];
                     $usuarioDb->fill($dataUsuario)->update();
+                    Log::info('Correo del usuario modificado correctamente.');
                 }
             } catch (Exception $e) {
                 Log::error("Ocurrio un problema al buscar el usuario.");
