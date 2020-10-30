@@ -8,6 +8,7 @@ use App\Entity\Documento;
 use App\Entity\Usuario;
 use App\Exceptions\GeneralAPIException;
 use Carbon\Carbon;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -53,6 +54,17 @@ class PublicadorController extends Controller
                 $dataCliente["estadoCliente"] = 1;
                 $clienteDb->fill($dataCliente)->update();
             }
+            try {
+                $usuarioDb = Usuario::where("rucClient", $dataCliente["rucClient"])->first();
+                if (isset($usuarioDb)) {
+                    $dataUsuario = array();
+                    $dataUsuario["email"] = $dataCliente["email"];
+                    $usuarioDb->fill($dataUsuario)->update();
+                }
+            } catch (Exception $e) {
+                Log::error("Ocurrio un problema al buscar el usuario.");
+                Log::error($e->getMessage());
+            }
             $mensajeErrorAnexo = false;
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf",
@@ -61,7 +73,7 @@ class PublicadorController extends Controller
                 $timeData = $request->only(["start_at", "end_at"]);
                 $data["start_at"] = Carbon::createFromFormat("H:i:s", $timeData["start_at"]);
                 $data["end_at"] = Carbon::createFromFormat("H:i:s", $timeData["end_at"]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::error("No se encuentra el tiempo en el documento se creara con el tiempo actual.");
                 Log::error($e->getMessage());
                 $ahora = Carbon::now();
@@ -80,19 +92,19 @@ class PublicadorController extends Controller
             $fileName = $data["numSerie"];
             try {
                 $filePdf = base64_decode($docPdf);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $mensajeErrorAnexo = "Error en el documento Impreso" . $e->getMessage();
                 Log::error($mensajeErrorAnexo);
             }
             try {
                 $fileXml = base64_decode($docXML);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $mensajeErrorAnexo = "Error en el archivo XML" . $e->getMessage();
                 Log::error($mensajeErrorAnexo);
             }
             try {
                 $fileCdr = base64_decode($docCdr);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $mensajeErrorAnexo = "Error en la Respuesta CDR." . $e->getMessage();
                 Log::error($mensajeErrorAnexo);
             }
@@ -136,12 +148,12 @@ class PublicadorController extends Controller
                 $documentoController = new EmailController();
                 return $documentoController->sendEmail($data["idDocumento"], false);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getTraceAsString());
             if ($e instanceof GeneralAPIException) {
                 return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
             }
-            if ($e instanceof \Exception) {
+            if ($e instanceof Exception) {
                 return response()->json(array("mensaje" => "No se pudo registar el documento [" . $serieNumero . "] por: " . $e->getMessage()), 201);
             }
             if (!$mensajeErrorAnexo) {
@@ -191,19 +203,19 @@ class PublicadorController extends Controller
             $fileName = $data["numSerie"];
             try {
                 $filePdf = base64_decode($docPdf);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $mensajeErrorAnexo = "Error en el documento Impreso" . $e->getMessage();
                 Log::error($mensajeErrorAnexo);
             }
             try {
                 $fileXml = base64_decode($docXML);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $mensajeErrorAnexo = "Error en el archivo XML" . $e->getMessage();
                 Log::error($mensajeErrorAnexo);
             }
             try {
                 $fileCdr = base64_decode($docCdr);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $mensajeErrorAnexo = "Error en la Respuesta CDR." . $e->getMessage();
                 Log::error($mensajeErrorAnexo);
             }
@@ -240,8 +252,8 @@ class PublicadorController extends Controller
             }
             Log::info('');
             return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "]"), 201);
-        } catch (\Exception $e) {
-            if ($e instanceof \Exception) {
+        } catch (Exception $e) {
+            if ($e instanceof Exception) {
                 return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
             }
             if (!$mensajeErrorAnexo) {
@@ -303,7 +315,7 @@ class PublicadorController extends Controller
             $response = $client->request('POST', '/api/consultar', ['json' => $data]);
             $body = $response->getBody();
             return $body;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return "";
         }
     }
