@@ -77,7 +77,8 @@ class PHPMailerController extends Controller
             if (!empty($emailSecundario)) {
                 $correos = preg_split("/([,;])/", $emailSecundario);
                 foreach ($correos as $correo) {
-                    $mail->addCC(trim($correo));
+                    if (!empty($correo))
+                        $mail->addCC(trim($correo));
                 }
             }
             $appLogoPath = public_path() . config('app.logo');

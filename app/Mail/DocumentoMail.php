@@ -85,7 +85,8 @@ class DocumentoMail extends Mailable implements ShouldQueue
         if (!empty($emailSecundario)) {
             $correos = preg_split("/([,;])/", $emailSecundario);
             foreach ($correos as $correo) {
-                $mail->cc(trim($correo));
+                if (!empty($correo))
+                    $mail->cc(trim($correo));
             }
         }
         return $mail;
