@@ -82,11 +82,13 @@ class PHPMailerController extends Controller
                 }
             }
             $appLogoPath = public_path() . config('app.logo');
+            $appLogoCorreoPath = public_path() . config('app.logo_correo');
             $appOkPath = public_path() . '/content/images/okok.png';
             $appFacebookPath = public_path() . '/content/images/facebook2x.png';
             $appTwitterPath = public_path() . '/content/images/twitter2x.png';
             $appGooglePath = public_path() . '/content/images/googleplus2x.png';
             $mail->addEmbeddedImage($appLogoPath, "app-logo", "Logo Aplicacion");
+            $mail->addEmbeddedImage($appLogoCorreoPath, "app-logo-correo", "Logo Correo Aplicacion");
             $mail->addEmbeddedImage($appOkPath, "app-ok", "Fondo Aplicacion");
             $mail->addEmbeddedImage($appFacebookPath, "facebook", "Facebook");
             $mail->addEmbeddedImage($appTwitterPath, "twitter", "Twitter");

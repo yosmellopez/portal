@@ -130,6 +130,7 @@ return [
     'logo' => env('APP_LOGO', '/content/images/logo_1.png'),
     'use_phpmailer' => env('USE_PHPMAILER', false),
     'use_https' => env('USE_HTTPS', false),
+    'logo_correo' => env('APP_LOGO_CORREO', '/content/images/logo_1.png'),
 
     /*
     |--------------------------------------------------------------------------

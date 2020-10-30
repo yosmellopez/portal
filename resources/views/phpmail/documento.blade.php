@@ -187,7 +187,7 @@
                                     <div style="width:100% !important;">
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
                                             <div align="center" class="img-container center" style="padding-right: 0px;padding-left: 0px;">
-                                                <img align="center" alt="Image" border="0" class="center" src="cid:app-ok"
+                                                <img align="center" alt="Image" border="0" class="center" src="cid:app-logo-correo"
                                                      style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 252px; display: block;" title="Image" width="252"/>
                                             </div>
                                         </div>
