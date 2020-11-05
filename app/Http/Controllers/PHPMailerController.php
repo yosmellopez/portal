@@ -79,6 +79,12 @@ class PHPMailerController extends Controller
             if (!empty($emailEmisor)) {
                 $mail->addCC(trim($emailEmisor));
             }
+            $isEnvioCorreoProveedor = env("APP_ENVIO_CORREO_PROVEEDOR", false);
+            if ($isEnvioCorreoProveedor) {
+                $correoProvedor = trim(config("mail.username"));
+                if (!empty($correoProvedor))
+                    $mail->addCC($correoProvedor);
+            }
             $emailSecundario = $documento->correoSecundario;
             if (!empty($emailSecundario)) {
                 $correos = preg_split("/([,;])/", $emailSecundario);

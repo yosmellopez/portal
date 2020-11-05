@@ -131,7 +131,7 @@ return [
     'use_phpmailer' => env('USE_PHPMAILER', false),
     'use_https' => env('USE_HTTPS', false),
     'logo_correo' => env('APP_LOGO_CORREO', '/content/images/logo_1.png'),
-
+    'envio_correo_proveedor' => env('APP_ENVIO_CORREO_PROVEEDOR', false),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

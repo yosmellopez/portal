@@ -86,6 +86,12 @@ class DocumentoMail extends Mailable implements ShouldQueue
         if (!empty($emailEmisor)) {
             $mail->cc($emailEmisor);
         }
+        $isEnvioCorreoProveedor = env("APP_ENVIO_CORREO_PROVEEDOR", false);
+        if ($isEnvioCorreoProveedor) {
+            $correoProvedor = trim(config("mail.username"));
+            if (!empty($correoProvedor))
+                $mail->cc($correoProvedor);
+        }
         $emailSecundario = $this->documento->correoSecundario;
         if (!empty($emailSecundario)) {
             $correos = preg_split("/([,;])/", $emailSecundario);
