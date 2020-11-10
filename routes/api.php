@@ -46,6 +46,7 @@ Route::post('token/validate', 'Auth\ResetPasswordController@validateToken');
 Route::post('publicar', 'PublicadorController@publicar');
 Route::post('publicarWithoutEmail', 'PublicadorController@publishOnly');
 Route::post('createStore', 'DocumentoController@createSequenceStore');
+Route::post('clearSequence', 'DocumentoController@clearSequenceStore');
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('documentos/lastEmmited', 'DashboardController@lastEmmitedDocuments');
     Route::get('documentos/lastAproved', 'DashboardController@lastAprovedDocuments');

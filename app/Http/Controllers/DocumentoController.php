@@ -209,7 +209,7 @@ class DocumentoController extends Controller
 //                $mysql_version_check = DB::select(DB::raw('SHOW VARIABLES LIKE "version";'));
 //                $mysql_version = $mysql_version_check[0]->Value;
 //                if (substr($mysql_version, 2, 1) < '7' and substr($mysql_version, 4, 1) < '6') {
-                    $procedure = "
+                $procedure = "
                         CREATE FUNCTION `last_id_from_table`()
                         RETURNS BIGINT
                         no sql deterministic
@@ -264,5 +264,12 @@ class DocumentoController extends Controller
         } catch (\Exception $exception) {
             return response()->json(array("message" => "Hubo un problema al crear el store " . $exception->getMessage()), 200);
         }
+    }
+
+    public function clearSequenceStore()
+    {
+        $procedure = "DELETE FROM fe_sequence";
+        DB::unprepared($procedure);
+        return response()->json(array("message" => "Vaceo de secuencia ejecutada correctamente"), 200);
     }
 }
