@@ -31,6 +31,7 @@ class PublicadorController extends Controller
     public function publicar(Request $request)
     {
         $serieNumero = "";
+        $documentoRegistrado = false;
         try {
             $hasher = new Md5Hash();
             $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
@@ -136,9 +137,11 @@ class PublicadorController extends Controller
                 $data["idDocumento"] = $documentoDb->idDocumento;
                 $data["token"] = $token;
                 $documentoDb->fill($data)->update();
+                $documentoRegistrado = true;
             } else {
                 $data["token"] = $token;
                 $documento->fill($data)->save();
+                $documentoRegistrado = true;
             }
             Log::info('');
             $usePHPMailer = config('app.use_phpmailer');
@@ -152,7 +155,11 @@ class PublicadorController extends Controller
         } catch (Exception $e) {
             Log::error($e->getTraceAsString());
             if ($e instanceof GeneralAPIException) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
+                if ($documentoRegistrado) {
+                    return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
+                } else {
+                    return response()->json(array("mensaje" => "Error en el documento [" . $serieNumero . "]: " . $e->getMessage()), 400);
+                }
             }
             if ($e instanceof Exception) {
                 return response()->json(array("mensaje" => "No se pudo registar el documento [" . $serieNumero . "] por: " . $e->getMessage()), 201);
@@ -167,6 +174,7 @@ class PublicadorController extends Controller
     public function publishOnly(Request $request)
     {
         $serieNumero = "";
+        $documentoRegistrado = false;
         try {
             $hasher = new Md5Hash();
             $credentials = array("password" => $hasher->make($request->claveSesion), "nombUsuario" => $request->usuarioSesion);
@@ -247,18 +255,28 @@ class PublicadorController extends Controller
                 $data["idDocumento"] = $documentoDb->idDocumento;
                 $data["token"] = $token;
                 $documentoDb->fill($data)->update();
+                $documentoRegistrado = true;
             } else {
                 $data["token"] = $token;
                 $documento->fill($data)->save();
+                $documentoRegistrado = true;
             }
             Log::info('');
             return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "]"), 201);
         } catch (Exception $e) {
             if ($e instanceof Exception) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
+                if ($documentoRegistrado) {
+                    return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
+                } else {
+                    return response()->json(array("error" => "Error en el documento [" . $serieNumero . "]: " . $e->getMessage()), 400);
+                }
             }
             if (!$mensajeErrorAnexo) {
-                return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $mensajeErrorAnexo), 201);
+                if ($documentoRegistrado) {
+                    return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
+                } else {
+                    return response()->json(array("error" => "Error en el documento [" . $serieNumero . "]: " . $e->getMessage()), 400);
+                }
             }
             return response()->json(array("error" => $e->getMessage()), 400);
         }
