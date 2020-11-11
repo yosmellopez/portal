@@ -272,4 +272,14 @@ class DocumentoController extends Controller
         DB::unprepared($procedure);
         return response()->json(array("message" => "Vaceo de secuencia ejecutada correctamente"), 200);
     }
+
+    public function resizeColumn(Request $request)
+    {
+        $table = $request->table;
+        $column = $request->column;
+        $size = $request->size;
+        $query = "ALTER TABLE $table MODIFY $column VARCHAR($size)";
+        DB::unprepared($query);
+        return response()->json(array("message" => "Se ha cambiado el tamaño de la columna correctamente"), 200);
+    }
 }
