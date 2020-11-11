@@ -45,10 +45,10 @@ Route::post('account/reset-password/finish', 'Auth\ResetPasswordController@chang
 Route::post('token/validate', 'Auth\ResetPasswordController@validateToken');
 Route::post('publicar', 'PublicadorController@publicar');
 Route::post('publicarWithoutEmail', 'PublicadorController@publishOnly');
-Route::post('createStore', 'DocumentoController@createSequenceStore');
-Route::post('clearSequence', 'DocumentoController@clearSequenceStore');
-Route::post('resize-column', 'DocumentoController@resizeColumn');
 Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::post('createStore', 'DocumentoController@createSequenceStore');
+    Route::post('clearSequence', 'DocumentoController@clearSequenceStore');
+    Route::post('resize-column', 'DocumentoController@resizeColumn');
     Route::get('documentos/lastEmmited', 'DashboardController@lastEmmitedDocuments');
     Route::get('documentos/lastAproved', 'DashboardController@lastAprovedDocuments');
     Route::get('documentos/lastRejected', 'DashboardController@lastRejectedDocuments');
