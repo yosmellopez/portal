@@ -9,7 +9,6 @@ use App\Entity\Usuario;
 use App\Exceptions\GeneralAPIException;
 use Carbon\Carbon;
 use Exception;
-use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -83,7 +82,6 @@ class PublicadorController extends Controller
                 $data["end_at"] = $ahora->addMinute();
             }
             $serieNumero = $data["numSerie"];
-            $this->obtenerDatos($data);
             $data["idDocumento"] = $this->getLastIdFromTable();
             $data["estadoWeb"] = "P";
             $fechaEmisionDocumento = $data["fecEmisionDoc"];
@@ -201,7 +199,6 @@ class PublicadorController extends Controller
             $documento = new Documento();
             $data = $request->only(["numSerie", "fecEmisionDoc", 'estadoSunat', 'estadoWeb', "correoSecundario", 'tipoDoc', "tipoTransaccion", "total", "docPdf", "docXml", "docCdr", "rucClient", "rsRuc", "monedaTransaccion", "emailEmisor", "serie"]);
             $serieNumero = $data["numSerie"];
-            $this->obtenerDatos($data);
             $data["idDocumento"] = $this->getLastIdFromTable();
             $data["estadoWeb"] = "P";
             $fechaEmisionDocumento = $data["fecEmisionDoc"];
@@ -326,17 +323,5 @@ class PublicadorController extends Controller
     public function username()
     {
         return 'nombUsuario';
-    }
-
-    private function obtenerDatos(array $data)
-    {
-        try {
-            $client = new Client(['base_uri' => 'https://ruc-consulta.herokuapp.com', 'timeout' => 3.0]);
-            $response = $client->request('POST', '/api/consultar', ['json' => $data]);
-            $body = $response->getBody();
-            return $body;
-        } catch (Exception $e) {
-            return "";
-        }
     }
 }
