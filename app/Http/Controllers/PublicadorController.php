@@ -264,6 +264,7 @@ class PublicadorController extends Controller
             Log::info('');
             return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "]"), 201);
         } catch (Exception $e) {
+            Log::error($e->getMessage());
             if ($e instanceof Exception) {
                 if ($documentoRegistrado) {
                     return response()->json(array("mensaje" => "Se registró existosamente el documento [" . $serieNumero . "] pero: " . $e->getMessage()), 201);
