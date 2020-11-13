@@ -9,6 +9,8 @@ import {LoginService} from 'app/core/login/login.service';
 import {ProfileService} from 'app/layouts/profiles/profile.service';
 import {Location} from '@angular/common';
 import {ROUTES} from 'app/layouts/sidebar/sidebar.component';
+import {Account} from "app/core/user/account.model";
+import {Observable, of} from "rxjs";
 
 @Component({
     selector: 'jhi-navbar',
@@ -16,6 +18,8 @@ import {ROUTES} from 'app/layouts/sidebar/sidebar.component';
     styleUrls: ['navbar.scss']
 })
 export class NavbarComponent implements OnInit {
+    account: Account;
+    username: Observable<string>;
     inProduction: boolean;
     isNavbarCollapsed: boolean;
     languages: any[];
@@ -77,6 +81,10 @@ export class NavbarComponent implements OnInit {
                 $layer.remove();
                 this.mobile_menu_visible = 0;
             }
+        });
+        this.accountService.identity().subscribe((account: Account) => {
+            this.account = account;
+            this.username = of(account.nombUsuario);
         });
     }
 

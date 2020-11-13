@@ -33,7 +33,7 @@
             <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <button mat-button id="account-menu" [matMenuTriggerFor]="menuCuenta">
                     <mat-icon>account_circle</mat-icon>
-                    <span>Cuenta</span>
+                    <span>Cuenta [{{username|async}}]</span>
                     <mat-icon>arrow_drop_down</mat-icon>
                 </button>
                 <mat-menu #menuCuenta="matMenu">
