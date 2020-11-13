@@ -121,61 +121,116 @@ class SearchController extends Controller
 //        \DB::connection()->enableQueryLog();
         if ($idRol == 2 || $idRol == 3) {
             $rucCliente = $usuario->rucClient;
-            $paginator = Documento::with('cliente')
-                ->where("rucClient", $rucCliente)
-                ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
-                ->when($numSerie, function ($query, $numSerie) {
-                    return $query->where('numSerie', 'like', '%' . $numSerie . '%');
-                })
-                ->when($razonSocial, function ($query, $razonSocial) {
-                    return $query->join('fe_cliente', 'fe_docelectronico.rucClient', '=', 'fe_cliente.rucClient')
-                        ->where('fe_cliente.nombreClient', 'like', '%' . $razonSocial . '%');
-                })
-                ->when($numero, function ($query, $numero) {
-                    return $query->where('numSerie', 'like', '%' . $numero . '%');
-                })
-                ->when($tipoDoc, function ($query, $tipoDoc) {
-                    return $query->where('tipoDoc', $tipoDoc);
-                })
-                ->when($rucClient, function ($query, $rucClient) {
-                    return $query->where('rucClient', $rucClient);
-                })
-                ->when($estadoSunat, function ($query, $estadoWeb) {
-                    return $query->where('estadoSunat', $estadoWeb);
-                })
-                ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
-                    return $query->where('monedaTransaccion', $monedaTransaccion);
-                })
-                ->orderBy($order, $direction)
-                ->paginate($size);
+            if ($items["tipoDoc"] === 'comunicacion-baja') {
+                $paginator = Documento::with('cliente')
+                    ->where("rucClient", $rucCliente)
+                    ->where('tipoTransaccion', "B")
+                    ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
+                    ->when($numSerie, function ($query, $numSerie) {
+                        return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+                    })
+                    ->when($razonSocial, function ($query, $razonSocial) {
+                        return $query->join('fe_cliente', 'fe_docelectronico.rucClient', '=', 'fe_cliente.rucClient')
+                            ->where('fe_cliente.nombreClient', 'like', '%' . $razonSocial . '%');
+                    })
+                    ->when($numero, function ($query, $numero) {
+                        return $query->where('numSerie', 'like', '%' . $numero . '%');
+                    })
+                    ->when($rucClient, function ($query, $rucClient) {
+                        return $query->where('rucClient', $rucClient);
+                    })
+                    ->when($estadoSunat, function ($query, $estadoWeb) {
+                        return $query->where('estadoSunat', $estadoWeb);
+                    })
+                    ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
+                        return $query->where('monedaTransaccion', $monedaTransaccion);
+                    })
+                    ->orderBy($order, $direction)
+                    ->paginate($size);
+            } else {
+                $paginator = Documento::with('cliente')
+                    ->where("rucClient", $rucCliente)
+                    ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
+                    ->when($numSerie, function ($query, $numSerie) {
+                        return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+                    })
+                    ->when($razonSocial, function ($query, $razonSocial) {
+                        return $query->join('fe_cliente', 'fe_docelectronico.rucClient', '=', 'fe_cliente.rucClient')
+                            ->where('fe_cliente.nombreClient', 'like', '%' . $razonSocial . '%');
+                    })
+                    ->when($numero, function ($query, $numero) {
+                        return $query->where('numSerie', 'like', '%' . $numero . '%');
+                    })
+                    ->when($tipoDoc, function ($query, $tipoDoc) {
+                        return $query->where('tipoDoc', $tipoDoc);
+                    })
+                    ->when($rucClient, function ($query, $rucClient) {
+                        return $query->where('rucClient', $rucClient);
+                    })
+                    ->when($estadoSunat, function ($query, $estadoWeb) {
+                        return $query->where('estadoSunat', $estadoWeb);
+                    })
+                    ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
+                        return $query->where('monedaTransaccion', $monedaTransaccion);
+                    })
+                    ->orderBy($order, $direction)
+                    ->paginate($size);
+            }
             return response()->json($paginator, 200);
         } else {
-            $paginator = Documento::with('cliente')
-                ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
-                ->when($numSerie, function ($query, $numSerie) {
-                    return $query->where('numSerie', 'like', '%' . $numSerie . '%');
-                })
-                ->when($razonSocial, function ($query, $razonSocial) {
-                    return $query->join('fe_cliente', 'fe_docelectronico.rucClient', '=', 'fe_cliente.rucClient')
-                        ->where('fe_cliente.nombreClient', 'like', '%' . $razonSocial . '%');
-                })
-                ->when($numero, function ($query, $numero) {
-                    return $query->where('numSerie', 'like', '%' . $numero . '%');
-                })
-                ->when($tipoDoc, function ($query, $tipoDoc) {
-                    return $query->where('tipoDoc', $tipoDoc);
-                })
-                ->when($rucClient, function ($query, $rucClient) {
-                    return $query->where('rucClient', $rucClient);
-                })
-                ->when($estadoSunat, function ($query, $estadoWeb) {
-                    return $query->where('estadoSunat', $estadoWeb);
-                })
-                ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
-                    return $query->where('monedaTransaccion', $monedaTransaccion);
-                })
-                ->orderBy($order, $direction)
-                ->paginate($size);
+            if ($items["tipoDoc"] === 'comunicacion-baja') {
+                $paginator = Documento::with('cliente')
+                    ->where('tipoTransaccion', "B")
+                    ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
+                    ->when($numSerie, function ($query, $numSerie) {
+                        return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+                    })
+                    ->when($razonSocial, function ($query, $razonSocial) {
+                        return $query->join('fe_cliente', 'fe_docelectronico.rucClient', '=', 'fe_cliente.rucClient')
+                            ->where('fe_cliente.nombreClient', 'like', '%' . $razonSocial . '%');
+                    })
+                    ->when($numero, function ($query, $numero) {
+                        return $query->where('numSerie', 'like', '%' . $numero . '%');
+                    })
+                    ->when($rucClient, function ($query, $rucClient) {
+                        return $query->where('rucClient', $rucClient);
+                    })
+                    ->when($estadoSunat, function ($query, $estadoWeb) {
+                        return $query->where('estadoSunat', $estadoWeb);
+                    })
+                    ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
+                        return $query->where('monedaTransaccion', $monedaTransaccion);
+                    })
+                    ->orderBy($order, $direction)
+                    ->paginate($size);
+            } else {
+                $paginator = Documento::with('cliente')
+                    ->whereBetween('fecEmisionDoc', array($fechaEmisionInicio, $fechaEmisionFin))
+                    ->when($numSerie, function ($query, $numSerie) {
+                        return $query->where('numSerie', 'like', '%' . $numSerie . '%');
+                    })
+                    ->when($razonSocial, function ($query, $razonSocial) {
+                        return $query->join('fe_cliente', 'fe_docelectronico.rucClient', '=', 'fe_cliente.rucClient')
+                            ->where('fe_cliente.nombreClient', 'like', '%' . $razonSocial . '%');
+                    })
+                    ->when($numero, function ($query, $numero) {
+                        return $query->where('numSerie', 'like', '%' . $numero . '%');
+                    })
+                    ->when($tipoDoc, function ($query, $tipoDoc) {
+                        return $query->where('tipoDoc', $tipoDoc);
+                    })
+                    ->when($rucClient, function ($query, $rucClient) {
+                        return $query->where('rucClient', $rucClient);
+                    })
+                    ->when($estadoSunat, function ($query, $estadoWeb) {
+                        return $query->where('estadoSunat', $estadoWeb);
+                    })
+                    ->when($monedaTransaccion, function ($query, $monedaTransaccion) {
+                        return $query->where('monedaTransaccion', $monedaTransaccion);
+                    })
+                    ->orderBy($order, $direction)
+                    ->paginate($size);
+            }
 //            $queries = \DB::getQueryLog();
 //            var_dump($queries);
             return response()->json($paginator, 200);
