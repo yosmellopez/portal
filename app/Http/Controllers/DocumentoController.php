@@ -28,19 +28,36 @@ class DocumentoController extends Controller
         $order = $request->sort;
         $direction = $request->direction;
         if ($idRol == 2 || $idRol == 3) {
-            $documentos = Documento::with("cliente")
-                ->where('tipoDoc', $this->findTipoDoc($tipo))
-                ->where("rucClient", $rucCliente)
-                ->orderBy($order, $direction)
-                ->orderBy("fecEmisionDoc", "desc")
-                ->paginate($size);
+            if ($tipo === 'comunicacion-baja') {
+                $documentos = Documento::with("cliente")
+                    ->where('tipoTransaccion', "B")
+                    ->where("rucClient", $rucCliente)
+                    ->orderBy($order, $direction)
+                    ->orderBy("fecEmisionDoc", "desc")
+                    ->paginate($size);
+            } else {
+                $documentos = Documento::with("cliente")
+                    ->where('tipoDoc', $this->findTipoDoc($tipo))
+                    ->where("rucClient", $rucCliente)
+                    ->orderBy($order, $direction)
+                    ->orderBy("fecEmisionDoc", "desc")
+                    ->paginate($size);
+            }
             return response()->json($documentos, 200);
         } else {
-            $documentos = Documento::with("cliente")
-                ->where('tipoDoc', $this->findTipoDoc($tipo))
-                ->orderBy($order, $direction)
-                ->orderBy("fecEmisionDoc", "desc")
-                ->paginate($size);
+            if ($tipo === 'comunicacion-baja') {
+                $documentos = Documento::with("cliente")
+                    ->where('tipoTransaccion', "B")
+                    ->orderBy($order, $direction)
+                    ->orderBy("fecEmisionDoc", "desc")
+                    ->paginate($size);
+            } else {
+                $documentos = Documento::with("cliente")
+                    ->where('tipoDoc', $this->findTipoDoc($tipo))
+                    ->orderBy($order, $direction)
+                    ->orderBy("fecEmisionDoc", "desc")
+                    ->paginate($size);
+            }
             return response()->json($documentos, 200);
         }
     }
