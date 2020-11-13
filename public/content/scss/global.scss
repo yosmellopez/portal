@@ -277,8 +277,15 @@ snack-bar-container {
 }
 
 .danger-row {
-  background-color: red;
-  background-size: 100px 100px;
+  border-left-color: #d32f2f;
+  border-left-style: solid;
+  border-left-width: 12px;
+}
+
+.info-row {
+  border-left-color: #2e7d32;
+  border-left-style: solid;
+  border-left-width: 12px;
 }
 
 .danger-row mat-cell {

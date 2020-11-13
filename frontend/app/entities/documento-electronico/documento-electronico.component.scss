@@ -1,5 +1,5 @@
 .mat-column-expandido {
-  flex: 0.1 !important;
+  flex: 0.07 !important;
 }
 
 .mat-column-numSerie {
@@ -80,10 +80,6 @@ tr.detail-row {
 
 tr.element-row:not(.expanded-row):hover {
   background: whitesmoke;
-}
-
-tr.element-row.danger-row:hover {
-  background-color: red;
 }
 
 tr.element-row:not(.expanded-row):active {

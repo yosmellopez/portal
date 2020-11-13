@@ -234,7 +234,7 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; let element; columns: displayedColumns;"
-                        [ngClass]="{'danger-row': row.tipoTransaccion == 'B'}"
+                        [ngClass]="{'danger-row': row.tipoTransaccion == 'B', 'info-row': row.tipoTransaccion != 'B'}"
                         class="element-row"
                         [class.expanded-row]="expandedElement == element">
                     </tr>
