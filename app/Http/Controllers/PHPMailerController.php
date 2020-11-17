@@ -7,7 +7,6 @@ use App\Entity\Usuario;
 use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -69,11 +68,21 @@ class PHPMailerController extends Controller
             if (isset($documento->email)) {
                 Log::info($documento->email);
                 $correoCliente = $documento->email;
-                $mail->addAddress($documento->email);
+                $correos = preg_split("/([,;])/", $correoCliente);
+                foreach ($correos as $email) {
+                    $correoCliente = $email;
+                    break;
+                }
+                $mail->addAddress($correoCliente);
             } else {
                 Log::info($documento->cliente->email);
                 $correoCliente = $documento->cliente->email;
-                $mail->addAddress($documento->cliente->email);
+                $correos = preg_split("/([,;])/", $correoCliente);
+                foreach ($correos as $email) {
+                    $correoCliente = $email;
+                    break;
+                }
+                $mail->addAddress($correoCliente);
             }
             $emailEmisor = $documento->emailEmisor;
             if (!empty($emailEmisor)) {

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Entity\Documento;
-use App\Entity\SystemJobs;
 use App\Entity\Usuario;
 use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
@@ -11,7 +10,6 @@ use App\Mail\DocumentoMail;
 use App\Mail\RegisterUser;
 use App\Mail\ResetPassword;
 use App\Mail\RestorePassword;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
@@ -38,6 +36,11 @@ class EmailController extends Controller
                     $correo = $documento->email;
                 } else {
                     $correo = $documento->cliente->email;
+                }
+                $correos = preg_split("/([,;])/", $correo);
+                foreach ($correos as $email) {
+                    $correo = $email;
+                    break;
                 }
                 Mail::to($correo)->send(new DocumentoMail($documento, $userEmail));
                 if (Mail::failures()) {
