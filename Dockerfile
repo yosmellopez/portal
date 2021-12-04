@@ -1,4 +1,14 @@
+FROM node:16.13.1 as builder
+WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+RUN echo "se copio correctamente"
+RUN npm run build --prod
+
 FROM php:7.4-apache
+
+COPY --from=builder /usr/src/app/dist/kong-tools/ /usr/share/nginx/html
 
 # Install packages
 RUN apt-get update && apt-get install -y \
