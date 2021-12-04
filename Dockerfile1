@@ -1,0 +1,38 @@
+#FROM composer:2.0.2 as build
+#RUN echo php --version
+#WORKDIR /app
+#COPY . /app
+#RUN apk add icu-dev
+#RUN docker-php-ext-configure intl
+#RUN docker-php-ext-install intl
+#RUN docker-php-ext-enable intl
+#RUN composer install
+#
+#FROM php:7.4.26
+##EXPOSE 80
+#COPY --from=build /app /app
+##COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+##RUN #chown -R www-data:www-data /app \ && a2enmod rewrite
+##RUN #chown -R www-data:www-data /app a2enmod rewrite
+#
+#RUN cd /app
+#RUN ls
+#CMD php artisan serve --host=0.0.0.0 --port=8181
+#EXPOSE 8181
+
+FROM php:7.4.26
+RUN apt-get update -y && apt-get install -y openssl zip unzip git libicu-dev libpq-dev
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-install pdo pdo_pgsql
+#RUN docker-php-ext-install pdo mbstring
+RUN docker-php-ext-configure intl
+RUN docker-php-ext-install intl
+RUN docker-php-ext-enable intl
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+WORKDIR /app
+COPY . /app
+RUN composer install
+
+CMD php artisan serve --host=0.0.0.0 --port=8181
+EXPOSE 8181

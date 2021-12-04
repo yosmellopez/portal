@@ -53,7 +53,7 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => array(
-                PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+//                PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
             ),
         ],
 
