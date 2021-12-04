@@ -21,10 +21,10 @@
     "laravel/framework": "5.5.*",
     "laravel/tinker": "~1.0",
     "laraveles/spanish": "^1.5",
-    "league/flysystem-sftp": "^1.0",
+    "league/flysystem-sftp": "^2.2.1",
     "matriphe/laravel-md5-hash": "^1.1.1",
     "mxl/laravel-queue-rate-limit": "1.0.2",
-    "phpmailer/phpmailer": "^6.1.6",
+    "phpmailer/phpmailer": "^6.5.0",
     "tymon/jwt-auth": "~1.0.0-rc.5.1"
   },
   "require-dev": {
