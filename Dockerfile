@@ -1,14 +1,14 @@
-FROM node:16.13.1 as builder
+FROM node:16.13.1-alpine as builder
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --loglevel verbose
 COPY . .
 RUN echo "se copio correctamente"
-RUN npm run build --prod
+RUN npm run build --prod --loglevel verbose
+RUN cd /usr/src/app
+RUN ls
 
 FROM php:7.4-apache
-
-COPY --from=builder /usr/src/app/dist/kong-tools/ /usr/share/nginx/html
 
 # Install packages
 RUN apt-get update && apt-get install -y \
@@ -62,6 +62,9 @@ VOLUME /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . /var/www/tmp
 RUN cd /var/www/tmp && composer install --no-dev
+
+RUN rm -rf /var/www/html/public/*
+COPY --from=builder /usr/src/app/public /var/www/html/public
 
 # Ensure the entrypoint file can be run
 RUN chmod +x /var/www/tmp/docker-entrypoint.sh
