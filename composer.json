@@ -13,6 +13,7 @@
     "ext-intl": "*",
     "ext-openssl": "*",
     "ext-pdo": "*",
+    "dacastro4/laravel-gmail": "3.0",
     "doctrine/dbal": "^2.10.1",
     "eduardokum/laravel-mail-auto-embed": "^1.0.4",
     "fideloper/proxy": "~4.0",
@@ -21,10 +22,10 @@
     "laravel/framework": "5.5.*",
     "laravel/tinker": "~1.0",
     "laraveles/spanish": "^1.5",
-    "league/flysystem-sftp": "^2.2.1",
-    "matriphe/laravel-md5-hash": "^1.1.1",
+    "league/flysystem-sftp": "^1.0.22",
+    "matriphe/laravel-md5-hash": "^1.0.1",
     "mxl/laravel-queue-rate-limit": "1.0.2",
-    "phpmailer/phpmailer": "^6.5.0",
+    "phpmailer/phpmailer": "^6.1.8",
     "tymon/jwt-auth": "~1.0.0-rc.5.1"
   },
   "require-dev": {
@@ -74,6 +75,10 @@
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "kylekatarnls/update-helper": true,
+      "symfony/thanks": true
+    }
   }
 }

@@ -159,7 +159,7 @@ return [
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
 //        Illuminate\Hashing\HashServiceProvider::class,
-//        Matriphe\Md5Hash\HashServiceProvider::class,
+        Matriphe\Md5Hash\HashServiceProvider::class,
 //        App\Providers\CustomHashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
         Illuminate\Notifications\NotificationServiceProvider::class,
@@ -189,6 +189,7 @@ return [
         App\Providers\HashServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Dacastro4\LaravelGmail\LaravelGmailServiceProvider::class,
     ],
 
     /*
@@ -239,7 +240,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'LaravelGmail' => Dacastro4\LaravelGmail\Facade\LaravelGmail::class,
     ],
 
 ];

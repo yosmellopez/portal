@@ -10,7 +10,10 @@ use App\Mail\DocumentoMail;
 use App\Mail\RegisterUser;
 use App\Mail\ResetPassword;
 use App\Mail\RestorePassword;
+use Carbon\Carbon;
+use Dacastro4\LaravelGmail\Facade\LaravelGmail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 
 class EmailController extends Controller
 {
@@ -121,5 +124,47 @@ class EmailController extends Controller
             }
             throw new GeneralAPIException("No se pudo enviar el correo. Por favor comuníquese con su administrador de sistemas." . $mensaje);
         }
+    }
+
+    public function sendGmailEmail()
+    {
+        $check = LaravelGmail::check();
+        if (!$check) {
+            LaravelGmail::fetchAccessTokenWithRefreshToken("1//0417MeZearVLiCgYIARAAGAQSNwF-L9IrKkW6qgDL8ZOXafs3jgpdEJjxLbhbE8evqObtoVnqEBF6PAYWLwP-ZyenHy1W9zhlN4U");
+            $token = LaravelGmail::getAccessToken();
+            LaravelGmail::setBothAccessToken($token);
+        }
+        $appLogoPath = public_path() . config('app.logo');
+        $encode = base64_encode(file_get_contents($appLogoPath));
+        $dataArray = [
+            "rucCliente" => "10160208541",
+            "nombreCliente" => "Yosmel Lopez Pimentel",
+            "numSerie" => "F22-12345678",
+            "docPdf" => "",
+            "docXml" => "",
+            "docCdr" => "",
+            "total" => "1000",
+            "moneda" => "Soles",
+            "tipoDocumento" => "Boleta De Venta",
+            "serieNumero" => "F22-86872345",
+            "fechaEmision" => "25/05/2022",
+            "estadoDocumento" => "Publicado",
+            "imageLogo" => $encode,
+            "fecha" => Carbon::now(),
+        ];
+        $mail = new \Dacastro4\LaravelGmail\Services\Message\Mail();
+        $mail->to("yosmellopez@gmail.com", $name = null);
+        $mail->from("yosmellopez@gmail.com", $name = null);
+        $mail->view('phpmail.documento', $dataArray);
+        $appLogoPath = public_path() . config('app.logo');
+        $appLogoCorreoPath = public_path() . config('app.logo_correo');
+        $appOkPath = public_path() . '/content/images/okok.png';
+        $appFacebookPath = public_path() . '/content/images/facebook2x.png';
+        $appTwitterPath = public_path() . '/content/images/twitter2x.png';
+        $appGooglePath = public_path() . '/content/images/googleplus2x.png';
+
+        $mail->attach($appLogoPath, $appLogoCorreoPath, $appOkPath, $appFacebookPath, $appTwitterPath, $appGooglePath);
+        $mail->subject("Prueba de Gmail con Laravel");
+        $mail->send();
     }
 }

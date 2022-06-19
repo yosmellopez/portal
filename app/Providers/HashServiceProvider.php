@@ -5,7 +5,7 @@ namespace App\Providers;
 
 
 use Illuminate\Support\ServiceProvider;
-use Matriphe\Md5Hash\Md5Hash;
+use Matriphe\Md5Hash\Md5Hasher;
 
 class HashServiceProvider extends ServiceProvider
 {
@@ -23,7 +23,7 @@ class HashServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('hash', function ($app) {
-            return new Md5Hash();
+            return new Md5Hasher();
         });
     }
 
