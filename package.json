@@ -59,7 +59,7 @@
   "devDependencies": {
     "@angular/cli": "9.0.1",
     "@angular/compiler-cli": "^9.1.13",
-    "@ngtools/webpack": "^10.2.4",
+    "@ngtools/webpack": "^9.1.15",
     "@types/file-saver": "^2.0.1",
     "@types/jest": "24.0.18",
     "@types/node": "^12.11.1",
