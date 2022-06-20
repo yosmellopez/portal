@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@angular/cli": "9.0.1",
-    "@angular/compiler-cli": "9.1.13",
+    "@angular/compiler-cli": "^10.0.0",
     "@ngtools/webpack": "^10.2.4",
     "@openapitools/openapi-generator-cli": "0.0.19-4.1.2",
     "@types/file-saver": "^2.0.1",
