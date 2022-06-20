@@ -14,9 +14,10 @@ import {
     ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MatOption, MatSelect} from '@angular/material';
 import {take, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {MatSelect} from "@angular/material/select";
+import {MatOption} from "@angular/material/core";
 
 @Component({
     selector: 'mat-select-search',

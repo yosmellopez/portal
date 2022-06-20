@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MAT_SNACK_BAR_DATA, MatDialogRef, MatSnackBarRef} from '@angular/material';
 import {ConfirmMensaje, Mensaje} from 'app/shared/model/generic-model';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'jhi-confirm-mensaje',

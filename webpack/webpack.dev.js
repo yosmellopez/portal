@@ -27,6 +27,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
                 '/h2-console',
                 '/auth'
             ],
+            port: 9001,
             target: `http${options.tls ? 's' : ''}://localhost:8000`,
             secure: false,
             changeOrigin: options.tls
@@ -118,9 +119,9 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         new BrowserSyncPlugin({
             https: options.tls,
             host: 'localhost',
-            port: 9000,
+            port: 9001,
             proxy: {
-                target: `http${options.tls ? 's' : ''}://localhost:9060`,
+                target: `http${options.tls ? 's' : ''}://localhost:9060/`,
                 ws: true,
                 proxyOptions: {
                     changeOrigin: false  //pass the Host header to the backend unchanged  https://github.com/Browsersync/browser-sync/issues/430
