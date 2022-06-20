@@ -6,6 +6,7 @@ use App\Entity\Documento;
 use App\Entity\Usuario;
 use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
+use App\Libs\GmailAPI\Mailer;
 use App\Mail\DocumentoMail;
 use App\Mail\RegisterUser;
 use App\Mail\ResetPassword;
@@ -13,10 +14,18 @@ use App\Mail\RestorePassword;
 use Carbon\Carbon;
 use Dacastro4\LaravelGmail\Facade\LaravelGmail;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\View;
+use PHPMailer\PHPMailer\Exception;
+use Swift_Message;
 
 class EmailController extends Controller
 {
+    const ENCODING_7BIT = '7bit';
+    const ENCODING_8BIT = '8bit';
+    const ENCODING_BASE64 = 'base64';
+    const ENCODING_BINARY = 'binary';
+    const ENCODING_QUOTED_PRINTABLE = 'quoted-printable';
+    const STOP_CONTINUE = 1;
+
     /**
      * Display a listing of the resource.
      *
@@ -134,8 +143,6 @@ class EmailController extends Controller
             $token = LaravelGmail::getAccessToken();
             LaravelGmail::setBothAccessToken($token);
         }
-        $appLogoPath = public_path() . config('app.logo');
-        $encode = base64_encode(file_get_contents($appLogoPath));
         $dataArray = [
             "rucCliente" => "10160208541",
             "nombreCliente" => "Yosmel Lopez Pimentel",
@@ -149,21 +156,24 @@ class EmailController extends Controller
             "serieNumero" => "F22-86872345",
             "fechaEmision" => "25/05/2022",
             "estadoDocumento" => "Publicado",
-            "imageLogo" => $encode,
             "fecha" => Carbon::now(),
         ];
-        $mail = new \Dacastro4\LaravelGmail\Services\Message\Mail();
+        $mail = new Mailer();
         $mail->to("yosmellopez@gmail.com", $name = null);
         $mail->from("yosmellopez@gmail.com", $name = null);
         $mail->view('phpmail.documento', $dataArray);
         $appLogoPath = public_path() . config('app.logo');
         $appLogoCorreoPath = public_path() . config('app.logo_correo');
-        $appOkPath = public_path() . '/content/images/okok.png';
+        $appOkPath = public_path() . '/content/images/okok.gif';
         $appFacebookPath = public_path() . '/content/images/facebook2x.png';
         $appTwitterPath = public_path() . '/content/images/twitter2x.png';
         $appGooglePath = public_path() . '/content/images/googleplus2x.png';
-
-        $mail->attach($appLogoPath, $appLogoCorreoPath, $appOkPath, $appFacebookPath, $appTwitterPath, $appGooglePath);
+        $mail->addEmbeddedImage($appLogoPath, "app-logo");
+//        $mail->addEmbeddedImage($appLogoCorreoPath, "app-logo-correo");
+//        $mail->addEmbeddedImage($appOkPath, "app-ok");
+        $mail->addEmbeddedImage($appFacebookPath, "facebook");
+        $mail->addEmbeddedImage($appTwitterPath, "twitter");
+        $mail->addEmbeddedImage($appGooglePath, "google");
         $mail->subject("Prueba de Gmail con Laravel");
         $mail->send();
     }

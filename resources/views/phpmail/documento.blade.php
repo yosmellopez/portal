@@ -185,22 +185,6 @@
                             <div style="border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;">
                                 <div class="col num12" style="min-width: 285px; max-width: 660px; display: table-cell; vertical-align: top; width: 660px;">
                                     <div style="width:100% !important;">
-                                        <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
-                                            <div align="center" class="img-container center" style="padding-right: 0px;padding-left: 0px;">
-                                                <img align="center" alt="Image" border="0" class="center" src="cid:app-logo-correo"
-                                                     style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 252px; display: block;" title="Image" width="252"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="background-color:transparent;">
-                        <div class="block-grid" style="Margin: 0 auto; min-width: 285px; max-width: 660px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;">
-                            <div style="border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;">
-                                <div class="col num12" style="min-width: 285px; max-width: 660px; display: table-cell; vertical-align: top; width: 660px;">
-                                    <div style="width:100% !important;">
                                         <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:10px; padding-right: 0px; padding-left: 0px;">
                                             <div style="color:#000000;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.2;padding-top:10px;padding-right:10px;padding-bottom:5px;padding-left:10px;">
                                                 <div style="font-size: 12px; line-height: 1.2; color: #000000; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14px;">
