@@ -123,6 +123,7 @@
     "npm": ">= 6.14.4"
   },
   "scripts": {
+    "heroku-prebuild": "npm install --force",
     "prettier:format": "prettier --write \"{,frontend/}*.{md,json,ts,css,scss,yml}\"",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "npm run lint -- --fix",
