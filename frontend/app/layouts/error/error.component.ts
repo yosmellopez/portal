@@ -6,9 +6,9 @@ import {ActivatedRoute} from '@angular/router';
     templateUrl: './error.component.html'
 })
 export class ErrorComponent implements OnInit {
-    errorMessage: string;
-    error403: boolean;
-    error404: boolean;
+    errorMessage!: string;
+    error403!: boolean;
+    error404!: boolean;
 
     constructor(private route: ActivatedRoute) {
     }

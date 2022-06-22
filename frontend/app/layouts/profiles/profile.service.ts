@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 
-import {SERVER_API_URL} from 'app/app.constants';
 import {ProfileInfo} from './profile-info.model';
 import {map} from 'rxjs/operators';
+import {SERVER_API_URL} from "../../app.constants";
 
 @Injectable({providedIn: 'root'})
 export class ProfileService {
     private infoUrl = SERVER_API_URL + 'management/info';
-    private profileInfo: Promise<ProfileInfo>;
+    private profileInfo!: Promise<ProfileInfo>;
 
     constructor(private http: HttpClient) {
     }
@@ -19,7 +19,7 @@ export class ProfileService {
                 .get<ProfileInfo>(this.infoUrl, {observe: 'response'})
                 .pipe(
                     map((res: HttpResponse<ProfileInfo>) => {
-                        const data = res.body;
+                        const data = res.body ?? [];
                         const pi = new ProfileInfo();
                         pi.activeProfiles = data['activeProfiles'];
                         const displayRibbonOnProfiles = data['display-ribbon-on-profiles'].split(',');

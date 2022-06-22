@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {ResetResponse} from "../../shared/model/usuario.model";
+import {SERVER_API_URL} from "../../app.constants";
 
-import {SERVER_API_URL} from 'app/app.constants';
-import {ResetResponse} from "app/shared/model/usuario.model";
 
 @Injectable({providedIn: 'root'})
 export class PasswordResetFinishService {

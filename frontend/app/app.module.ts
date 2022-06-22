@@ -1,4 +1,4 @@
-import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -7,8 +7,6 @@ import {AuthInterceptor} from './blocks/interceptor/auth.interceptor';
 import {AuthExpiredInterceptor} from './blocks/interceptor/auth-expired.interceptor';
 import {ErrorHandlerInterceptor} from './blocks/interceptor/errorhandler.interceptor';
 import {NotificationInterceptor} from './blocks/interceptor/notification.interceptor';
-import {PortalSharedModule} from 'app/shared/shared.module';
-import {PortalCoreModule} from 'app/core/core.module';
 import {PortalAppRoutingModule} from './app-routing.module';
 import {PortalEntityModule} from './entities/entity.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -17,17 +15,13 @@ import 'hammerjs';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import {JhiMainComponent} from './layouts/main/main.component';
 import {FooterComponent} from './layouts/footer/footer.component';
-import {JhMaterialModule} from 'app/shared/jh-material.module';
-import {SidebarComponent} from 'app/layouts/sidebar/sidebar.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateModule} from '@angular/material/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatPaginatorIntl} from '@angular/material/paginator';
-import {getSpanishPaginatorIntl} from 'app/es-locale-paginator';
 import {MatTableExporterModule} from 'mat-table-exporter';
-import {MensajeModule} from 'app/mensaje/mensaje.module';
 import {MatSelectModule} from '@angular/material/select';
-import {ChartsModule} from 'ng2-charts';
+import {NgChartsModule} from 'ng2-charts';
 import localeMx from '@angular/common/locales/es-MX';
 import {registerLocaleData} from '@angular/common';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
@@ -39,12 +33,18 @@ import {
     NgxUiLoaderRouterModule,
     SPINNER
 } from "ngx-ui-loader";
-import {AppNgxUiLoaderService} from "app/app-ngx-ui-loader.service";
 import {MissingTranslationHandler, TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {JhiConfigService, missingTranslationHandler, translatePartialLoader} from "ng-jhipster";
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule} from "@angular/material-moment-adapter";
-import {ConfigService} from "app/shared/config-service";
 import {Moment} from "moment";
+import {AppNgxUiLoaderService} from "./app-ngx-ui-loader.service";
+import {ConfigService} from "./shared/config-service";
+import {TranslationModule} from "./shared/language/translation.module";
+import {JhMaterialModule} from "./shared/jh-material.module";
+import {MensajeModule} from "./mensaje/mensaje.module";
+import {PortalCoreModule} from "./core/core.module";
+import {PortalSharedModule} from "./shared/shared.module";
+import {SidebarComponent} from "./layouts/sidebar/sidebar.component";
+import {getSpanishPaginatorIntl} from "./es-locale-paginator";
 // background-color: rgb(79, 195, 247);
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     bgsColor: '#4fc3f7',
@@ -92,7 +92,7 @@ const MY_NATIVE_DATE_FORMATS = {
         PerfectScrollbarModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         PortalEntityModule,
-        ChartsModule,
+        NgChartsModule,
         JhMaterialModule,
         PortalAppRoutingModule,
         MatDatepickerModule,
@@ -105,18 +105,7 @@ const MY_NATIVE_DATE_FORMATS = {
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
         NgxUiLoaderRouterModule, // import this module for showing loader automatically when navigating between app routes
         NgxUiLoaderHttpModule.forRoot({exclude: ['/api/account'], showForeground: false}),
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: translatePartialLoader,
-                deps: [HttpClient]
-            },
-            missingTranslationHandler: {
-                provide: MissingTranslationHandler,
-                useFactory: missingTranslationHandler,
-                deps: [JhiConfigService]
-            }
-        })
+        TranslationModule,
     ],
     declarations: [JhiMainComponent],
     providers: [

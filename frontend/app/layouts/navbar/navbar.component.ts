@@ -2,15 +2,15 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
-import {VERSION} from 'app/app.constants';
-import {AccountService} from 'app/core/auth/account.service';
-import {LoginModalService} from 'app/core/login/login-modal.service';
-import {LoginService} from 'app/core/login/login.service';
-import {ProfileService} from 'app/layouts/profiles/profile.service';
 import {Location} from '@angular/common';
-import {ROUTES} from 'app/layouts/sidebar/sidebar.component';
-import {Account} from "app/core/user/account.model";
 import {Observable, of} from "rxjs";
+import {Account} from "../../core/user/account.model";
+import {LoginService} from "../../core/login/login.service";
+import {LoginModalService} from "../../core/login/login-modal.service";
+import {ProfileService} from "../profiles/profile.service";
+import {VERSION} from "../../app.constants";
+import {AccountService} from "../../core/auth/account.service";
+import {ROUTES} from "../sidebar/sidebar.component";
 
 @Component({
     selector: 'jhi-navbar',
@@ -18,18 +18,18 @@ import {Observable, of} from "rxjs";
     styleUrls: ['navbar.scss']
 })
 export class NavbarComponent implements OnInit {
-    account: Account;
-    username: Observable<string>;
-    inProduction: boolean;
+    account!: Account;
+    username!: Observable<string>;
+    inProduction!: boolean;
     isNavbarCollapsed: boolean;
-    languages: any[];
-    swaggerEnabled: boolean;
-    modalRef: NgbModalRef;
+    languages: any[] = [];
+    swaggerEnabled = false;
+    modalRef!: NgbModalRef;
     version: string;
-    private listTitles: any[];
-    mobile_menu_visible: any = 0;
+    private listTitles: any[] = [];
+    mobile_menu_visible = 0;
     private toggleButton: any;
-    private sidebarVisible: boolean;
+    private sidebarVisible = false;
 
     constructor(
         private loginService: LoginService,
@@ -111,7 +111,7 @@ export class NavbarComponent implements OnInit {
         // const toggleButton = this.toggleButton;
         // const body = document.getElementsByTagName('body')[0];
         var $toggle = document.getElementsByClassName('navbar-toggler')[0];
-        if (this.sidebarVisible === false) {
+        if (!this.sidebarVisible) {
             this.sidebarOpen();
         } else {
             this.sidebarClose();

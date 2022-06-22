@@ -1,5 +1,5 @@
 import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
-import {AccountService} from 'app/core/auth/account.service';
+import {AccountService} from "../../core/auth/account.service";
 
 /**
  * @whatItDoes Conditionally includes an HTML element if current user has any
@@ -16,7 +16,7 @@ import {AccountService} from 'app/core/auth/account.service';
     selector: '[jhiHasAnyAuthority]'
 })
 export class HasAnyAuthorityDirective {
-    private authorities: string[];
+    private authorities: string[] = [];
 
     constructor(private accountService: AccountService, private templateRef: TemplateRef<any>, private viewContainerRef: ViewContainerRef) {
     }

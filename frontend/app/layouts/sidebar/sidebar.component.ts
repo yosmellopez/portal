@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {AccountService} from 'app/core/auth/account.service';
-import {Account} from 'app/core/user/account.model';
+import {Account} from "../../core/user/account.model";
+import {AccountService} from "../../core/auth/account.service";
 
 // declare const $: any;
 declare interface RouteInfo {
@@ -87,14 +87,14 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
     rutas: RouteInfo[] = ROUTES;
     rutasUsuario: RouteInfo[] = [];
-    usuario: Account;
-    appLogo: string;
+    usuario!: Account;
+    appLogo!: string;
 
     constructor(private route: ActivatedRoute, protected auth: AccountService) {
     }
 
     ngOnInit() {
-        this.auth.identity().subscribe(valor => {
+        this.auth.identity().subscribe((valor: any) => {
             if (valor) {
                 this.usuario = valor;
                 this.rutas.forEach(ruta => {

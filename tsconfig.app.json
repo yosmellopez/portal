@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./target/classes/static/app",
+    "types": []
+  },
+  "files": ["frontend/main.ts", "frontend/polyfills.ts"],
+  "include": ["frontend/**/*.d.ts"]
+}

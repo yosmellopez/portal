@@ -12,8 +12,8 @@ import {ProfileInfo} from './profile-info.model';
     styleUrls: ['page-ribbon.scss']
 })
 export class PageRibbonComponent implements OnInit {
-    profileInfo: ProfileInfo;
-    ribbonEnv: string;
+    profileInfo!: ProfileInfo;
+    ribbonEnv!: string;
 
     constructor(private profileService: ProfileService) {
     }
