@@ -8,6 +8,7 @@ use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
 use App\Libs\GmailAPI\Mailer;
 use Carbon\Carbon;
+use Dacastro4\LaravelGmail\Facade\LaravelGmail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -25,6 +26,7 @@ class GmailMailerController extends Controller
      */
     public function sendEmail($idDocumento, $isFromView)
     {
+        $this->resolveTokenIfExpired();
         setlocale(LC_TIME, 'Spanish');
         $fechaActual = Carbon::now();
         $fechaActual = ucfirst($fechaActual->formatLocalized('%B, %Y'));
@@ -135,6 +137,7 @@ class GmailMailerController extends Controller
 
     public function sendEmailToUser(Usuario $usuario, UsuarioToken $usuarioToken)
     {
+        $this->resolveTokenIfExpired();
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         $mail = new Mailer();
         try {
@@ -169,6 +172,7 @@ class GmailMailerController extends Controller
 
     public function sendRegisterEmail(Usuario $usuario, $password)
     {
+        $this->resolveTokenIfExpired();
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         $mail = new Mailer();
         try {
@@ -201,6 +205,7 @@ class GmailMailerController extends Controller
 
     public function sendRestorePasswordEmail(Usuario $usuario, $password)
     {
+        $this->resolveTokenIfExpired();
         $userEmail = env("MAIL_USERNAME", "ylopez@vsperu.com");
         $mail = new Mailer();
         try {
@@ -231,6 +236,17 @@ class GmailMailerController extends Controller
             return response()->json(array("mensaje" => "Se ha enviado el correo exitosamente a: " . $email));
         } catch (Exception $e) {
             return response()->json(array("error" => $e->errorMessage()), 500);
+        }
+    }
+
+    private function resolveTokenIfExpired()
+    {
+        $check = LaravelGmail::check();
+        if (!$check) {
+            $refreshToken = env("GOOGLE_REFRESH_TOKEN", "");
+            LaravelGmail::fetchAccessTokenWithRefreshToken($refreshToken);
+            $token = LaravelGmail::getAccessToken();
+            LaravelGmail::setBothAccessToken($token);
         }
     }
 

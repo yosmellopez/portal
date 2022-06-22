@@ -7,6 +7,7 @@ use App\Entity\UsuarioToken;
 use App\Exceptions\GeneralAPIException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\GmailMailerController;
 use App\Http\Controllers\PHPMailerController;
 use Carbon\Carbon;
 use Exception;
@@ -105,7 +106,12 @@ class ResetPasswordController extends Controller
                 $userToken->token_expiration = $fechaExpiracion;
                 $userToken->save();
                 $usePHPMailer = config('app.use_phpmailer');
-                if ($usePHPMailer) {
+                $useGmailApi = env("USE_GMAIL_API", false);
+                //dd($usePHPMailer);
+                if ($useGmailApi) {
+                    $controller = new GmailMailerController();
+                    $controller->sendEmailToUser($usuario, $userToken);
+                } else if ($usePHPMailer) {
                     $emailController = new PHPMailerController();
                     $emailController->sendEmailToUser($usuario, $userToken);
                 } else {

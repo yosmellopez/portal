@@ -19,13 +19,6 @@ use Swift_Message;
 
 class EmailController extends Controller
 {
-    const ENCODING_7BIT = '7bit';
-    const ENCODING_8BIT = '8bit';
-    const ENCODING_BASE64 = 'base64';
-    const ENCODING_BINARY = 'binary';
-    const ENCODING_QUOTED_PRINTABLE = 'quoted-printable';
-    const STOP_CONTINUE = 1;
-
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +28,12 @@ class EmailController extends Controller
     public function sendEmail($idDocumento, $isFromView)
     {
         $usePHPMailer = config('app.use_phpmailer');
-        if ($usePHPMailer) {
+        $useGmailApi = env("USE_GMAIL_API", false);
+        //dd($usePHPMailer);
+        if ($useGmailApi) {
+            $controller = new GmailMailerController();
+            return $controller->sendEmail($idDocumento, $isFromView);
+        } else if ($usePHPMailer) {
             $documentoController = new PHPMailerController();
             return $documentoController->sendEmail($idDocumento, $isFromView);
         } else {

@@ -143,7 +143,11 @@ class PublicadorController extends Controller
             }
             Log::info('');
             $usePHPMailer = config('app.use_phpmailer');
-            if ($usePHPMailer) {
+            $useGmailApi = env("USE_GMAIL_API", false);
+            if ($useGmailApi) {
+                $controller = new GmailMailerController();
+                return $controller->sendEmail($data["idDocumento"], false);
+            } else if ($usePHPMailer) {
                 $documentoController = new PHPMailerController();
                 return $documentoController->sendEmail($data["idDocumento"], false);
             } else {
@@ -307,7 +311,12 @@ class PublicadorController extends Controller
             "claveUsuario" => $claveUsuario, "estadoUsuario" => "1", "rucClient" => $rucClient, "idRoles" => 3])->save();
         try {
             $usePHPMailer = config('app.use_phpmailer');
-            if ($usePHPMailer) {
+            $useGmailApi = env("USE_GMAIL_API", false);
+            //dd($usePHPMailer);
+            if ($useGmailApi) {
+                $controller = new GmailMailerController();
+                $controller->sendRegisterEmail($usuario, $password);
+            } else if ($usePHPMailer) {
                 $documentoController = new PHPMailerController();
                 $documentoController->sendRegisterEmail($usuario, $password);
             } else {
