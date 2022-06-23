@@ -1,0 +1,7 @@
+
+.applogo {
+    width: 200px;
+    height: 200px;
+    background: url(../img/logo-angular.png) center center no-repeat;
+    background-size: 200px 200px;
+}

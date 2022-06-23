@@ -120,7 +120,7 @@ const MY_NATIVE_DATE_FORMATS = {
     ],
     declarations: [JhiMainComponent],
     providers: [
-        AppNgxUiLoaderService, ConfigService,
+        AppNgxUiLoaderService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

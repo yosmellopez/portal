@@ -1,0 +1,77 @@
+/* after changing this file run 'npm run webpack:build' */
+/***************************
+put Sass variables here:
+eg $input-color: red;
+****************************/
+@import '~@angular/material/theming';
+
+@include mat-core();
+// Define an alternate dark theme.
+$dark-primary: mat-palette($mat-green, 900);
+$dark-accent: mat-palette($mat-blue, A700);
+$dark-warn: mat-palette($mat-red, 900);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+$table-primary: mat-palette($mat-green, 900);
+$table-accent: mat-palette($mat-orange, 800);
+$table-warn: mat-palette($mat-red, 900);
+$table-theme: mat-light-theme($table-primary, $table-accent, $table-warn);
+
+$no-fortaleza-primary: mat-palette($mat-red, 300);
+$no-fortaleza-theme: mat-light-theme($no-fortaleza-primary, $table-accent, $table-warn);
+
+$debil-primary: mat-palette($mat-orange, 500);
+$debil-theme: mat-light-theme($debil-primary, $table-accent, $table-warn);
+
+$medio-debil-primary: mat-palette($mat-teal, 500);
+$medio-debil-theme: mat-light-theme($medio-debil-primary, $table-accent, $table-warn);
+
+$fuerte-primary: mat-palette($mat-green, 600);
+$fuerte-theme: mat-light-theme($fuerte-primary, $table-accent, $table-warn);
+
+$super-fuerte-primary: mat-palette($mat-green, 900);
+$super-fuerte-theme: mat-light-theme($super-fuerte-primary, $table-accent, $table-warn);
+
+.table-actions-theme {
+  @include angular-material-theme($table-theme);
+}
+
+.login-success-color {
+  @include angular-material-theme($table-theme);
+}
+
+.btn-success-color {
+  background: linear-gradient(60deg, #66bb6a, #43a047);
+}
+
+.btn-danger-color {
+  background: linear-gradient(60deg, $red-300, $red-800);
+}
+
+.btn-danger-color {
+  background: linear-gradient(60deg, $orange-300, $orange-900);
+}
+
+.btn-info-color {
+  background: linear-gradient(60deg, $cyan-500, $cyan-700);
+}
+
+.sin-fortaleza {
+  @include angular-material-theme($no-fortaleza-theme);
+}
+
+.debil {
+  @include angular-material-theme($debil-theme);
+}
+
+.medio-fuerte {
+  @include angular-material-theme($medio-debil-theme);
+}
+
+.fuerte {
+  @include angular-material-theme($fuerte-theme);
+}
+
+.super-fuerte {
+  @include angular-material-theme($super-fuerte-theme);
+}

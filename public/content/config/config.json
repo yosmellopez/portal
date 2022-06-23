@@ -1,0 +1,8 @@
+{
+  "app": {
+    "headerTitle": "Portal de Facturación Electrónica Ventura Soluciones",
+    "sidebarTitle": "Facturación Electrónica",
+    "sidebarSubtitle": "",
+    "logo": "../../../content/img/ventura-logo.png"
+  }
+}

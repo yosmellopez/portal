@@ -1,0 +1,459 @@
+@import 'bootstrap-variables';
+@import '~bootstrap/scss/functions';
+@import '~bootswatch/dist/flatly/variables';
+@import '~bootstrap/scss/variables';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+/* ==============================================================
+Bootstrap tweaks
+===============================================================*/
+.loading-shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.app-loading {
+  .logo {
+    width: 100px;
+    height: 100px;
+    background: url(../../content/img/favicon.png) center center no-repeat;
+  }
+}
+
+body,
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 300;
+}
+
+a:hover {
+  /* make sure browsers use the pointer cursor for anchors, even with no href */
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  color: $dropdown-link-hover-color;
+}
+
+/* ==========================================================================
+Browser Upgrade Prompt
+========================================================================== */
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* ==========================================================================
+Generic styles
+========================================================================== */
+
+/* other generic styles */
+
+.jh-card {
+  padding: 1.5%;
+  margin-top: 20px;
+  border: none;
+}
+
+.error {
+  color: white;
+  background-color: red;
+}
+
+.pad {
+  padding: 10px;
+}
+
+.w-40 {
+  width: 40% !important;
+}
+
+.w-60 {
+  width: 60% !important;
+}
+
+.break {
+  white-space: normal;
+  word-break: break-all;
+}
+
+.readonly {
+  background-color: #eee;
+  opacity: 1;
+}
+
+.footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.hand,
+[jhisortby] {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+Custom alerts for notification
+========================================================================== */
+.alerts {
+  .alert {
+    text-overflow: ellipsis;
+
+    pre {
+      background: none;
+      border: none;
+      font: inherit;
+      color: inherit;
+      padding: 0;
+      margin: 0;
+    }
+
+    .popover pre {
+      font-size: 10px;
+    }
+  }
+
+  .jhi-toast {
+    position: fixed;
+    width: 100%;
+
+    &.left {
+      left: 5px;
+    }
+
+    &.right {
+      right: 5px;
+    }
+
+    &.top {
+      top: 55px;
+    }
+
+    &.bottom {
+      bottom: 55px;
+    }
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .alerts .jhi-toast {
+    width: 50%;
+  }
+}
+
+/* ==========================================================================
+entity detail page css
+========================================================================== */
+.row.jh-entity-details > {
+  dd {
+    margin-bottom: 15px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .row.jh-entity-details > {
+    dt {
+      margin-bottom: 15px;
+    }
+
+    dd {
+      border-bottom: 1px solid #eee;
+      padding-left: 180px;
+      margin-left: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+ui bootstrap tweaks
+========================================================================== */
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
+
+.thread-dump-modal-lock {
+  max-width: 450px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mat-raised-button.btn {
+  margin-right: 15px;
+}
+
+.apptooltip {
+  font-size: 12px;
+  background-color: #757575;
+}
+
+mat-table {
+  width: 100%;
+  min-height: 600px;
+}
+
+mat-footer-row, mat-header-row, mat-row {
+  min-height: 44px !important;
+}
+
+table {
+  width: 100%;
+}
+
+.center-block {
+  text-align: center;
+  justify-content: center;
+}
+
+.mat-header-cell.text-center {
+  text-align: center;
+  justify-content: center;
+}
+
+.text-center.mat-sort-header-container {
+  text-align: center;
+  justify-content: center;
+}
+
+.mat-column-acciones button {
+  margin-right: 10px;
+}
+
+.mat-icon {
+  position: relative;
+  top: -2px;
+}
+
+.modal-body {
+  padding: 2rem !important;
+}
+
+.blue-snackbar {
+  background: #9e9e9e;
+  color: black;
+  position: relative;
+  bottom: 30px;
+  left: 30px;
+}
+
+.success-snackbar {
+  background: #1B5E20;
+  color: white;
+  position: relative;
+  top: 30px;
+  left: 30px;
+}
+
+.failure-snackbar {
+  background: #8e120c;
+  color: white;
+  position: relative;
+  top: 30px;
+  left: 30px;
+}
+
+.mat-snack-bar-container {
+  padding: 0;
+}
+
+snack-bar-container {
+  padding: 0;
+}
+
+.danger-row {
+  border-left-color: #d32f2f;
+  border-left-style: solid;
+  border-left-width: 12px;
+}
+
+.info-row {
+  border-left-color: #2e7d32;
+  border-left-style: solid;
+  border-left-width: 12px;
+}
+
+.danger-row mat-cell {
+  color: white;
+}
+
+mat-error {
+  font-size: 13px;
+}
+
+.main-panel {
+  //padding-left: 300px
+}
+
+.pull-right {
+  float: right !important;
+  clear: right;
+}
+
+/************
+1. 1600px
+************/
+
+@media only screen and (max-width: 1600px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+2. 1440px
+************/
+
+@media only screen and (max-width: 1440px) {
+  .main-panel {
+    padding-left: 270px
+  }
+}
+
+/************
+3. 1380px
+************/
+
+@media only screen and (max-width: 1380px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+3. 1280px
+************/
+
+@media only screen and (max-width: 1280px) {
+}
+
+/************
+4. 1199px
+************/
+
+@media only screen and (max-width: 1199px) {
+}
+
+/************
+4. 1100px
+************/
+
+@media only screen and (max-width: 1100px) {
+}
+
+/************
+5. 1024px
+************/
+
+@media only screen and (max-width: 1024px) {
+}
+
+/************
+6. 991px
+************/
+
+@media only screen and (max-width: 991px) {
+
+}
+
+/************
+7. 959px
+************/
+
+@media only screen and (max-width: 959px) {
+}
+
+/************
+8. 880px
+************/
+
+@media only screen and (max-width: 880px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+9. 768px
+************/
+
+@media only screen and (max-width: 768px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+10. 767px
+************/
+
+@media only screen and (max-width: 767px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+11. 575px
+************/
+
+@media only screen and (max-width: 575px) {
+}
+
+/************
+11. 539px
+************/
+
+@media only screen and (max-width: 539px) {
+}
+
+/************
+12. 480px
+************/
+
+@media only screen and (max-width: 480px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+13. 479px
+************/
+
+@media only screen and (max-width: 479px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+/************
+14. 400px
+************/
+
+@media only screen and (max-width: 400px) {
+  .main-panel {
+    padding-left: 0;
+  }
+}
+
+.table-actions-theme div {
+  margin-bottom: 5px;
+}
+
+/* jhipster-needle-scss-add-main JHipster will add new css style */
