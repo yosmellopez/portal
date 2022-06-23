@@ -5,8 +5,6 @@ function setupProxy({ tls }) {
             target: `http${tls ? 's' : ''}://localhost:8080`,
             secure: false,
             changeOrigin: tls,
-        }, {
-            context: ['/websocket'], target: 'ws://localhost:8080', ws: true,
         }
     ];
 }
