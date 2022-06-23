@@ -1,7 +1,8 @@
 FROM node:16.13.1-alpine as builder
 WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-RUN npm install --loglevel verbose
+COPY package.json yarn.lock ./
+RUN npm install -g yarn
+RUN yarn install --loglevel verbose
 COPY . .
 RUN echo "se copio correctamente"
 RUN npm run build --prod --loglevel verbose
